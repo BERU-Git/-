@@ -12,20 +12,15 @@ void result_update()
 	switch (result_state)
 	{
 	case 0:
-		//////// 初期設定 ////////
 
 		result_state++;
 		/*fallthrough*/
 	case 1:
-		//////// パラメータの設定 ////////
-
-		// ブレンドモードの設定
 		GameLib::setBlendMode(Blender::BS_ALPHA);
 
 		result_state++;
 		/*fallthrough*/
 	case 2:
-		//////// 通常時 ////////
 		if (TRG(0) & PAD_SELECT)
 		{
 			nextScene = SCENE_TITLE;
