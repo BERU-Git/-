@@ -1,5 +1,6 @@
 #include "all.h"
 #include "field.h"
+#include "player.h"
 
 int game_state = 0;     // 状態
 int game_timer = 0;     // タイマー
@@ -10,6 +11,7 @@ int game_timer = 0;     // タイマー
 void game_init()
 {
 	field_init();
+	player_init();
 	game_state = 0;
 	game_timer = 0;
 }
@@ -31,6 +33,7 @@ void game_update()
 	case 2:
 	
 		field_update();
+		player_update();
 
 	
 		if (game_timer >= 300)
@@ -47,16 +50,19 @@ void game_update()
 void game_render()
 {
 	GameLib::clear(0.2f, 0.0f, 0.75f);
-  field_render();
+    field_render();
+
+    player_render();
 
 
-	font::textOut(2, "GAME", 100, 200, 2, 2);
+	
 
 }
 
 void game_deinit()
 {
 	field_deinit();
+	player_deinit();
 
 
 }

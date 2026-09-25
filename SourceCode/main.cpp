@@ -1,5 +1,4 @@
 #include "all.h"
-
 using namespace GameLib;
 
 int curScene = SCENE_NONE;       //åªç›

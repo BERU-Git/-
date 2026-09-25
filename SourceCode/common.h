@@ -4,6 +4,9 @@
 #define SCREEN_W        1920
 #define SCREEN_H        1080
 
+#define PLAYER_W        128
+#define PLAYER_H        128
+
 #define SCENE_NONE 0
 #define SCENE_TITLE 1
 #define SCENE_GAME 2
