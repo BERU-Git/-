@@ -1,6 +1,7 @@
 #include "all.h"
 #include "field.h"
 #include "player.h"
+#include "camera.h"
 
 int game_state = 0;     // 状態
 int game_timer = 0;     // タイマー
@@ -10,8 +11,9 @@ int game_timer = 0;     // タイマー
 
 void game_init()
 {
-	field_init();
 	player_init();
+	field_init();
+	camera_init();
 	game_state = 0;
 	game_timer = 0;
 }
@@ -31,9 +33,10 @@ void game_update()
 		/*fallthrough*/
 	
 	case 2:
-	
-		field_update();
+
 		player_update();
+		field_update();
+		camera_update();
 
 	
 		if (game_timer >= 300)

@@ -2,8 +2,7 @@
 #include "all.h"
 
 extern Sprite* spr_player;
-extern float player_posx;
-extern float player_posy;
+extern VECTOR2 player_pos;
 void player_init();
 void player_update();
 void player_render();
