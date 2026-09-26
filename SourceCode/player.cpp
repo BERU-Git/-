@@ -87,9 +87,34 @@ void player_update()
 	{
 		player_speed.y = MIN_SPEED;
 	}
+
 	//プレイヤーの移動
 	player_pos.x += player_speed.x;
 	player_pos.y += player_speed.y;
+
+	//移動範囲制限
+	if (player_pos.x <= PLAYER_W * 0.5f)
+	{
+		player_pos.x = PLAYER_W * 0.5f;
+		player_speed.x = 0;
+	}
+	else if(player_pos.x >= WORLD_W - PLAYER_W * 0.5f)
+	{
+		player_pos.x = WORLD_W - PLAYER_W * 0.5f;
+		player_speed.x = 0;
+	}
+
+	if (player_pos.y <= PLAYER_H * 0.5f)
+	{
+		player_pos.y = PLAYER_H * 0.5f;
+		player_speed.y = 0;
+	}
+	else if(player_pos.y >= WORLD_H - PLAYER_H * 0.5f)
+	{
+		player_pos.y = WORLD_H - PLAYER_H * 0.5f;
+		player_speed.y = 0;
+	}
+
 
 	//向きを更新
 	if (player_speed.x < 0)

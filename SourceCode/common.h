@@ -4,6 +4,9 @@
 #define SCREEN_W        1920
 #define SCREEN_H        1080
 
+#define WORLD_W         5760
+#define WORLD_H         3240
+
 #define PLAYER_W        128
 #define PLAYER_H        128
 
