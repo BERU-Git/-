@@ -2,6 +2,7 @@
 #include "field.h"
 #include "player.h"
 #include "camera.h"
+#include "enemy.h"
 
 int game_state = 0;     // 状態
 int game_timer = 0;     // タイマー
@@ -16,6 +17,7 @@ void game_init()
 	camera_init();
 	game_state = 0;
 	game_timer = 0;
+
 }
 
 void game_update()
