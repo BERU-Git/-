@@ -13,10 +13,13 @@ int game_timer = 0;     // タイマー
 void game_init()
 {
 	player_init();
+	enemy_init();
 	field_init();
 	camera_init();
 	game_state = 0;
 	game_timer = 0;
+
+	srand((unsigned int)time(NULL));
 
 }
 
@@ -37,6 +40,7 @@ void game_update()
 	case 2:
 
 		player_update();
+		enemy_update();
 		field_update();
 		camera_update();
 
@@ -49,7 +53,6 @@ void game_update()
 		break;
 	}
 
-
 }
 
 void game_render()
@@ -58,7 +61,7 @@ void game_render()
     field_render();
 
     player_render();
-
+	enemy_render();
 
 	
 
@@ -66,8 +69,9 @@ void game_render()
 
 void game_deinit()
 {
-	field_deinit();
 	player_deinit();
+	enemy_deinit();
+	field_deinit();
 
 
 }
