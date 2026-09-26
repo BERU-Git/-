@@ -4,15 +4,21 @@ Sprite* spr_player;
 VECTOR2 screen;
 VECTOR2 player_pos;
 VECTOR2 player_speed;
+VECTOR2 player_render_pos;
 
 
 void player_init()
 {
 	spr_player = sprite_load(L"Data/images/player.png");
+	
 	player_pos.x = SCREEN_W * 0.5f;
 	player_pos.y = SCREEN_H * 0.5f;
+	
 	player_speed.x = 0;
 	player_speed.y = 0;
+
+	player_render_pos.x = 0;
+	player_render_pos.y = 0;
 
 }
 
@@ -33,6 +39,11 @@ void player_update()
 	else
 	{
 		player_speed.x *= DECELERATION;
+		if (fabs(player_speed.x) <= 0.01)
+		{
+			player_speed.x = 0;
+		}
+
 	}
 
 	//‰º
@@ -48,6 +59,10 @@ void player_update()
 	else
 	{
 		player_speed.y *= DECELERATION;
+		if (fabs(player_speed.y) <= 0.01)
+		{
+			player_speed.y = 0;
+		}
 	}
 
 	//‘¬“xãŒÀ
@@ -72,6 +87,21 @@ void player_update()
 	player_pos.x += player_speed.x;
 	player_pos.y += player_speed.y;
 
+	if (player_speed.x == 0 && player_speed.y == 0)
+	{
+		player_render_pos.y = 0;
+	}
+
+	if (player_speed.x < 0)
+	{
+		player_render_pos.y = 2;
+	}
+	else if (player_speed.x > 0)
+	{
+		player_render_pos.y = 1;
+	}
+
+
 }
 
 void player_render()
@@ -82,7 +112,7 @@ void player_render()
 
 	sprite_render(spr_player, screen.x, screen.y,
 		                      1,1,
-		                      0,0,
+						      PLAYER_W * player_render_pos.x, PLAYER_H * player_render_pos.y,
 		                      PLAYER_W,PLAYER_H,
 		                      PLAYER_W * 0.5f,PLAYER_H * 0.5f);
 }
