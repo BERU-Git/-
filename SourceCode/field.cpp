@@ -15,13 +15,20 @@ field_pos.y = 0;
 
 void field_update()
 {
-	field_screen.x = field_pos.x - camera_pos.x + SCREEN_W * 0.5f;
-	field_screen.y = field_pos.y - camera_pos.y + SCREEN_H * 0.5f;
 }
 
 void field_render()
 {
-	sprite_render(spr_field, field_screen.x,field_screen.y);
+	//3x3でフィールドを生成する
+	for(int x = 0; x < 3; x++ )
+	{
+	field_screen.x = (field_pos.x + x * FIELD_W) - camera_pos.x + SCREEN_W * 0.5f;
+		for (int y = 0; y < 3; y++)
+		{
+			field_screen.y = (field_pos.y + y * FIELD_H) - camera_pos.y + SCREEN_H * 0.5f;
+			sprite_render(spr_field, field_screen.x, field_screen.y);
+		}
+	}
 }
 
 void field_deinit()
