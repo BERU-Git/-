@@ -101,6 +101,29 @@ void player_update()
 	{
 		player_render_posy = 1;
 		player_direction = 0;
+	}
+
+	if (player_speed.y < 0)
+	{
+		if (player_direction == 1)
+		{
+			player_render_posy = 2;
+		}
+		else
+		{
+			player_render_posy = 1;
+		}
+	}
+	else if (player_speed.y > 0)
+	{
+		if (player_direction == 0)
+		{
+			player_render_posy = 1;
+		}
+		else
+		{
+			player_render_posy = 2;
+		}
 
 	}
 
@@ -118,6 +141,7 @@ void player_update()
 	}
 	else
 	{
+		player_render_posx = player_direction;
 		player_render_posy = 0;
 	}
 
