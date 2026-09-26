@@ -3,7 +3,7 @@
 
 struct OBJ2D
 {
-	
+	VECTOR2 pos;
 	VECTOR2 scale;
 	VECTOR2 tex_pos;
 	VECTOR2 tex_size;
