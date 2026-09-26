@@ -10,6 +10,8 @@
 #define FIELD_W         1920
 #define FIELD_H         1080
 
+#define ACCELERATION    0.5f
+#define DECELERATION    0.83f
 #define MIN_SPEED       -9
 #define MAX_SPEED        9
 

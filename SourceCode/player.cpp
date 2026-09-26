@@ -23,31 +23,31 @@ void player_update()
 	//ç∂
 	if (STATE(0) & PAD_LEFT)
 	{
-		player_speed.x -= 0.5f;
+		player_speed.x -= ACCELERATION;
 	}
 	//âE
 	else if (STATE(0) & PAD_RIGHT)
 	{
-		player_speed.x += 0.5f;
+		player_speed.x += ACCELERATION;
 	}
 	else
 	{
-		player_speed.x *= 0.83f;
+		player_speed.x *= DECELERATION;
 	}
 
 	//â∫
 	if (STATE(0) & PAD_DOWN)
 	{
-		player_speed.y += 0.5f;
+		player_speed.y += ACCELERATION;
 	}
 	//è„
 	else if (STATE(0) & PAD_UP)
 	{
-		player_speed.y -= 0.5f;
+		player_speed.y -= ACCELERATION;
 	}	
 	else
 	{
-		player_speed.y *= 0.83f;
+		player_speed.y *= DECELERATION;
 	}
 
 	//ë¨ìxè„å¿
