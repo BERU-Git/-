@@ -12,6 +12,8 @@
 
 #define ENEMY_W         128
 #define ENEMY_H         128
+#define NORMAL_ENEMY_HITBOX    100
+
 
 #define FIELD_W         1920
 #define FIELD_H         1080

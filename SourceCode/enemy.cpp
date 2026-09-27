@@ -26,8 +26,8 @@ void enemy_init()
             for (int j = 0; j < i; j++)
             {
                 if (hit_check(
-                    enemy[i].pos.x, enemy[i].pos.y, ENEMY_W * 0.5f,
-                    enemy[j].pos.x, enemy[j].pos.y, ENEMY_W * 0.5f) ||
+                    enemy[i].pos.x, enemy[i].pos.y, NORMAL_ENEMY_HITBOX * 0.5f,
+                    enemy[j].pos.x, enemy[j].pos.y, NORMAL_ENEMY_HITBOX * 0.5f) ||
                     hit_check(
                     player_pos.x, player_pos.y,    SCREEN_H * 0.5f,
                     enemy[i].pos.x, enemy[i].pos.y, ENEMY_W * 0.5f))
@@ -43,6 +43,25 @@ void enemy_init()
 
 void enemy_update()
 {
+    for (int i = 0; i < ENEMY_MAX; i++)
+    {
+        enemy[i].effect_timer++;
+
+        if (enemy[i].effect_timer % 6 == 0)
+        {
+            enemy[i].render_posx++;
+            enemy[i].render_posx %= 8;
+        }
+
+        if (enemy[i].pos.x <= player_pos.x)
+        {
+            enemy[i].direction = 1;
+        }
+        else
+        {
+            enemy[i].direction = -1;
+        }
+    }
 
 }
 
@@ -54,8 +73,8 @@ void enemy_render()//“G‚Ì•`‰æ
 		enemy[i].screen.y = enemy[i].pos.y - camera_pos.y + SCREEN_H * 0.5f;
 
 		sprite_render(spr_enemy, enemy[i].screen.x, enemy[i].screen.y,
-		              1,1,
-					  0,0,
+                      enemy[i].direction,1,
+					  ENEMY_W * enemy[i].render_posx,0,
 			          ENEMY_W,ENEMY_H,
 			          ENEMY_W * 0.5f,ENEMY_H * 0.5f);
 	}
