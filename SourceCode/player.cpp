@@ -14,8 +14,8 @@ void player_init()
 {
 	spr_player = sprite_load(L"Data/images/player.png");
 	
-	player_pos.x = SCREEN_W * 0.5f;
-	player_pos.y = SCREEN_H * 0.5f;
+	player_pos.x = WORLD_W * 0.5f;
+	player_pos.y = WORLD_H * 0.5f;
 	
 	player_speed.x = 0;
 	player_speed.y = 0;

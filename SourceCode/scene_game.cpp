@@ -3,6 +3,8 @@
 #include "player.h"
 #include "camera.h"
 #include "enemy.h"
+#include "hit_check.h"
+
 
 int game_state = 0;     // 状態
 int game_timer = 0;     // タイマー
@@ -57,7 +59,7 @@ void game_update()
 
 void game_render()
 {
-	GameLib::clear(0.2f, 0.0f, 0.75f);
+	GameLib::clear(0.0f, 0.0f, 0.0f);
     field_render();
 
     player_render();
