@@ -16,7 +16,7 @@ void field_init()
 {
 spr_field = sprite_load(L"Data/images/Field_01.png");
 spr_wall = sprite_load(L"Data/images/wall_01.png");
-spr_wall_side = sprite_load(L"Data/images/sallside.png");
+spr_wall_side = sprite_load(L"Data/images/wallside.png");
 
 field_pos.x = 0;
 field_pos.y = 0;
