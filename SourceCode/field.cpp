@@ -12,11 +12,16 @@ Sprite* spr_field;
 VECTOR2 field_pos;
 VECTOR2 field_screen;
 
+Sprite* spr_wall_down;
+VECTOR2 wall_down_pos;
+VECTOR2 wall_down_screen;
+
 void field_init()
 {
 spr_field = sprite_load(L"Data/images/Field_01.png");
 spr_wall = sprite_load(L"Data/images/wall_01.png");
 spr_wall_side = sprite_load(L"Data/images/wallside.png");
+spr_wall_down = sprite_load(L"Data/images/wall_down.png");
 
 field_pos.x = 0;
 field_pos.y = 0;
@@ -27,6 +32,9 @@ wall_pos.y = -WALL_H;
 
 wall_side_pos.x = -WALLSIDE_W;
 wall_side_pos.y = WORLD_H - WALLSIDE_H;
+
+wall_down_pos.x = 0;
+wall_down_pos.y = WORLD_H;
 
 
 }
@@ -49,23 +57,33 @@ void field_render()
 			sprite_render(spr_field, field_screen.x, field_screen.y);
 		}
 	}
+	//è„ÇÃï«
 	for (int x = 0; x <23; x++)
 	{
 		wall_screen.x = (wall_pos.x + x * WALL_W) - camera_pos.x + SCREEN_W * 0.5f;
 		wall_screen.y = wall_pos.y  - camera_pos.y + SCREEN_H * 0.5f;
 		sprite_render(spr_wall, wall_screen.x, wall_screen.y);
 	}
+	//ç∂ÇÃï«
 	for (int y = 0; y < 9; y++)
 	{
 		wall_side_screen.x = wall_side_pos.x  - camera_pos.x + SCREEN_W * 0.5f;
 		wall_side_screen.y = (wall_side_pos.y + -y * WALLSIDE_H)  - camera_pos.y + SCREEN_H * 0.5f;
 		sprite_render(spr_wall_side, wall_side_screen.x, wall_side_screen.y);
 	}
+	//âEÇÃï«
 	for (int y = 0; y < 9; y++)
 	{
 		wall_side_screen.x = (wall_side_pos.x + WORLD_W + WALLSIDE_W) - camera_pos.x + SCREEN_W * 0.5f;
 		wall_side_screen.y = (wall_side_pos.y + -y * WALLSIDE_H)  - camera_pos.y + SCREEN_H * 0.5f;
 		sprite_render(spr_wall_side, wall_side_screen.x, wall_side_screen.y);
+	}
+	//â∫ÇÃï«
+	for (int x = 0; x < 10; x++)
+	{
+		wall_down_screen.x = (wall_down_pos.x + x * WALLDOWN_W) - camera_pos.x + SCREEN_W * 0.5f;
+		wall_down_screen.y = wall_down_pos.y  - camera_pos.y + SCREEN_H * 0.5f;
+		sprite_render(spr_wall_down, wall_down_screen.x, wall_down_screen.y);
 	}
 
 }
@@ -73,4 +91,7 @@ void field_render()
 void field_deinit()
 {
 	safe_delete(spr_field);
+	safe_delete(spr_wall);
+	safe_delete(spr_wall_side);
+	safe_delete(spr_wall_down);
 }

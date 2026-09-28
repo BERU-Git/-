@@ -22,6 +22,9 @@
 #define WALLSIDE_W     128
 #define WALLSIDE_H     488
 
+#define WALLDOWN_W     576
+#define WALLDOWN_H     128
+
 #define FIELD_W         1920
 #define FIELD_H         1080
 
