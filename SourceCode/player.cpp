@@ -104,9 +104,9 @@ void player_update()
 		player_speed.x = 0;
 	}
 
-	if (player_pos.y <= PLAYER_H * 0.5f)
+	if (player_pos.y <= -PLAYER_H * 0.3f)
 	{
-		player_pos.y = PLAYER_H * 0.5f;
+		player_pos.y = -PLAYER_H * 0.3f;
 		player_speed.y = 0;
 	}
 	else if(player_pos.y >= WORLD_H - PLAYER_H * 0.5f)

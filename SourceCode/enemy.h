@@ -5,11 +5,13 @@ struct enemy_data
 {
 	VECTOR2 pos;
 	VECTOR2 speed;
+	VECTOR2 move;
 	VECTOR2 screen;
 	int render_posx;
 	int render_posy;
 	int effect_timer;
 	int direction;
+	float angle;
 
 };
 

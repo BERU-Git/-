@@ -14,8 +14,10 @@
 #define ENEMY_H         128
 #define NORMAL_ENEMY_HITBOX    100
 
-#define WALL_W         640
-#define WALL_H         1024
+#define ENEMY_SPEED     7.0f
+
+#define WALL_W         256
+#define WALL_H         1180
 
 #define WALLSIDE_W     128
 #define WALLSIDE_H     488
@@ -25,8 +27,8 @@
 
 #define ACCELERATION    0.5f
 #define DECELERATION    0.83f
-#define MIN_SPEED       -9
-#define MAX_SPEED        9
+#define MIN_SPEED       -9.0f
+#define MAX_SPEED        9.0f
 
 #define ENEMY_MAX 50
 

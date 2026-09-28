@@ -49,7 +49,7 @@ void field_render()
 			sprite_render(spr_field, field_screen.x, field_screen.y);
 		}
 	}
-	for (int x = 0; x < 9; x++)
+	for (int x = 0; x <23; x++)
 	{
 		wall_screen.x = (wall_pos.x + x * WALL_W) - camera_pos.x + SCREEN_W * 0.5f;
 		wall_screen.y = wall_pos.y  - camera_pos.y + SCREEN_H * 0.5f;

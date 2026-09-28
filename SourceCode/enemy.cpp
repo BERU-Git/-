@@ -13,6 +13,9 @@ void enemy_init()
     for (int i = 0; i < ENEMY_MAX; i++)
     {
         bool can_spawn = false;
+        enemy[i].speed.x = ENEMY_SPEED;
+        enemy[i].speed.y = ENEMY_SPEED;
+
 
         while (!can_spawn)
         {
@@ -45,6 +48,28 @@ void enemy_update()
 {
     for (int i = 0; i < ENEMY_MAX; i++)
     {
+        if (hit_check(enemy[i].pos.x, enemy[i].pos.y, ENEMY_W * 0.5f,
+            player_pos.x, player_pos.y, SCREEN_H * 0.5f))
+        {
+           float dx = player_pos.x - enemy[i].pos.x;
+           float dy = player_pos.y - enemy[i].pos.y;
+
+           enemy[i].angle = atan2f(dy, dx);
+
+           enemy[i].move.x = cosf(enemy[i].angle);
+           enemy[i].move.y = sinf(enemy[i].angle);
+
+           enemy[i].pos.x += enemy[i].move.x * enemy[i].speed.x;
+           enemy[i].pos.y += enemy[i].move.y * enemy[i].speed.y;
+
+        }
+    }
+
+
+
+    //エネミーのモーション
+    for (int i = 0; i < ENEMY_MAX; i++)
+    {
         enemy[i].effect_timer++;
 
         if (enemy[i].effect_timer % 6 == 0)
@@ -53,6 +78,7 @@ void enemy_update()
             enemy[i].render_posx %= 8;
         }
 
+        //エネミーの向き更新
         if (enemy[i].pos.x <= player_pos.x)
         {
             enemy[i].direction = 1;
