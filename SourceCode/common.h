@@ -14,7 +14,7 @@
 #define ENEMY_H         128
 #define NORMAL_ENEMY_HITBOX    100
 
-#define ENEMY_SPEED     7.0f
+#define ENEMY_SPEED     6.0f
 
 #define WALL_W         256
 #define WALL_H         1180
