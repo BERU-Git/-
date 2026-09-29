@@ -48,6 +48,7 @@ void enemy_update()
 {
     for (int i = 0; i < ENEMY_MAX; i++)
     {
+        //ƒvƒŒƒCƒ„[‚Ì‹ß‚­‚É“G‚ª“ü‚é‚Æ’ÇÕ‚·‚é
         if (hit_check(enemy[i].pos.x, enemy[i].pos.y, ENEMY_W * 0.5f,
             player_pos.x, player_pos.y, SCREEN_H * 0.5f))
         {
@@ -56,8 +57,36 @@ void enemy_update()
 
            enemy[i].angle = atan2f(dy, dx);
 
-           enemy[i].move.x = cosf(enemy[i].angle);
-           enemy[i].move.y = sinf(enemy[i].angle);
+           enemy[i].chase.x = cosf(enemy[i].angle);
+           enemy[i].chase.y = sinf(enemy[i].angle);
+
+           enemy[i].separate.x = 0.0f;
+           enemy[i].separate.y = 0.0f;
+           //“G‚Æ“G‚ª”½”­‚µ‚Äd‚È‚ç‚È‚¢‚æ‚¤‚É‚·‚é
+           for (int j = 0; j < ENEMY_MAX; j++)
+           {
+               if (i == j)
+                   continue;
+
+               enemy[i].away.x = enemy[i].pos.x - enemy[j].pos.x;
+               enemy[i].away.y = enemy[i].pos.y - enemy[j].pos.y;
+
+               enemy[i].distance_sq = (enemy[i].away.x * enemy[i].away.x)
+                                    + (enemy[i].away.y * enemy[i].away.y);
+
+               if (enemy[i].distance_sq < 80.0f * 80.0f && enemy[i].distance_sq > 0.0f)
+               {
+                   enemy[i].distance = sqrtf(enemy[i].distance_sq);
+
+                   // —£‚ê‚é•ûŒü‚ğ’·‚³1‚É‚µ‚Ä‘«‚µ‡‚í‚¹‚é
+                   enemy[i].separate.x += enemy[i].away.x / enemy[i].distance;
+                   enemy[i].separate.y += enemy[i].away.y / enemy[i].distance;
+               }
+
+           }
+
+               enemy[i].move.x = enemy[i].chase.x + enemy[i].separate.x * 0.5f;
+               enemy[i].move.y = enemy[i].chase.y + enemy[i].separate.y * 0.5f;
 
            enemy[i].pos.x += enemy[i].move.x * enemy[i].speed.x;
            enemy[i].pos.y += enemy[i].move.y * enemy[i].speed.y;
