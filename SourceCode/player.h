@@ -9,6 +9,7 @@ extern int player_render_posx;
 extern int player_render_posy;
 extern int player_effect_timer;
 extern int player_direction;
+extern float length;
 
 
 void player_init();

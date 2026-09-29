@@ -8,6 +8,7 @@ int player_render_posx;
 int player_render_posy;
 int player_effect_timer;
 int player_direction;
+float length;
 
 
 void player_init()
@@ -86,6 +87,23 @@ void player_update()
 	if (player_speed.y <= MIN_SPEED)
 	{
 		player_speed.y = MIN_SPEED;
+	}
+
+	//最高速度制限
+	length = sqrtf(
+		player_speed.x * player_speed.x +
+		player_speed.y * player_speed.y
+	);
+
+	if (length > MAX_SPEED)
+	{
+		// 正規化
+		player_speed.x /= length;
+		player_speed.y /= length;
+
+		// 最大速度を掛ける
+		player_speed.x *= MAX_SPEED;
+		player_speed.y *= MAX_SPEED;
 	}
 
 	//プレイヤーの移動
