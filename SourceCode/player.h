@@ -11,6 +11,9 @@ extern int player_effect_timer;
 extern int player_direction;
 extern float length;
 
+void clamp_position(float& pos_x, float& pos_y, float texsize_x, float texsize_y,
+	float& speed_x, float& speed_y);
+
 
 void player_init();
 void player_update();

@@ -11,6 +11,31 @@ int player_direction;
 float length;
 
 
+void clamp_position(float& pos_x,float& pos_y,float texsize_x, float texsize_y,
+	                float& speed_x,float& speed_y)
+{
+	if (pos_x <= texsize_x * 0.5f)
+	{
+		pos_x = texsize_x * 0.5f;
+		speed_x = 0;
+	}
+	else if (pos_x >= WORLD_W - texsize_x * 0.5f)
+	{
+		pos_x = WORLD_W - texsize_x * 0.5f;
+		speed_x = 0;
+	}
+
+	if (pos_y <= -texsize_y * 0.3f)
+	{
+		pos_y = -texsize_y * 0.3f;
+		speed_y = 0;
+	}
+	else if (pos_y >= WORLD_H - texsize_y * 0.5f)
+	{
+		pos_y = WORLD_H - texsize_y * 0.5f;
+		speed_y = 0;
+	}
+}
 void player_init()
 {
 	spr_player = sprite_load(L"Data/images/player.png");
@@ -111,27 +136,8 @@ void player_update()
 	player_pos.y += player_speed.y;
 
 	//à⁄ìÆîÕàÕêßå¿
-	if (player_pos.x <= PLAYER_W * 0.5f)
-	{
-		player_pos.x = PLAYER_W * 0.5f;
-		player_speed.x = 0;
-	}
-	else if(player_pos.x >= WORLD_W - PLAYER_W * 0.5f)
-	{
-		player_pos.x = WORLD_W - PLAYER_W * 0.5f;
-		player_speed.x = 0;
-	}
-
-	if (player_pos.y <= -PLAYER_H * 0.3f)
-	{
-		player_pos.y = -PLAYER_H * 0.3f;
-		player_speed.y = 0;
-	}
-	else if(player_pos.y >= WORLD_H - PLAYER_H * 0.5f)
-	{
-		player_pos.y = WORLD_H - PLAYER_H * 0.5f;
-		player_speed.y = 0;
-	}
+	clamp_position(player_pos.x, player_pos.y, PLAYER_W, PLAYER_H,
+		player_speed.x, player_speed.y);
 
 
 	//å¸Ç´ÇçXêV

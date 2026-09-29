@@ -6,6 +6,42 @@
 Sprite* spr_enemy;
 enemy_data enemy[ENEMY_MAX];
 
+void enemy_separate(float pos1_x, float pos1_y,
+                    float pos2_x ,float pos2_y,
+                    float separate_distance,
+                    float& separate_x, float& separate_y)
+{
+    float away_x = pos1_x - pos2_x;
+    float away_y = pos1_y - pos2_y;
+
+    float distance_sq = (away_x * away_x)
+        + (away_y * away_y);
+
+    if (distance_sq < separate_distance * separate_distance && distance_sq > 0.0f)
+    {
+        float distance = sqrtf(distance_sq);
+
+        // 離れる方向を長さ1にして足し合わせる
+        separate_x += away_x / distance;
+        separate_y += away_y / distance;
+    }
+
+}
+
+void enemy_chase(float pos1_x,float pos1_y,
+                 float pos2_x,float pos2_y,
+                 float& angle,float& chase_x,float& chase_y)
+{
+    float dx = pos1_x - pos2_x;
+    float dy = pos1_y - pos2_y;
+
+    angle = atan2f(dy, dx);
+
+    chase_x = cosf(angle);
+    chase_y = sinf(angle);
+}
+
+
 void enemy_init()
 {
 	spr_enemy = sprite_load(L"Data/Images/enemy01.png");
@@ -15,6 +51,10 @@ void enemy_init()
         bool can_spawn = false;
         enemy[i].speed.x = ENEMY_SPEED;
         enemy[i].speed.y = ENEMY_SPEED;
+
+        enemy[i].state = ENEMY_CHASE;
+        enemy[i].charge_timer = 0.0f;
+        enemy[i].charge_prep_timer = 0.0f;
 
 
         while (!can_spawn)
@@ -48,50 +88,88 @@ void enemy_update()
 {
     for (int i = 0; i < ENEMY_MAX; i++)
     {
-        //プレイヤーの近くに敵が入ると追跡する
-        if (hit_check(enemy[i].pos.x, enemy[i].pos.y, ENEMY_W * 0.5f,
-            player_pos.x, player_pos.y, SCREEN_H * 0.5f))
+        switch (enemy[i].state)
         {
-           float dx = player_pos.x - enemy[i].pos.x;
-           float dy = player_pos.y - enemy[i].pos.y;
+        //通常追跡
+        case ENEMY_CHASE:
+            //プレイヤーの近くに敵が入ると追跡する
+            if (hit_check(enemy[i].pos.x, enemy[i].pos.y, ENEMY_W * 0.5f,
+                player_pos.x, player_pos.y, SCREEN_H * 0.5f))
+            {
 
-           enemy[i].angle = atan2f(dy, dx);
+                enemy_chase(player_pos.x, player_pos.y, enemy[i].pos.x, enemy[i].pos.y,
+                    enemy[i].angle, enemy[i].chase.x, enemy[i].chase.y);
 
-           enemy[i].chase.x = cosf(enemy[i].angle);
-           enemy[i].chase.y = sinf(enemy[i].angle);
+                enemy[i].separate.x = 0.0f;
+                enemy[i].separate.y = 0.0f;
 
-           enemy[i].separate.x = 0.0f;
-           enemy[i].separate.y = 0.0f;
-           //敵と敵が反発して重ならないようにする
-           for (int j = 0; j < ENEMY_MAX; j++)
-           {
-               if (i == j)
-                   continue;
+                //敵と敵が反発して重ならないようにする
+                for (int j = 0; j < ENEMY_MAX; j++)
+                {
+                    if (i == j)
+                        continue;
+                    enemy_separate(enemy[i].pos.x, enemy[i].pos.y,
+                        enemy[j].pos.x, enemy[j].pos.y,
+                        NORMAL_ENEMY_DISTANCE,
+                        enemy[i].separate.x, enemy[i].separate.y);
 
-               enemy[i].away.x = enemy[i].pos.x - enemy[j].pos.x;
-               enemy[i].away.y = enemy[i].pos.y - enemy[j].pos.y;
+                }
 
-               enemy[i].distance_sq = (enemy[i].away.x * enemy[i].away.x)
-                                    + (enemy[i].away.y * enemy[i].away.y);
+                enemy[i].move.x = enemy[i].chase.x + enemy[i].separate.x * 0.5f;
+                enemy[i].move.y = enemy[i].chase.y + enemy[i].separate.y * 0.5f;
 
-               if (enemy[i].distance_sq < 80.0f * 80.0f && enemy[i].distance_sq > 0.0f)
-               {
-                   enemy[i].distance = sqrtf(enemy[i].distance_sq);
+                enemy[i].pos.x += enemy[i].move.x * enemy[i].speed.x;
+                enemy[i].pos.y += enemy[i].move.y * enemy[i].speed.y;
 
-                   // 離れる方向を長さ1にして足し合わせる
-                   enemy[i].separate.x += enemy[i].away.x / enemy[i].distance;
-                   enemy[i].separate.y += enemy[i].away.y / enemy[i].distance;
-               }
+                if (hit_check(
+                    player_pos.x, player_pos.y, CHARGE_CHECK_W * 0.5f,
+                    enemy[i].pos.x, enemy[i].pos.y, ENEMY_W * 0.5f))
+                {
 
-           }
+            enemy[i].charge_prep_timer = 0.0f;
+                    enemy[i].state = ENEMY_CHARGE_PREP;
+                }
+            }
+                break;
+         //突進待機
+        case ENEMY_CHARGE_PREP:
+            enemy[i].charge_prep_timer += 1.0f;
+            enemy_chase(player_pos.x, player_pos.y,
+                enemy[i].pos.x, enemy[i].pos.y,
+                enemy[i].angle, enemy[i].chase.x, enemy[i].chase.y);
 
-               enemy[i].move.x = enemy[i].chase.x + enemy[i].separate.x * 0.5f;
-               enemy[i].move.y = enemy[i].chase.y + enemy[i].separate.y * 0.5f;
+            enemy[i].charge_direction.x = enemy[i].chase.x;
+            enemy[i].charge_direction.y = enemy[i].chase.y;
+            if (enemy[i].charge_prep_timer >= CHARGE_PREP_TIME)
+            {
+                enemy[i].state = ENEMY_CHARGE;
+            }
 
-           enemy[i].pos.x += enemy[i].move.x * enemy[i].speed.x;
-           enemy[i].pos.y += enemy[i].move.y * enemy[i].speed.y;
+            break;
+        //突進
+        case ENEMY_CHARGE:
+            enemy[i].charge_timer += 1.0f;
 
+            enemy[i].pos.x += enemy[i].charge_direction.x * CHARGE_SPEED;
+            enemy[i].pos.y += enemy[i].charge_direction.y * CHARGE_SPEED;
+
+            if (enemy[i].charge_timer >= CHARGE_TIME)
+            {
+                enemy[i].charge_timer = 0.0f;
+                enemy[i].state = ENEMY_COOLDOWN;
+            }
+
+            break;
+        //クールダウン
+        case ENEMY_COOLDOWN:
+
+            break;
+            
         }
+
+        //移動範囲制限
+        clamp_position(enemy[i].pos.x, enemy[i].pos.y, ENEMY_W, ENEMY_H,
+            enemy[i].speed.x, enemy[i].speed.y);
     }
 
 
