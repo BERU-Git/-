@@ -30,7 +30,7 @@
 #define ACCELERATION    0.5f
 #define DECELERATION    0.78f
 
-#define ENEMY_SPEED     6.0f
+#define ENEMY_SPEED    4.5f
 #define MIN_SPEED       -10.0f
 #define MAX_SPEED        10.0f
 
