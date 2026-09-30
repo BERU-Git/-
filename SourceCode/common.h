@@ -38,6 +38,7 @@
 
 #define CHARGE_TIME     60.0f
 #define CHARGE_PREP_TIME     90.0f
+#define COOLDOWN_TIME     180.0f
 
 #define ENEMY_MAX       50
 #define NORMAL_ENEMY_DISTANCE   80.0f 

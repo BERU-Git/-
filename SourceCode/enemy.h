@@ -25,6 +25,7 @@ struct enemy_data
 	float angle;
 	float charge_prep_timer;
 	float charge_timer;
+	float cooldown_timer;
 };
 
 extern enemy_data enemy[ENEMY_MAX];

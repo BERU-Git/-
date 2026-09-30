@@ -48,6 +48,11 @@ void enemy_init()
 
     for (int i = 0; i < ENEMY_MAX; i++)
     {
+        enemy_data enemy[ENEMY_MAX] = {};
+    }
+
+    for (int i = 0; i < ENEMY_MAX; i++)
+    {
         bool can_spawn = false;
         enemy[i].speed.x = ENEMY_SPEED;
         enemy[i].speed.y = ENEMY_SPEED;
@@ -94,7 +99,7 @@ void enemy_update()
         case ENEMY_CHASE:
             //プレイヤーの近くに敵が入ると追跡する
             if (hit_check(enemy[i].pos.x, enemy[i].pos.y, ENEMY_W * 0.5f,
-                player_pos.x, player_pos.y, SCREEN_H * 0.5f))
+                player_pos.x, player_pos.y, SCREEN_W * 0.4f))
             {
 
                 enemy_chase(player_pos.x, player_pos.y, enemy[i].pos.x, enemy[i].pos.y,
@@ -162,6 +167,14 @@ void enemy_update()
             break;
         //クールダウン
         case ENEMY_COOLDOWN:
+            enemy[i].cooldown_timer += 1.0f;
+
+            if (enemy[i].cooldown_timer >= COOLDOWN_TIME)
+            {
+                enemy[i].cooldown_timer = 0.0f;
+                enemy[i].state = ENEMY_CHASE;
+            }
+
 
             break;
             
