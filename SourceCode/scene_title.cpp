@@ -78,11 +78,11 @@ void title_render()
 	font::textOut(1, "SAMPLE GAME TITLE", 700, 200);
 	if (start_check)
 	{
-		font::textOut(1, "> GAME START <", 780, 400);
+		font::textOut(1, "> GAME START <", 760, 400);
 	}
 	else
 	{
-		font::textOut(1, "GAME START", 800, 400);
+		font::textOut(1, "GAME START", 800, 400, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.5f);
 	}
 	/*if((title_timer / 30) % 2 == 0)
 	{ 

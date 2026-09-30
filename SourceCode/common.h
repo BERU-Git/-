@@ -40,9 +40,20 @@
 #define SCENE_GAME 2
 #define SCENE_RESULT 3
 
+#define MOUSE_LIMIT_X_RIGHT 800
+#define MOUSE_LIMIT_X_LEFT 1130
+#define MOUSE_LIMIT_Y_LEFT 400
+#define MOUSE_LIMIT_Y_LEFT 420
+#define TEXT_START_X_CHECK_TRUE 760
+#define TEXT_START_Y_CHECK_TRUE 400
+#define TEXT_START_X_CHECK_FALSE 800
+#define TEXT_START_Y_CHECK_FALSE 400
+
 #define ToRadian( x )   DirectX::XMConvertToRadians( x )
 #define ToDegree( x )   DirectX::XMConvertToDegrees( x )
 #define PI              DirectX::XM_PI
+
+
 
 extern int curScene;
 extern int nextScene;
