@@ -26,6 +26,7 @@ struct enemy_data
 	float charge_prep_timer;
 	float charge_timer;
 	float cooldown_timer;
+	bool attack;
 };
 
 extern enemy_data enemy[ENEMY_MAX];

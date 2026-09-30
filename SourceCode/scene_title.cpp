@@ -1,7 +1,5 @@
 #include "all.h"
 #include <sstream>
-#include "Mouse.h"
-
 
 int title_state = 0;     // 状態
 int title_timer = 0;     // タイマー

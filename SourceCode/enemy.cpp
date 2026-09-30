@@ -97,6 +97,7 @@ void enemy_update()
         {
         //通常追跡
         case ENEMY_CHASE:
+            enemy[i].attack = false;
             //プレイヤーの近くに敵が入ると追跡する
             if (hit_check(enemy[i].pos.x, enemy[i].pos.y, ENEMY_W * 0.5f,
                 player_pos.x, player_pos.y, SCREEN_W * 0.4f))
@@ -138,6 +139,7 @@ void enemy_update()
                 break;
          //突進待機
         case ENEMY_CHARGE_PREP:
+            enemy[i].attack = true;
             enemy[i].charge_prep_timer += 1.0f;
             enemy_chase(player_pos.x, player_pos.y,
                 enemy[i].pos.x, enemy[i].pos.y,
@@ -145,6 +147,8 @@ void enemy_update()
 
             enemy[i].charge_direction.x = enemy[i].chase.x;
             enemy[i].charge_direction.y = enemy[i].chase.y;
+
+
             if (enemy[i].charge_prep_timer >= CHARGE_PREP_TIME)
             {
                 enemy[i].state = ENEMY_CHARGE;
@@ -158,7 +162,9 @@ void enemy_update()
             enemy[i].pos.x += enemy[i].charge_direction.x * CHARGE_SPEED;
             enemy[i].pos.y += enemy[i].charge_direction.y * CHARGE_SPEED;
 
-            if (enemy[i].charge_timer >= CHARGE_TIME)
+            if (enemy[i].charge_timer >= CHARGE_TIME || 
+                enemy[i].pos.x >= WORLD_W - ENEMY_W * 0.7f || enemy[i].pos.x <= ENEMY_W * 0.7f ||
+                enemy[i].pos.y >= WORLD_H - ENEMY_H * 0.7f || enemy[i].pos.y <= -ENEMY_H * 0.1f)
             {
                 enemy[i].charge_timer = 0.0f;
                 enemy[i].state = ENEMY_COOLDOWN;
@@ -167,6 +173,7 @@ void enemy_update()
             break;
         //クールダウン
         case ENEMY_COOLDOWN:
+            enemy[i].attack = false;
             enemy[i].cooldown_timer += 1.0f;
 
             if (enemy[i].cooldown_timer >= COOLDOWN_TIME)
