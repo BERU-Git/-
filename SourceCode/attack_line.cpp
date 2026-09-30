@@ -15,11 +15,6 @@ spr_attack_line = sprite_load(L"Data/Images/attack_line.png");
 }
 void attack_line_update()
 {
-	for (int i = 0; i < ENEMY_MAX; i++)
-	{
-		attack_line[i].pos.x = enemy[i].pos.x;
-		attack_line[i].pos.y = enemy[i].pos.y;
-	}
 }
 void attack_line_render()
 {

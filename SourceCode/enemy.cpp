@@ -3,6 +3,7 @@
 #include "camera.h"
 #include "hit_check.h"
 #include "player.h"
+#include "attack_line.h"
 Sprite* spr_enemy;
 enemy_data enemy[ENEMY_MAX];
 
@@ -48,7 +49,7 @@ void enemy_init()
 
     for (int i = 0; i < ENEMY_MAX; i++)
     {
-        enemy_data enemy[ENEMY_MAX] = {};
+        enemy[i] = {};
     }
 
     for (int i = 0; i < ENEMY_MAX; i++)
@@ -59,7 +60,9 @@ void enemy_init()
 
         enemy[i].state = ENEMY_CHASE;
         enemy[i].charge_timer = 0.0f;
-        enemy[i].charge_prep_timer = 0.0f;
+        enemy[i].charge_prep_timer = 0.0f;               
+        enemy[i].cooldown_timer = 0.0f;
+
 
 
         while (!can_spawn)
@@ -147,6 +150,10 @@ void enemy_update()
 
             enemy[i].charge_direction.x = enemy[i].chase.x;
             enemy[i].charge_direction.y = enemy[i].chase.y;
+
+            attack_line[i].pos.x = enemy[i].pos.x;
+            attack_line[i].pos.y = enemy[i].pos.y;
+
 
 
             if (enemy[i].charge_prep_timer >= CHARGE_PREP_TIME)
