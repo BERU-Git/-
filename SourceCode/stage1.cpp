@@ -8,8 +8,8 @@
 #include "gimick.h"
 
 
-int game_state = 0;     // 状態
-int game_timer = 0;     // タイマー
+int stage1_state = 0;     // 状態
+int stage1_timer = 0;     // タイマー
 
 
 
@@ -21,8 +21,6 @@ void stage1_init()
 	camera_init();
 	gimick_init();
 	attack_line_init();
-	game_state = 0;
-	game_timer = 0;
 
 	srand((unsigned int)time(NULL));
 
@@ -30,34 +28,20 @@ void stage1_init()
 
 void stage1_update()
 {
-	switch (game_state)
-	{
-	case 0:
-
-		game_state++;
-		/*fallthrough*/
-	case 1:
 		GameLib::setBlendMode(Blender::BS_ALPHA);
-
-		game_state++;
-		/*fallthrough*/
-	
-	case 2:
 
 		player_update();
 		enemy_update();
-attack_line_update();
+		attack_line_update();
 		field_update();
 		camera_update();
 
-	
-		if (game_timer >= 300)
+		debug::setString("hp%d", player_hp);
+
+		if (stage1_timer >= 300)
 		{
 			nextScene = SCENE_RESULT;
 		}
-
-		break;
-	}
 
 }
 
