@@ -5,6 +5,7 @@
 #include "enemy.h"
 #include "hit_check.h"
 #include "attack_line.h"
+#include "gimick.h"
 
 
 int game_state = 0;     // ó‘Ô
@@ -18,6 +19,7 @@ void game_init()
 	enemy_init();
 	field_init();
 	camera_init();
+	gimick_init();
 	attack_line_init();
 	game_state = 0;
 	game_timer = 0;
@@ -66,7 +68,7 @@ void game_render()
 	attack_line_render();
     player_render();
 	enemy_render();
-
+	gimick_render();
 	
 
 }
@@ -77,6 +79,6 @@ void game_deinit()
 	enemy_deinit();
 	field_deinit();
 	attack_line_delete();
-
+	gimick_deinit();
 
 }
