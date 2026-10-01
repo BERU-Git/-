@@ -16,12 +16,15 @@ Sprite* spr_wall_down;
 VECTOR2 wall_down_pos;
 VECTOR2 wall_down_screen;
 
+
+
 void field_init()
 {
 spr_field = sprite_load(L"Data/images/Field_01.png");
 spr_wall = sprite_load(L"Data/images/wall_01.png");
 spr_wall_side = sprite_load(L"Data/images/wallside.png");
 spr_wall_down = sprite_load(L"Data/images/wall_down.png");
+
 
 field_pos.x = 0;
 field_pos.y = 0;
@@ -35,7 +38,6 @@ wall_side_pos.y = WORLD_H - WALLSIDE_H;
 
 wall_down_pos.x = 0;
 wall_down_pos.y = WORLD_H;
-
 
 }
 
@@ -86,6 +88,7 @@ void field_render()
 		sprite_render(spr_wall_down, wall_down_screen.x, wall_down_screen.y);
 	}
 
+	
 }
 
 void field_deinit()

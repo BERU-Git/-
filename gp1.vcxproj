@@ -118,6 +118,7 @@ attrib +h SourceCode\gp1.log
     <ClInclude Include="SourceCode\common.h" />
     <ClInclude Include="SourceCode\enemy.h" />
     <ClInclude Include="SourceCode\field.h" />
+    <ClInclude Include="SourceCode\gimick.h" />
     <ClInclude Include="SourceCode\hit_check.h" />
     <ClInclude Include="SourceCode\player.h" />
     <ClInclude Include="SourceCode\scene_game.h" />
@@ -143,6 +144,7 @@ attrib +h SourceCode\gp1.log
     <ClCompile Include="SourceCode\camera.cpp" />
     <ClCompile Include="SourceCode\enemy.cpp" />
     <ClCompile Include="SourceCode\field.cpp" />
+    <ClCompile Include="SourceCode\gimick.cpp" />
     <ClCompile Include="SourceCode\hit_check.cpp" />
     <ClCompile Include="SourceCode\main.cpp" />
     <ClCompile Include="SourceCode\player.cpp" />
