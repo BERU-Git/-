@@ -114,6 +114,7 @@ attrib +h SourceCode\gp1.log
     <ClInclude Include="GameLib\vector.h" />
     <ClInclude Include="GameLib\view_settings.h" />
     <ClInclude Include="SourceCode\all.h" />
+    <ClInclude Include="SourceCode\attack_line.h" />
     <ClInclude Include="SourceCode\camera.h" />
     <ClInclude Include="SourceCode\common.h" />
     <ClInclude Include="SourceCode\enemy.h" />
@@ -141,6 +142,7 @@ attrib +h SourceCode\gp1.log
     <ClCompile Include="GameLib\vector.cpp" />
     <ClCompile Include="GameLib\view_settings.cpp" />
     <ClCompile Include="GameLib\wnd_proc.cpp" />
+    <ClCompile Include="SourceCode\attack_line.cpp" />
     <ClCompile Include="SourceCode\camera.cpp" />
     <ClCompile Include="SourceCode\enemy.cpp" />
     <ClCompile Include="SourceCode\field.cpp" />
