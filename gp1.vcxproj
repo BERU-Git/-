@@ -122,7 +122,9 @@ attrib +h SourceCode\gp1.log
     <ClInclude Include="SourceCode\gimick.h" />
     <ClInclude Include="SourceCode\hit_check.h" />
     <ClInclude Include="SourceCode\player.h" />
-    <ClInclude Include="SourceCode\scene_game.h" />
+    <ClInclude Include="SourceCode\scene_game.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="SourceCode\scene_result.h" />
     <ClInclude Include="SourceCode\scene_title.h" />
   </ItemGroup>
@@ -150,7 +152,9 @@ attrib +h SourceCode\gp1.log
     <ClCompile Include="SourceCode\hit_check.cpp" />
     <ClCompile Include="SourceCode\main.cpp" />
     <ClCompile Include="SourceCode\player.cpp" />
-    <ClCompile Include="SourceCode\scene_game.cpp" />
+    <ClCompile Include="SourceCode\scene_game.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="SourceCode\scene_result.cpp" />
     <ClCompile Include="SourceCode\scene_title.cpp" />
   </ItemGroup>
