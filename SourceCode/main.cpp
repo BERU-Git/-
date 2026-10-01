@@ -17,8 +17,8 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)// g—p‚µ‚È‚¢•Ï”‚Í‹Lq‚
 			case SCENE_TITLE:
 					title_deinit();
 					break;
-			case SCENE_GAME:
-					game_deinit();
+			case SCENE_STAGE1:
+					stage1_deinit();
 					break;
 			case SCENE_RESULT:
 				result_deinit();
@@ -31,8 +31,8 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)// g—p‚µ‚È‚¢•Ï”‚Í‹Lq‚
 			case SCENE_TITLE:
 					title_init();
 					break;
-			case SCENE_GAME:
-					game_init();
+			case SCENE_STAGE1:
+				stage1_init();
 					break;
 			case SCENE_RESULT:
 				    result_init();
@@ -47,10 +47,10 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)// g—p‚µ‚È‚¢•Ï”‚Í‹Lq‚
 
 		input::update();
 
-		if (curScene == SCENE_GAME)
+		if (curScene == SCENE_STAGE1)
 		{
-			game_update();
-			game_render();
+			stage1_update();
+			stage1_render();
 		}
 		else if (curScene == SCENE_TITLE)
 		{
@@ -70,9 +70,9 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)// g—p‚µ‚È‚¢•Ï”‚Í‹Lq‚
 
 		GameLib::present(1, 0);
 	}
-	if (curScene == SCENE_GAME)
+	if (curScene == SCENE_STAGE1)
 	{
-	game_deinit();
+		stage1_deinit();
 	}
 	if (curScene == SCENE_TITLE)
 	{

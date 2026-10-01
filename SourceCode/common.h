@@ -48,8 +48,12 @@
 
 #define SCENE_NONE 0
 #define SCENE_TITLE 1
-#define SCENE_GAME 2
-#define SCENE_RESULT 3
+#define SCENE_STAGE1 2
+#define SCENE_STAGE2 3
+#define SCENE_STAGE3 4
+#define SCENE_STAGE4 5
+#define SCENE_STAGE5 6
+#define SCENE_RESULT 7
 
 
 #define ToRadian( x )   DirectX::XMConvertToRadians( x )

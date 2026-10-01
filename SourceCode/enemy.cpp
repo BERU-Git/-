@@ -169,6 +169,21 @@ void enemy_update()
             enemy[i].pos.x += enemy[i].charge_direction.x * CHARGE_SPEED;
             enemy[i].pos.y += enemy[i].charge_direction.y * CHARGE_SPEED;
 
+            for (int j = 0; j < ENEMY_MAX; j++)
+            {
+                if (i == j)
+                    continue;
+
+                if (hit_check(
+                    enemy[i].pos.x, enemy[i].pos.y, NORMAL_ENEMY_HITBOX * 0.5f,
+                    enemy[j].pos.x, enemy[j].pos.y, NORMAL_ENEMY_HITBOX * 0.5f))
+                {
+                    enemy[j].pos.x = ENEMY_W + rand() % (WORLD_W - ENEMY_W * 2);
+                    enemy[j].pos.y = ENEMY_H + rand() % (WORLD_H - ENEMY_H * 2);
+                    enemy[j].attack = false;
+                }
+            }
+
             if (enemy[i].charge_timer >= CHARGE_TIME || 
                 enemy[i].pos.x >= WORLD_W - ENEMY_W * 0.7f || enemy[i].pos.x <= ENEMY_W * 0.7f ||
                 enemy[i].pos.y >= WORLD_H - ENEMY_H * 0.7f || enemy[i].pos.y <= -ENEMY_H * 0.1f)

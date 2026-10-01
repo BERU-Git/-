@@ -4,7 +4,7 @@
 #include "../GameLib/game_lib.h"
 #include "common.h"
 #include "scene_title.h"
-#include "scene_game.h"
+#include "stage1.h"
 #include "scene_result.h"
 
 

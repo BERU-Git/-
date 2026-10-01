@@ -13,7 +13,7 @@ int game_timer = 0;     // タイマー
 
 
 
-void game_init()
+void stage1_init()
 {
 	player_init();
 	enemy_init();
@@ -28,7 +28,7 @@ void game_init()
 
 }
 
-void game_update()
+void stage1_update()
 {
 	switch (game_state)
 	{
@@ -61,7 +61,7 @@ attack_line_update();
 
 }
 
-void game_render()
+void stage1_render()
 {
 	GameLib::clear(0.0f, 0.0f, 0.0f);
     field_render();
@@ -73,7 +73,7 @@ void game_render()
 
 }
 
-void game_deinit()
+void stage1_deinit()
 {
 	player_deinit();
 	enemy_deinit();
