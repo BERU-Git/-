@@ -13,6 +13,9 @@
 #define ENEMY_W         128            //ゴブリンの画像サイズ
 #define ENEMY_H         128			   //
 
+#define STRONG_ENEMY_W         256     //中ボスの画像サイズ
+#define STRONG_ENEMY_H         256	   //
+
 #define NORMAL_ENEMY_HITBOX    100     //ゴブリンのヒットボックス
 
 #define CHARGE_CHECK_W  520            //突進を認識する範囲
