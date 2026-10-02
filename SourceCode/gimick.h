@@ -6,7 +6,7 @@ extern VECTOR2 gimick_screen;
 
 void gimick_init();
 void gimick_render();
-//void gimick_update();
 void gimick_deinit();
+//void gimick_update();
 
 

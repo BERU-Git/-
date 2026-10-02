@@ -1,14 +1,19 @@
 #include "all.h"
 #include "camera.h"
+#include "hit_check.h"
+#include "enemy.h"
 Sprite* spr_player;
 VECTOR2 screen;
 VECTOR2 player_pos;
 VECTOR2 player_speed;
+int player_hp;
+int player_invincible_time;
 int player_render_posx;
 int player_render_posy;
 int player_effect_timer;
 int player_direction;
 float length;
+bool player_hit;
 
 
 void clamp_position(float& pos_x,float& pos_y,float texsize_x, float texsize_y,
@@ -49,12 +54,18 @@ void player_init()
 	player_render_posx = 0;
 	player_render_posy = 0;
 
+	player_hp = PLAYER_HP;
+
+	player_hit = false;
+
+	player_invincible_time = 0;
+
 	player_direction = 0;
 }
 
 void player_update()
 {
-
+	
 	//プレイヤー操作
 	//左
 	if (STATE(0) & PAD_LEFT)
@@ -138,6 +149,28 @@ void player_update()
 	//移動範囲制限
 	clamp_position(player_pos.x, player_pos.y, PLAYER_W, PLAYER_H,
 		player_speed.x, player_speed.y);
+
+	//プレイヤーのHP処理
+	for(int i = 0; i < ENEMY_MAX ; i++ )
+	{
+		if (hit_check(player_pos.x, player_pos.y, PLAYER_W,
+			enemy[i].pos.x, enemy[i].pos.y, NORMAL_ENEMY_HITBOX) && !player_hit)
+		{
+			player_hit = true;
+			player_hp -= 1;
+		}
+	}
+
+	//無敵時間
+	if (player_hit)
+	{
+		player_invincible_time += 1;
+		if (player_invincible_time >= 120)
+		{
+			player_hit = false;
+			player_invincible_time = 0;
+		}
+	}
 
 
 	//向きを更新

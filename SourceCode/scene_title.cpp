@@ -28,10 +28,10 @@ void title_update()
 		/*fallthrough*/
 	case 2:
 		//////// í èÌéû ////////
-		/*if (TRG(0) & PAD_TRG1)
+		if (TRG(0) & PAD_TRG1)
 		{
-			nextScene = SCENE_GAME;
-		}*/
+			nextScene = SCENE_STAGE1;
+		}
 		
 	{
 		std::ostringstream oss;									// ï∂éöóÒÉXÉgÉäÅ[ÉÄ
@@ -48,7 +48,7 @@ void title_update()
 			start_check = true;
 			if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 			{
-				nextScene = SCENE_GAME;
+				nextScene = SCENE_STAGE5;
 			}
 		}
 		else

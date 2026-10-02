@@ -3,9 +3,9 @@
 
 
 //------< プロトタイプ宣言 >-----------------------------------------------------
-void game_init();
-void game_update();
-void game_render();
-void game_deinit();
+void stage1_init();
+void stage1_update();
+void stage1_render();
+void stage1_deinit();
 
 #endif//SCENE_GAME_H
