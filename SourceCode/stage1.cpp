@@ -35,6 +35,7 @@ void stage1_update()
 		attack_line_update();
 		field_update();
 		camera_update();
+		gimick_update();//gimick_updateì‚Á‚½‚©‚çŒÄ‚ñ‚¾
 
 		debug::setString("hp%d", player_hp);
 

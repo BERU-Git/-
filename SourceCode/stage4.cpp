@@ -20,7 +20,7 @@ void stage4_update()
 	camera_update();
 	player_update();
 	field_update();
-
+	gimick_update();
 }
 void stage4_render()
 {

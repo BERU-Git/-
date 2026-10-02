@@ -29,6 +29,19 @@
 #define FIELD_W         1920           //フィールドのサイズ
 #define FIELD_H         1080		   //
 
+#define GIMICK_POS_X_1 512
+#define GIMICK_POS_Y_1 512
+#define GIMICK_POS_X_2 512
+#define GIMICK_POS_Y_2 2726
+#define GIMICK_POS_X_3 5248
+#define GIMICK_POS_Y_3 512
+#define GIMICK_POS_X_4 5248
+#define GIMICK_POS_Y_4 2726
+#define GIMICK_MAX 5
+
+
+
+
 #define ACCELERATION    0.5f           //プレイヤーの加速度
 #define DECELERATION    0.78f          //プレイヤーの減速度
 

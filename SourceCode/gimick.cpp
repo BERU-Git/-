@@ -1,52 +1,99 @@
 #include "gimick.h"
 #include "all.h"
 #include "camera.h"
+#include "hit_check.h"
+#include "enemy.h"
+
+//VECTOR2 gimick_pos_1;
+//VECTOR2 gimick_screen_1;
+//float gimick_circle_1;
+//VECTOR2 gimick_pos_2;
+//VECTOR2 gimick_screen_2;
+//float gimick_circle_2;
+//VECTOR2 gimick_pos_3;
+//VECTOR2 gimick_screen_3;
+//float gimick_circle_3;
+//VECTOR2 gimick_pos_4;
+//VECTOR2 gimick_screen_4;
+//float gimick_circle_4;
+//
+//bool barrier_break_check_1;
+//bool barrier_break_check_2;
+//bool barrier_break_check_3;
+//bool barrier_break_check_4;
 
 Sprite* spr_gimick = nullptr;
+Sprite* spr_barrier_break = nullptr;
+Sprite* spr_gimick_effect = nullptr;
 
-VECTOR2 gimick_pos_1;
-VECTOR2 gimick_screen_1;
-VECTOR2 gimick_pos_2;
-VECTOR2 gimick_screen_2;
-VECTOR2 gimick_pos_3;
-VECTOR2 gimick_screen_3;
-VECTOR2 gimick_pos_4;
-VECTOR2 gimick_screen_4;
+gimick_data gimick[GIMICK_MAX];
 
 void gimick_init()
 {
 	spr_gimick = sprite_load(L"Data/images/barrier.png");
-	gimick_pos_1.x = 512;
-	gimick_pos_1.y = 512;
+	/*spr_gimick_break = sprite_load(L"Data/images/???.png");*/   //壊れたバリア用にあらかじめ作っておく
+	/*spr_gimick_effect = sprite_load(L"Data/images/???.png");*/  //エフェクト用
 
-	gimick_pos_2.x = 512;
-	gimick_pos_2.y = 2726;
+	VECTOR2 gimick_start_pos[GIMICK_MAX]//座標がそれぞれ違うから0～3番目までをここで管理してみた
+		//これfor文なのに座標のかぶりがないぞ！すげえ
+	{
+		{GIMICK_POS_X_1, GIMICK_POS_Y_1},
+		{GIMICK_POS_X_2, GIMICK_POS_Y_2},
+		{GIMICK_POS_X_3, GIMICK_POS_Y_3},
+		{GIMICK_POS_X_4, GIMICK_POS_Y_4}
+	};
+	for (int i = 0; i < GIMICK_MAX; i++)
+	{
+		gimick[i].pos = gimick_start_pos[i];
+		gimick[i].screen = { 0.0f, 0.0f };
+		gimick[i].circle = 128.0f;
+		gimick[i].barrier_break_check = false;
+		gimick[i].anime_frame = 0;
+		gimick[i].anime_timer = 0;
+	}
 
-	gimick_pos_3.x = 5248;
-	gimick_pos_3.y = 512;
-
-	gimick_pos_4.x = 5248;
-	gimick_pos_4.y = 2726;
+}
+void gimick_update()
+{
+	bool barrier_break_animate()
+	{
+		gimick.anime_timer++;
+		if()
+	}
+	
+	for (int g = 0; g < GIMICK_MAX; g++)//2重for文にしてあげると全gimickがそれぞれ全enemyと反応するようになる。
+	{
+		for (int e = 0; e < ENEMY_MAX; e++)
+		{
+			if (hit_check(gimick[g].pos.x, gimick[g].pos.y, gimick[g].circle, enemy[e].pos.x, enemy[e].pos.y, NORMAL_ENEMY_HITBOX))//もし敵とギミックのバリアが当たったら
+			{
+				gimick[g].barrier_break_check = true;
+			}
+		}
+	}
+	
+	
 }
 
 void gimick_render()//ギミックの描画
 {
-	gimick_screen_1.x = gimick_pos_1.x - camera_pos.x + SCREEN_W * 0.5f;
-	gimick_screen_1.y = gimick_pos_1.y - camera_pos.y + SCREEN_H * 0.5f;
-	sprite_render(spr_gimick,
-		gimick_screen_1.x, gimick_screen_1.y, 1.0f, 1.0f, 0, 0, 256, 256, 128, 128);
-	gimick_screen_2.x = gimick_pos_2.x - camera_pos.x + SCREEN_W * 0.5f;
-	gimick_screen_2.y = gimick_pos_2.y - camera_pos.y + SCREEN_H * 0.5f;
-	sprite_render(spr_gimick,
-		gimick_screen_2.x, gimick_screen_2.y, 1.0f, 1.0f, 0, 0, 256, 256, 128, 128);
-	gimick_screen_3.x = gimick_pos_3.x - camera_pos.x + SCREEN_W * 0.5f;
-	gimick_screen_3.y = gimick_pos_3.y - camera_pos.y + SCREEN_H * 0.5f;
-	sprite_render(spr_gimick,
-		gimick_screen_3.x, gimick_screen_3.y, 1.0f, 1.0f, 0, 0, 256, 256, 128, 128);
-	gimick_screen_4.x = gimick_pos_4.x - camera_pos.x + SCREEN_W * 0.5f;
-	gimick_screen_4.y = gimick_pos_4.y - camera_pos.y + SCREEN_H * 0.5f;
-	sprite_render(spr_gimick,
-		gimick_screen_4.x, gimick_screen_4.y, 1.0f, 1.0f, 0, 0, 256, 256, 128, 128);
+	for (int i = 0; i < GIMICK_MAX; i++)
+	{
+		gimick[i].screen.x = gimick[i].pos.x - camera_pos.x + SCREEN_W * 0.5f;
+		gimick[i].screen.y = gimick[i].pos.y - camera_pos.y + SCREEN_H * 0.5f;
+		if (gimick[i].barrier_break_check == true)
+		{
+			sprite_render(spr_gimick,
+				gimick[i].screen.x, gimick[i].screen.y, 1.0f, 1.0f, 0, 0, 256, 256, 128, 128, ToRadian(180));
+		}
+		else
+		{
+			sprite_render(spr_gimick,
+				gimick[i].screen.x, gimick[i].screen.y, 1.0f, 1.0f, 0, 0, 256, 256, 128, 128);
+		}
+		
+	}
+	
 }
 
 void gimick_deinit()

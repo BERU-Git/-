@@ -21,7 +21,7 @@ void stage5_update()
 	camera_update();
 	player_update();
 	field_update();
-
+	gimick_update();
 }
 void stage5_render()
 {
