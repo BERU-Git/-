@@ -103,7 +103,7 @@ void enemy_update()
             enemy[i].attack = false;
             //ƒvƒŒƒCƒ„[‚Ì‹ß‚­‚É“G‚ª“ü‚é‚Æ’ÇÕ‚·‚é
             if (hit_check(enemy[i].pos.x, enemy[i].pos.y, ENEMY_W * 0.5f,
-                player_pos.x, player_pos.y, SCREEN_W * 0.4f))
+                player_pos.x, player_pos.y, SCREEN_W * 0.5f))
             {
 
                 enemy_chase(player_pos.x, player_pos.y, enemy[i].pos.x, enemy[i].pos.y,

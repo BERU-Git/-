@@ -154,16 +154,16 @@ void player_update()
 	//ƒvƒŒƒCƒ„[‚ÌHPˆ—
 	for(int i = 0; i < ENEMY_MAX ; i++ )
 	{
-		if (hit_check(player_pos.x, player_pos.y, PLAYER_W,
-			enemy[i].pos.x, enemy[i].pos.y, NORMAL_ENEMY_HITBOX) && !player_hit)
+		if (hit_check(player_pos.x, player_pos.y, PLAYER_W * 0.5f,
+			enemy[i].pos.x, enemy[i].pos.y, NORMAL_ENEMY_HITBOX * 0.5f) && !player_hit)
 		{
 			player_hit = true;
 			player_hp -= 1;
 		}
 	}
 
-	if (hit_check(player_pos.x, player_pos.y, PLAYER_W,
-		strong_enemy.pos.x, strong_enemy.pos.y, STRONG_ENEMY_W) && !player_hit)
+	if (hit_check(player_pos.x, player_pos.y, PLAYER_W * 0.5f,
+		strong_enemy.pos.x, strong_enemy.pos.y, STRONG_ENEMY_W * 0.5f) && !player_hit)
 	{
 		player_hit = true;
 		player_hp -= 2;
