@@ -53,13 +53,10 @@ void gimick_init()
 	}
 
 }
+
 void gimick_update()
 {
-	bool barrier_break_animate()
-	{
-		gimick.anime_timer++;
-		if()
-	}
+	
 	
 	for (int g = 0; g < GIMICK_MAX; g++)//2重for文にしてあげると全gimickがそれぞれ全enemyと反応するようになる。
 	{

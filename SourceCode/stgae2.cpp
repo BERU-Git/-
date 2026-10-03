@@ -25,13 +25,13 @@ void stage2_update()
 	strong_enemy_update();
 	player_update();
 	field_update();
-<<<<<<< HEAD
+
 	gimick_update();
-=======
+
 
 	debug::setString("hp%d", player_hp);
 
->>>>>>> e92e4db3aba152474b9e773f7dbaf60606365ed4
+
 }
 void stage2_render()
 {
