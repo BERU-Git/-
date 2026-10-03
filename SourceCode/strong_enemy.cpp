@@ -37,6 +37,7 @@ void strong_enemy_update()
 	strong_enemy.pos.x += strong_enemy.speed.x * strong_enemy.chase.x;
 	strong_enemy.pos.y += strong_enemy.speed.y * strong_enemy.chase.y;
 
+
 	if (hit_check(player_pos.x, player_pos.y, CHARGE_CHECK_W * 0.5f,
 			strong_enemy.pos.x, strong_enemy.pos.y, STRONG_ENEMY_W * 0.5f))
 		{
@@ -69,7 +70,11 @@ void strong_enemy_update()
 		strong_enemy.pos.x += strong_enemy.chase.x * STRONG_CHARGE_SPEED;
 		strong_enemy.pos.y += strong_enemy.chase.y * STRONG_CHARGE_SPEED;
 
-		if (strong_enemy.charge_timer >= STRONG_CHARGE_TIME)
+		if (strong_enemy.charge_timer >= STRONG_CHARGE_TIME || 
+			strong_enemy.pos.x <= STRONG_ENEMY_W * 0.5f ||
+			strong_enemy.pos.x >= WORLD_W - STRONG_ENEMY_W * 0.5f ||
+			strong_enemy.pos.y <= STRONG_ENEMY_H * 0.5f ||
+			strong_enemy.pos.y >= WORLD_H - STRONG_ENEMY_H * 0.5f)
 		{
 			strong_enemy.attack = false;
 			strong_enemy.charge_timer = 0.0f;
@@ -77,6 +82,7 @@ void strong_enemy_update()
 		}
 		break;
 	}
+
 
 }
 void strong_enemy_render()

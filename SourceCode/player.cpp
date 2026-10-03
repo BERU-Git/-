@@ -2,6 +2,7 @@
 #include "camera.h"
 #include "hit_check.h"
 #include "enemy.h"
+#include "strong_enemy.h"
 Sprite* spr_player;
 VECTOR2 screen;
 VECTOR2 player_pos;
@@ -159,6 +160,14 @@ void player_update()
 			player_hit = true;
 			player_hp -= 1;
 		}
+	}
+
+	if (hit_check(player_pos.x, player_pos.y, PLAYER_W,
+		strong_enemy.pos.x, strong_enemy.pos.y, STRONG_ENEMY_W) && !player_hit)
+	{
+		player_hit = true;
+		player_hp -= 2;
+
 	}
 
 	//–³“GŽžŠÔ

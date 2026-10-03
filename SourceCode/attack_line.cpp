@@ -38,7 +38,7 @@ void attack_line_render()
 					  strong_enemy.angle + ToRadian(90));
 	}
 
-	//中ボスの攻撃ライン
+	//ゴブリン攻撃ライン
 	for (int i = 0; i < ENEMY_MAX; i++)
 	{
 		attack_line[i].screen.x = attack_line[i].pos.x - camera_pos.x + SCREEN_W * 0.5f;

@@ -26,6 +26,8 @@ void stage2_update()
 	player_update();
 	field_update();
 
+	debug::setString("hp%d", player_hp);
+
 }
 void stage2_render()
 {
