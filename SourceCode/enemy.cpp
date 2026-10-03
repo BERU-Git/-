@@ -68,8 +68,8 @@ void enemy_init()
         while (!can_spawn)
         {
             // 新しい場所を決める
-            enemy[i].pos.x = ENEMY_W + rand() % (WORLD_W - ENEMY_W * 2);
-            enemy[i].pos.y = ENEMY_H + rand() % (WORLD_H - ENEMY_H * 2);
+            enemy[i].pos.x = (float)(ENEMY_W + rand() % (WORLD_W - ENEMY_W * 2));
+            enemy[i].pos.y = (float)(ENEMY_H + rand() % (WORLD_H - ENEMY_H * 2));
 
             can_spawn = true;
 
@@ -103,7 +103,7 @@ void enemy_update()
             enemy[i].attack = false;
             //プレイヤーの近くに敵が入ると追跡する
             if (hit_check(enemy[i].pos.x, enemy[i].pos.y, ENEMY_W * 0.5f,
-                player_pos.x, player_pos.y, SCREEN_W * 0.4f))
+                player_pos.x, player_pos.y, SCREEN_W * 0.5f))
             {
 
                 enemy_chase(player_pos.x, player_pos.y, enemy[i].pos.x, enemy[i].pos.y,
@@ -143,7 +143,7 @@ void enemy_update()
          //突進待機
         case ENEMY_CHARGE_PREP:
             enemy[i].attack = true;
-            enemy[i].charge_prep_timer += 1.0f;
+            enemy[i].charge_prep_timer++;
             enemy_chase(player_pos.x, player_pos.y,
                 enemy[i].pos.x, enemy[i].pos.y,
                 enemy[i].angle, enemy[i].chase.x, enemy[i].chase.y);
@@ -178,8 +178,8 @@ void enemy_update()
                     enemy[i].pos.x, enemy[i].pos.y, NORMAL_ENEMY_HITBOX * 0.5f,
                     enemy[j].pos.x, enemy[j].pos.y, NORMAL_ENEMY_HITBOX * 0.5f))
                 {
-                    enemy[j].pos.x = ENEMY_W + rand() % (WORLD_W - ENEMY_W * 2);
-                    enemy[j].pos.y = ENEMY_H + rand() % (WORLD_H - ENEMY_H * 2);
+                    enemy[j].pos.x = (float)(ENEMY_W + rand() % (WORLD_W - ENEMY_W * 2));
+                    enemy[j].pos.y = (float)(ENEMY_H + rand() % (WORLD_H - ENEMY_H * 2));
                     enemy[j].attack = false;
                 }
             }

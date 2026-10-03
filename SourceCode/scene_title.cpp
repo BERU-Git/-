@@ -48,7 +48,7 @@ void title_update()
 			start_check = true;
 			if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 			{
-				nextScene = SCENE_STAGE5;
+				nextScene = SCENE_STAGE2;
 			}
 		}
 		else

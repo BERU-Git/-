@@ -8,6 +8,7 @@ struct attack_line_data
 };
 extern Sprite* spr_attack_line;
 extern attack_line_data attack_line[ENEMY_MAX];
+extern attack_line_data strong_attack_line;
 
 
 

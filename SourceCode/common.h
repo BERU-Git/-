@@ -13,6 +13,9 @@
 #define ENEMY_W         128            //ゴブリンの画像サイズ
 #define ENEMY_H         128			   //
 
+#define STRONG_ENEMY_W         256     //中ボスの画像サイズ
+#define STRONG_ENEMY_H         256	   //
+
 #define NORMAL_ENEMY_HITBOX    100     //ゴブリンのヒットボックス
 
 #define CHARGE_CHECK_W  520            //突進を認識する範囲
@@ -48,12 +51,16 @@
 #define ENEMY_SPEED     4.5f           //敵のスピード
 #define CHARGE_SPEED    20.0f          //敵の突進のスピード
 
+#define STRONG_ENEMY_SPEED     15.0f    //中ボスのスピード
+#define STRONG_CHARGE_SPEED    30.0f   //中ボスの突進のスピード
+
 #define MIN_SPEED      -10.0f          //スピードの最大速度
 #define MAX_SPEED       10.0f
 
 #define PLAYER_HP        10            //プレイヤーのHP
 
 #define CHARGE_TIME     60.0f          //突進の時間
+#define STRONG_CHARGE_TIME     90.0f   //中ボスの突進の時間
 #define CHARGE_PREP_TIME     90.0f     //突進準備の時間
 #define COOLDOWN_TIME     180.0f       //突進後のクールタイム
 
@@ -62,6 +69,10 @@
 
 #define ATTACK_LINE_W        100       //攻撃の予兆線
 #define ATTACK_LINE_H       1200       //
+
+#define STRONG_ATTACK_LINE_W        256       //中ボスの攻撃の予兆線
+#define STRONG_ATTACK_LINE_H       2700       //
+
 
 #define SCENE_NONE 0
 #define SCENE_TITLE 1

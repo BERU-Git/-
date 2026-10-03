@@ -10,23 +10,23 @@
 	};
 struct enemy_data
 {
-	VECTOR2 pos;
-	VECTOR2 speed;
-	VECTOR2 chase;
-	VECTOR2 move;
-	VECTOR2 screen;
-	VECTOR2 separate;
-	VECTOR2 charge_direction;
-	enemy_state state;
-	int render_posx;
-	int render_posy;
-	int effect_timer;
-	int direction;
-	float angle;
-	float charge_prep_timer;
-	float charge_timer;
-	float cooldown_timer;
-	bool attack;
+	VECTOR2 pos = {};
+	VECTOR2 speed = {};
+	VECTOR2 chase = {};
+	VECTOR2 move = {};
+	VECTOR2 screen = {};
+	VECTOR2 separate = {};
+	VECTOR2 charge_direction = {};
+	enemy_state state = {};
+	int render_posx = 0;
+	int render_posy = 0;
+	int effect_timer = 0;
+	int direction = 0;
+	float angle = 0;
+	float charge_prep_timer = 0;
+	float charge_timer = 0;
+	float cooldown_timer = 0;
+	bool attack = 0;
 };
 
 extern enemy_data enemy[ENEMY_MAX];
