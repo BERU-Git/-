@@ -29,6 +29,7 @@ void strong_enemy_update()
 {
 	switch (strong_enemy.state)
 	{
+		//’Êí’ÇÕ
 	case ENEMY_CHASE:
 		enemy_chase(player_pos.x, player_pos.y, strong_enemy.pos.x, strong_enemy.pos.y,
 			strong_enemy.angle, strong_enemy.chase.x, strong_enemy.chase.y);
@@ -42,7 +43,9 @@ void strong_enemy_update()
 			strong_enemy.state = ENEMY_CHARGE_PREP;
 		}
 
-		break;
+		break;	
+
+		//“ËŒ‚€”õ
 	case ENEMY_CHARGE_PREP:
 		strong_enemy.attack = true;
 		strong_enemy.charge_prep_timer++;
@@ -50,20 +53,25 @@ void strong_enemy_update()
 		enemy_chase(player_pos.x, player_pos.y, strong_enemy.pos.x, strong_enemy.pos.y,
 			strong_enemy.angle, strong_enemy.chase.x, strong_enemy.chase.y);
 
+		strong_attack_line.pos.x = strong_enemy.pos.x;
+		strong_attack_line.pos.y = strong_enemy.pos.y;
+
 		if (strong_enemy.charge_prep_timer >= CHARGE_PREP_TIME)
 		{
 			strong_enemy.charge_prep_timer = 0.0f;
 			strong_enemy.state = ENEMY_CHARGE;
 		}
 		break;
+		//“Ëi
 	case ENEMY_CHARGE:
 		strong_enemy.charge_timer++;
 
 		strong_enemy.pos.x += strong_enemy.chase.x * STRONG_CHARGE_SPEED;
 		strong_enemy.pos.y += strong_enemy.chase.y * STRONG_CHARGE_SPEED;
 
-		if (strong_enemy.charge_timer >= CHARGE_TIME)
+		if (strong_enemy.charge_timer >= STRONG_CHARGE_TIME)
 		{
+			strong_enemy.attack = false;
 			strong_enemy.charge_timer = 0.0f;
 			strong_enemy.state = ENEMY_CHASE;
 		}

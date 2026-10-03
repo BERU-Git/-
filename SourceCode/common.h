@@ -47,6 +47,7 @@
 #define PLAYER_HP        10            //プレイヤーのHP
 
 #define CHARGE_TIME     60.0f          //突進の時間
+#define STRONG_CHARGE_TIME     90.0f   //中ボスの突進の時間
 #define CHARGE_PREP_TIME     90.0f     //突進準備の時間
 #define COOLDOWN_TIME     180.0f       //突進後のクールタイム
 
@@ -55,6 +56,10 @@
 
 #define ATTACK_LINE_W        100       //攻撃の予兆線
 #define ATTACK_LINE_H       1200       //
+
+#define STRONG_ATTACK_LINE_W        256       //中ボスの攻撃の予兆線
+#define STRONG_ATTACK_LINE_H       2700       //
+
 
 #define SCENE_NONE 0
 #define SCENE_TITLE 1
