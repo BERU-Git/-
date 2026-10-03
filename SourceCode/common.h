@@ -39,7 +39,7 @@
 #define CHARGE_SPEED    20.0f          //敵の突進のスピード
 
 #define STRONG_ENEMY_SPEED     15.0f    //中ボスのスピード
-#define STRONG_CHARGE_SPEED    20.0f   //中ボスの突進のスピード
+#define STRONG_CHARGE_SPEED    30.0f   //中ボスの突進のスピード
 
 #define MIN_SPEED      -10.0f          //スピードの最大速度
 #define MAX_SPEED       10.0f

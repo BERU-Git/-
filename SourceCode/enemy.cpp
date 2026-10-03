@@ -68,8 +68,8 @@ void enemy_init()
         while (!can_spawn)
         {
             // êVÇµÇ¢èÍèäÇåàÇﬂÇÈ
-            enemy[i].pos.x = ENEMY_W + rand() % (WORLD_W - ENEMY_W * 2);
-            enemy[i].pos.y = ENEMY_H + rand() % (WORLD_H - ENEMY_H * 2);
+            enemy[i].pos.x = (float)(ENEMY_W + rand() % (WORLD_W - ENEMY_W * 2));
+            enemy[i].pos.y = (float)(ENEMY_H + rand() % (WORLD_H - ENEMY_H * 2));
 
             can_spawn = true;
 
@@ -143,7 +143,7 @@ void enemy_update()
          //ìÀêië“ã@
         case ENEMY_CHARGE_PREP:
             enemy[i].attack = true;
-            enemy[i].charge_prep_timer += 1.0f;
+            enemy[i].charge_prep_timer++;
             enemy_chase(player_pos.x, player_pos.y,
                 enemy[i].pos.x, enemy[i].pos.y,
                 enemy[i].angle, enemy[i].chase.x, enemy[i].chase.y);
@@ -178,8 +178,8 @@ void enemy_update()
                     enemy[i].pos.x, enemy[i].pos.y, NORMAL_ENEMY_HITBOX * 0.5f,
                     enemy[j].pos.x, enemy[j].pos.y, NORMAL_ENEMY_HITBOX * 0.5f))
                 {
-                    enemy[j].pos.x = ENEMY_W + rand() % (WORLD_W - ENEMY_W * 2);
-                    enemy[j].pos.y = ENEMY_H + rand() % (WORLD_H - ENEMY_H * 2);
+                    enemy[j].pos.x = (float)(ENEMY_W + rand() % (WORLD_W - ENEMY_W * 2));
+                    enemy[j].pos.y = (float)(ENEMY_H + rand() % (WORLD_H - ENEMY_H * 2));
                     enemy[j].attack = false;
                 }
             }
