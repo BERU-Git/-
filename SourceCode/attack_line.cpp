@@ -59,4 +59,5 @@ void attack_line_render()
 void attack_line_delete()
 {
 safe_delete(spr_attack_line);
+safe_delete(spr_strong_attack_line);
 }

@@ -13,8 +13,14 @@
 #define ENEMY_W         128            //ゴブリンの画像サイズ
 #define ENEMY_H         128			   //
 
-#define STRONG_ENEMY_W         256     //中ボスの画像サイズ
-#define STRONG_ENEMY_H         256	   //
+#define STRONG_ENEMY_W  256            //中ボスの画像サイズ
+#define STRONG_ENEMY_H  256	           //
+
+#define STAIRS_W        256            //階段の画像サイズ
+#define STAIRS_H        384            //
+
+#define MAGIC_CIRCLE_W  512            //魔法陣の画像サイズ
+#define MAGIC_CIRCLE_H  512            //
 
 #define NORMAL_ENEMY_HITBOX    100     //ゴブリンのヒットボックス
 

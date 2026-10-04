@@ -30,6 +30,11 @@ void stage2_update()
 
 	debug::setString("hp%d", player_hp);
 
+	if (go_next)
+	{
+		nextScene = SCENE_STAGE3;
+	}
+
 
 }
 void stage2_render()

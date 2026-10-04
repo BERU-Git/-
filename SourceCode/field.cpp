@@ -16,6 +16,15 @@ Sprite* spr_wall_down;
 VECTOR2 wall_down_pos;
 VECTOR2 wall_down_screen;
 
+Sprite* spr_magic_circle;
+VECTOR2 magic_circle_pos;
+VECTOR2 magic_circle_screen;
+
+Sprite* spr_stairs;
+VECTOR2 stairs_pos;
+VECTOR2 stairs_screen;
+
+
 
 
 void field_init()
@@ -24,6 +33,8 @@ spr_field = sprite_load(L"Data/images/Field_01.png");
 spr_wall = sprite_load(L"Data/images/wall_01.png");
 spr_wall_side = sprite_load(L"Data/images/wallside.png");
 spr_wall_down = sprite_load(L"Data/images/wall_down.png");
+spr_magic_circle = sprite_load(L"Data/images/magic_circrs.png");
+spr_stairs = sprite_load(L"Data/images/stairs.png");
 
 
 field_pos.x = 0;
@@ -38,6 +49,12 @@ wall_side_pos.y = WORLD_H - WALLSIDE_H;
 
 wall_down_pos.x = 0;
 wall_down_pos.y = WORLD_H;
+
+stairs_pos.x = WORLD_W * 0.5f;
+stairs_pos.y = WORLD_H * 0.5f;
+
+magic_circle_pos.x = WORLD_W * 0.5f;
+magic_circle_pos.y = WORLD_H * 0.5f;
 
 }
 
@@ -88,7 +105,31 @@ void field_render()
 		sprite_render(spr_wall_down, wall_down_screen.x, wall_down_screen.y);
 	}
 
-	
+
+	//äKíiÇï`âÊÇ∑ÇÈ
+	stairs_screen.x = stairs_pos.x - camera_pos.x + SCREEN_W * 0.5f;
+	stairs_screen.y = stairs_pos.y - camera_pos.y + SCREEN_H * 0.5f;
+
+	sprite_render(spr_stairs, stairs_screen.x, stairs_screen.y,
+		          1,1,
+		          0,0,
+		          STAIRS_W,STAIRS_H,
+		          STAIRS_W * 0.5f, STAIRS_H * 0.5f);
+
+	//ñÇñ@êwÇï`âÊÇ∑ÇÈ
+	magic_circle_screen.x = magic_circle_pos.x - camera_pos.x + SCREEN_W * 0.5f;
+	magic_circle_screen.y = magic_circle_pos.y - camera_pos.y + SCREEN_H * 0.5f;
+
+	sprite_render(spr_magic_circle, magic_circle_screen.x, magic_circle_screen.y,
+		          1,1,
+		          0,0,
+		          MAGIC_CIRCLE_W,MAGIC_CIRCLE_H,
+		          MAGIC_CIRCLE_W * 0.5f, MAGIC_CIRCLE_H * 0.5f);
+
+
+
+
+
 }
 
 void field_deinit()
@@ -97,4 +138,6 @@ void field_deinit()
 	safe_delete(spr_wall);
 	safe_delete(spr_wall_side);
 	safe_delete(spr_wall_down);
+	safe_delete(spr_stairs);
+	safe_delete(spr_magic_circle);
 }

@@ -39,9 +39,9 @@ void stage1_update()
 
 		debug::setString("hp%d", player_hp);
 
-		if (stage1_timer >= 300)
+		if (go_next)
 		{
-			nextScene = SCENE_RESULT;
+			nextScene = SCENE_STAGE2;
 		}
 
 }

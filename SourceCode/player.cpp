@@ -3,6 +3,9 @@
 #include "hit_check.h"
 #include "enemy.h"
 #include "strong_enemy.h"
+#include "field.h"
+#include "gimick.h"
+
 Sprite* spr_player;
 VECTOR2 screen;
 VECTOR2 player_pos;
@@ -15,6 +18,7 @@ int player_effect_timer;
 int player_direction;
 float length;
 bool player_hit;
+bool go_next;
 
 
 void clamp_position(float& pos_x,float& pos_y,float texsize_x, float texsize_y,
@@ -58,6 +62,8 @@ void player_init()
 	player_hp = PLAYER_HP;
 
 	player_hit = false;
+
+	go_next = false;
 
 	player_invincible_time = 0;
 
@@ -146,6 +152,16 @@ void player_update()
 	//プレイヤーの移動
 	player_pos.x += player_speed.x;
 	player_pos.y += player_speed.y;
+
+	//階段との当たり判定
+	if (player_pos.x >= stairs_pos.x - STAIRS_W * 0.5f &&
+		player_pos.x <= stairs_pos.x + STAIRS_W * 0.5f &&
+		player_pos.y >= stairs_pos.y - STAIRS_H * 0.5f &&
+		player_pos.y <= stairs_pos.y + STAIRS_H * 0.5f &&
+		stage_clear)
+	{
+		go_next = true;
+	}
 
 	//移動範囲制限
 	clamp_position(player_pos.x, player_pos.y, PLAYER_W, PLAYER_H,

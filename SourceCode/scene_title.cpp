@@ -30,7 +30,7 @@ void title_update()
 		//////// �ʏ펞 ////////
 		if (TRG(0) & PAD_TRG1)
 		{
-			nextScene = SCENE_STAGE1;
+			nextScene = SCENE_STAGE2;
 		}
 		
 	{
@@ -48,7 +48,7 @@ void title_update()
 			start_check = true;
 			if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 			{
-				nextScene = SCENE_STAGE2;
+				nextScene = SCENE_STAGE1;
 			}
 		}
 		else

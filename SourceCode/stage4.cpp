@@ -21,6 +21,13 @@ void stage4_update()
 	player_update();
 	field_update();
 	gimick_update();
+
+	if (go_next)
+	{
+		nextScene = SCENE_STAGE5;
+	}
+
+
 }
 void stage4_render()
 {

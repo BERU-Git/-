@@ -17,6 +17,8 @@ extern Sprite* spr_gimick;
 extern Sprite* spr_barrier_break;
 extern gimick_data gimick[GIMICK_MAX];
 
+extern bool stage_clear;
+
 void gimick_init();
 void gimick_render();
 void gimick_deinit();

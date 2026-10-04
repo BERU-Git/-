@@ -10,6 +10,8 @@ Sprite* spr_gimick = nullptr;
 Sprite* spr_bonfire = nullptr;
 Sprite* spr_kagari = nullptr;
 
+bool stage_clear;
+
 gimick_data gimick[GIMICK_MAX];
 
 void gimick_init()
@@ -35,7 +37,7 @@ void gimick_init()
 		gimick[i].anime_frame = 0;
 		gimick[i].anime_timer = 0;
 	}
-
+	    stage_clear = false;
 }
 
 void gimick_update()
@@ -64,6 +66,13 @@ void gimick_update()
 
 	}
 	
+		if (gimick[0].barrier_break_check &&
+			gimick[1].barrier_break_check &&
+			gimick[2].barrier_break_check &&
+			gimick[3].barrier_break_check)
+		{
+			stage_clear = true;
+		}
 	
 }
 
