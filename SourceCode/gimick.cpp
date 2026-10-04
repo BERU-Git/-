@@ -3,36 +3,20 @@
 #include "camera.h"
 #include "hit_check.h"
 #include "enemy.h"
+#include "strong_enemy.h"
 
-//VECTOR2 gimick_pos_1;
-//VECTOR2 gimick_screen_1;
-//float gimick_circle_1;
-//VECTOR2 gimick_pos_2;
-//VECTOR2 gimick_screen_2;
-//float gimick_circle_2;
-//VECTOR2 gimick_pos_3;
-//VECTOR2 gimick_screen_3;
-//float gimick_circle_3;
-//VECTOR2 gimick_pos_4;
-//VECTOR2 gimick_screen_4;
-//float gimick_circle_4;
-//
-//bool barrier_break_check_1;
-//bool barrier_break_check_2;
-//bool barrier_break_check_3;
-//bool barrier_break_check_4;
 
 Sprite* spr_gimick = nullptr;
-Sprite* spr_barrier_break = nullptr;
-Sprite* spr_gimick_effect = nullptr;
+Sprite* spr_bonfire = nullptr;
+Sprite* spr_kagari = nullptr;
 
 gimick_data gimick[GIMICK_MAX];
 
 void gimick_init()
 {
 	spr_gimick = sprite_load(L"Data/images/barrier.png");
-	/*spr_gimick_break = sprite_load(L"Data/images/???.png");*/   //壊れたバリア用にあらかじめ作っておく
-	/*spr_gimick_effect = sprite_load(L"Data/images/???.png");*/  //エフェクト用
+	spr_bonfire = sprite_load(L"Data/images/bonfire.png");   //壊れたバリア用にあらかじめ作っておく
+	spr_kagari = sprite_load(L"Data/images/kagari.png"); //
 
 	VECTOR2 gimick_start_pos[GIMICK_MAX]//座標がそれぞれ違うから0～3番目までをここで管理してみた
 		//これfor文なのに座標のかぶりがないぞ！すげえ
@@ -62,11 +46,22 @@ void gimick_update()
 	{
 		for (int e = 0; e < ENEMY_MAX; e++)
 		{
-			if (hit_check(gimick[g].pos.x, gimick[g].pos.y, gimick[g].circle, enemy[e].pos.x, enemy[e].pos.y, NORMAL_ENEMY_HITBOX))//もし敵とギミックのバリアが当たったら
+			if (hit_check(gimick[g].pos.x, gimick[g].pos.y, gimick[g].circle * 0.5f,
+						  enemy[e].pos.x, enemy[e].pos.y, NORMAL_ENEMY_HITBOX * 0.5f) &&
+						  enemy[e].attack)//もし突進中の敵とギミックのバリアが当たったら
 			{
 				gimick[g].barrier_break_check = true;
 			}
 		}
+
+		if (hit_check(gimick[g].pos.x, gimick[g].pos.y, gimick[g].circle * 0.5f,
+			strong_enemy.pos.x, strong_enemy.pos.y, STRONG_ENEMY_W * 0.5f) &&
+			strong_enemy.attack)//もし突進中の敵とギミックのバリアが当たったら
+		{
+			gimick[g].barrier_break_check = true;
+		}
+
+
 	}
 	
 	
@@ -78,13 +73,16 @@ void gimick_render()//ギミックの描画
 	{
 		gimick[i].screen.x = gimick[i].pos.x - camera_pos.x + SCREEN_W * 0.5f;
 		gimick[i].screen.y = gimick[i].pos.y - camera_pos.y + SCREEN_H * 0.5f;
-		if (gimick[i].barrier_break_check == true)
+		if (gimick[i].barrier_break_check)
 		{
-			sprite_render(spr_gimick,
-				gimick[i].screen.x, gimick[i].screen.y, 1.0f, 1.0f, 0, 0, 256, 256, 128, 128, ToRadian(180));
+			sprite_render(spr_bonfire,
+				gimick[i].screen.x, gimick[i].screen.y, 1.0f, 1.0f, 0, 0, 256, 256, 128, 128);
 		}
 		else
 		{
+			sprite_render(spr_kagari,
+				gimick[i].screen.x, gimick[i].screen.y, 1.0f, 1.0f, 0, 0, 256, 256, 128, 128);
+
 			sprite_render(spr_gimick,
 				gimick[i].screen.x, gimick[i].screen.y, 1.0f, 1.0f, 0, 0, 256, 256, 128, 128);
 		}

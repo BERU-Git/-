@@ -34,12 +34,16 @@
 
 #define GIMICK_POS_X_1 512
 #define GIMICK_POS_Y_1 512
+
 #define GIMICK_POS_X_2 512
 #define GIMICK_POS_Y_2 2726
+
 #define GIMICK_POS_X_3 5248
 #define GIMICK_POS_Y_3 512
+
 #define GIMICK_POS_X_4 5248
 #define GIMICK_POS_Y_4 2726
+
 #define GIMICK_MAX 4
 
 

@@ -25,7 +25,6 @@ void stage2_update()
 	strong_enemy_update();
 	player_update();
 	field_update();
-
 	gimick_update();
 
 
