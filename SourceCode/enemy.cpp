@@ -54,6 +54,7 @@ void enemy_init()
 
     for (int i = 0; i < ENEMY_MAX; i++)
     {
+        enemy[i].attack = false;
         bool can_spawn = false;
         enemy[i].speed.x = ENEMY_SPEED;
         enemy[i].speed.y = ENEMY_SPEED;

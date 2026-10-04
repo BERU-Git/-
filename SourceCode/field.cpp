@@ -1,5 +1,8 @@
 #include "all.h"
 #include "camera.h"
+#include "player.h"
+#include "gimick.h"
+
 Sprite* spr_wall_side;
 VECTOR2 wall_side_pos;
 VECTOR2 wall_side_screen;
@@ -117,14 +120,17 @@ void field_render()
 		          STAIRS_W * 0.5f, STAIRS_H * 0.5f);
 
 	//ñÇñ@êwÇï`âÊÇ∑ÇÈ
-	magic_circle_screen.x = magic_circle_pos.x - camera_pos.x + SCREEN_W * 0.5f;
-	magic_circle_screen.y = magic_circle_pos.y - camera_pos.y + SCREEN_H * 0.5f;
+	if(!stage_clear)
+	{
+		magic_circle_screen.x = magic_circle_pos.x - camera_pos.x + SCREEN_W * 0.5f;
+		magic_circle_screen.y = magic_circle_pos.y - camera_pos.y + SCREEN_H * 0.5f;
 
-	sprite_render(spr_magic_circle, magic_circle_screen.x, magic_circle_screen.y,
-		          1,1,
-		          0,0,
-		          MAGIC_CIRCLE_W,MAGIC_CIRCLE_H,
-		          MAGIC_CIRCLE_W * 0.5f, MAGIC_CIRCLE_H * 0.5f);
+		sprite_render(spr_magic_circle, magic_circle_screen.x, magic_circle_screen.y,
+			1, 1,
+			0, 0,
+			MAGIC_CIRCLE_W, MAGIC_CIRCLE_H,
+			MAGIC_CIRCLE_W * 0.5f, MAGIC_CIRCLE_H * 0.5f);
+	}
 
 
 

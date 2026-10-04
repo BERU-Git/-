@@ -10,6 +10,10 @@
 
 void stage2_init()
 {
+	for (int i = 0; i < ENEMY_MAX; i++)
+	{
+		enemy[i].attack = false;
+	}
 	attack_line_init();
 	player_init();
 	camera_init();

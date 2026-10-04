@@ -7,6 +7,7 @@ Sprite* spr_attack_line;
 Sprite* spr_strong_attack_line;
 attack_line_data attack_line[ENEMY_MAX];
 attack_line_data strong_attack_line;
+
 void attack_line_init()
 {
 	for(int i = 0 ; i < ENEMY_MAX ; i++ )
