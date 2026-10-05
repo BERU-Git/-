@@ -25,7 +25,6 @@ void stage1_init()
 void stage1_update()
 {
 		GameLib::setBlendMode(Blender::BS_ALPHA);
-
 		player_update();
 		enemy_update();
 		attack_line_update();

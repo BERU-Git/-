@@ -172,6 +172,7 @@ void player_update()
 		if (hit_check(player_pos.x, player_pos.y, PLAYER_HITBOX * 0.5f,
 			enemy[i].pos.x, enemy[i].pos.y, NORMAL_ENEMY_HITBOX * 0.5f) && !player_hit)
 		{
+			screen_shake_init(DAMAGE_SHAKE_TIME);
 			player_hit = true;
 			player_hp -= 1;
 		}
@@ -180,6 +181,7 @@ void player_update()
 	if (hit_check(player_pos.x, player_pos.y, PLAYER_HITBOX * 0.5f,
 		strong_enemy.pos.x, strong_enemy.pos.y, STRONG_ENEMY_W * 0.5f) && !player_hit)
 	{
+		screen_shake_init(DAMAGE_SHAKE_TIME);
 		player_hit = true;
 		player_hp -= 2;
 
@@ -190,11 +192,15 @@ void player_update()
 		if (hit_check(player_pos.x, player_pos.y, PLAYER_HITBOX * 0.5f,
 			range_enemy_bullet[i].pos.x, range_enemy_bullet[i].pos.y,STRONG_ENEMY_W * 0.5f) && !player_hit)
 		{
+			screen_shake_init(DAMAGE_SHAKE_TIME);
 			player_hit = true;
 			player_hp -= 1;
 
 		}
 	}
+
+	//パワー10で画面をシェイクさせる
+		screen_shake(15);
 
 	//無敵時間
 	if (player_hit)

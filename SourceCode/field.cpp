@@ -2,6 +2,7 @@
 #include "camera.h"
 #include "player.h"
 #include "gimick.h"
+#include "boss.h"
 
 Sprite* spr_wall_side;
 VECTOR2 wall_side_pos;
@@ -108,28 +109,30 @@ void field_render()
 		sprite_render(spr_wall_down, wall_down_screen.x, wall_down_screen.y);
 	}
 
-
-	//äKíiÇï`âÊÇ∑ÇÈ
-	stairs_screen.x = stairs_pos.x - camera_pos.x + SCREEN_W * 0.5f;
-	stairs_screen.y = stairs_pos.y - camera_pos.y + SCREEN_H * 0.5f;
-
-	sprite_render(spr_stairs, stairs_screen.x, stairs_screen.y,
-		          1,1,
-		          0,0,
-		          STAIRS_W,STAIRS_H,
-		          STAIRS_W * 0.5f, STAIRS_H * 0.5f);
-
-	//ñÇñ@êwÇï`âÊÇ∑ÇÈ
-	if(!stage_clear)
+	if(!boss_stage)
 	{
-		magic_circle_screen.x = magic_circle_pos.x - camera_pos.x + SCREEN_W * 0.5f;
-		magic_circle_screen.y = magic_circle_pos.y - camera_pos.y + SCREEN_H * 0.5f;
+		//äKíiÇï`âÊÇ∑ÇÈ
+		stairs_screen.x = stairs_pos.x - camera_pos.x + SCREEN_W * 0.5f;
+		stairs_screen.y = stairs_pos.y - camera_pos.y + SCREEN_H * 0.5f;
 
-		sprite_render(spr_magic_circle, magic_circle_screen.x, magic_circle_screen.y,
+		sprite_render(spr_stairs, stairs_screen.x, stairs_screen.y,
 			1, 1,
 			0, 0,
-			MAGIC_CIRCLE_W, MAGIC_CIRCLE_H,
-			MAGIC_CIRCLE_W * 0.5f, MAGIC_CIRCLE_H * 0.5f);
+			STAIRS_W, STAIRS_H,
+			STAIRS_W * 0.5f, STAIRS_H * 0.5f);
+
+		//ñÇñ@êwÇï`âÊÇ∑ÇÈ
+		if (!stage_clear)
+		{
+			magic_circle_screen.x = magic_circle_pos.x - camera_pos.x + SCREEN_W * 0.5f;
+			magic_circle_screen.y = magic_circle_pos.y - camera_pos.y + SCREEN_H * 0.5f;
+
+			sprite_render(spr_magic_circle, magic_circle_screen.x, magic_circle_screen.y,
+				1, 1,
+				0, 0,
+				MAGIC_CIRCLE_W, MAGIC_CIRCLE_H,
+				MAGIC_CIRCLE_W * 0.5f, MAGIC_CIRCLE_H * 0.5f);
+		}
 	}
 
 

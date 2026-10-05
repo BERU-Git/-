@@ -4,15 +4,18 @@
 #include "field.h"
 #include "hit_check.h"
 #include "gimick.h"
+#include "boss.h"
 
 
 
 void stage5_init()
 {
+	boss_stage = true;
 	camera_init();
 	player_init();
 	field_init();
-	gimick_init();
+	boss_init();
+
 
 }
 void stage5_update()
@@ -21,7 +24,7 @@ void stage5_update()
 	camera_update();
 	player_update();
 	field_update();
-	gimick_update();
+	boss_update();
 }
 void stage5_render()
 {
@@ -29,13 +32,13 @@ void stage5_render()
 	GameLib::clear(0.0f, 0.0f, 0.0f);
 	field_render();
 	player_render();
-	gimick_render();
+	boss_render();
 
 }
 void stage5_deinit()
 {
 	player_deinit();
 	field_deinit();
-	gimick_deinit();
+	boss_deinit();
 
 }

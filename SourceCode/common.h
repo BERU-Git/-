@@ -25,6 +25,9 @@
 #define MAGIC_CIRCLE_W  512            //魔法陣の画像サイズ
 #define MAGIC_CIRCLE_H  512            //
 
+#define BOSS_W          1211           //ボスのサイズ
+#define BOSS_H          503            //
+
 #define NORMAL_ENEMY_HITBOX    100     //ゴブリンのヒットボックス
 
 #define PLAYER_HITBOX         64       //プレイヤーのヒットボックス
@@ -81,6 +84,8 @@
 #define MAX_SPEED       10.0f
 
 #define PLAYER_HP        15            //プレイヤーのHP
+
+#define DAMAGE_SHAKE_TIME     30       //ダメージを受けたときの画面シェイクの時間
 
 #define CHARGE_TIME     60.0f          //突進の時間
 #define STRONG_CHARGE_TIME     90.0f   //中ボスの突進の時間
