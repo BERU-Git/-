@@ -195,7 +195,7 @@ void enemy_update()
 
             break;
         //クールダウン
-        case ENEMY_COOLDOWN:
+        case  ENEMY_COOLDOWN:
             enemy[i].attack = false;
             enemy[i].cooldown_timer += 1.0f;
 

@@ -8,6 +8,13 @@
 		ENEMY_CHARGE,      // 突進中
 		ENEMY_COOLDOWN     // 突進後の待機
 	};
+
+	enum range_enemy_state
+	{
+		BULLET_CHASE,       // 玉が普通に追跡
+		ENEMY_TELEPORT_PREP,     // 攻撃後の待機
+		ENEMY_TELEPORT,     // クールタイム
+	};
 struct enemy_data
 {
 	VECTOR2 pos = {};
@@ -18,6 +25,7 @@ struct enemy_data
 	VECTOR2 separate = {};
 	VECTOR2 charge_direction = {};
 	enemy_state state = {};
+	range_enemy_state range_state = {};
 	int render_posx = 0;
 	int render_posy = 0;
 	int effect_timer = 0;

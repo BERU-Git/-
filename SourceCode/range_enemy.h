@@ -5,6 +5,13 @@
 extern Sprite* spr_range_enemy;
 extern Sprite* spr_range_enemy_bullet;
 
+extern int range_attack_timer;
+extern int range_prep_timer;
+extern int range_teleport_timer;
+
+
+extern int range_attack_index;
+
 extern enemy_data range_enemy;
 extern enemy_data range_enemy_bullet[BULLET_MAX];
 

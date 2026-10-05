@@ -16,6 +16,9 @@
 #define STRONG_ENEMY_W  256            //中ボスの画像サイズ
 #define STRONG_ENEMY_H  256	           //
 
+#define ENEMY_BULLET_W  64             //玉のサイズ
+#define ENEMY_BULLET_H  64             //
+
 #define STAIRS_W        256            //階段の画像サイズ
 #define STAIRS_H        384            //
 
@@ -38,7 +41,13 @@
 #define FIELD_W         1920           //フィールドのサイズ
 #define FIELD_H         1080		   //
 
-#define BULLET_MAX     30              //エネミーが出す最大の球数
+#define BULLET_MAX     20              //エネミーが出す最大の球数
+
+#define RANGE_ATTACK_TIMER    300      //遠距離攻撃の敵の攻撃時間
+#define RANGE_ATTACK_TIMER    300      //遠距離攻撃の敵の攻撃時間
+#define RANGE_ATTACK_TIMER    300      //遠距離攻撃の敵の攻撃時間
+
+#define RANGE_ATTACK_SPEED    10.0f    //エネミー攻撃スピード
 
 #define GIMICK_POS_X_1 512
 #define GIMICK_POS_Y_1 512
