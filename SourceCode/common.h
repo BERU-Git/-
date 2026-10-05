@@ -38,6 +38,8 @@
 #define FIELD_W         1920           //フィールドのサイズ
 #define FIELD_H         1080		   //
 
+#define BULLET_MAX     30              //エネミーが出す最大の球数
+
 #define GIMICK_POS_X_1 512
 #define GIMICK_POS_Y_1 512
 

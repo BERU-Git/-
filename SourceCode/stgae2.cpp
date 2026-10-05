@@ -6,7 +6,7 @@
 #include "hit_check.h"
 #include "gimick.h"
 #include "strong_enemy.h"
-
+#include "range_enemy.h"
 
 void stage2_init()
 {
@@ -14,12 +14,14 @@ void stage2_init()
 	{
 		enemy[i].attack = false;
 	}
+
 	attack_line_init();
 	player_init();
 	camera_init();
 	strong_enemy_init();
 	field_init();
 	gimick_init();
+	range_enemy_init();
 
 }
 void stage2_update()
@@ -30,6 +32,7 @@ void stage2_update()
 	player_update();
 	field_update();
 	gimick_update();
+	range_enemy_update();
 
 
 	debug::setString("hp%d", player_hp);
@@ -50,6 +53,7 @@ void stage2_render()
 	player_render();
 	strong_enemy_render();
 	gimick_render();
+	range_enemy_render();
 
 }
 void stage2_deinit()
@@ -59,5 +63,6 @@ void stage2_deinit()
 	gimick_deinit();
 	strong_enemy_deinit();
 	attack_line_delete();
+	range_enemy_deinit();
 
 }
