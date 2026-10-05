@@ -190,7 +190,7 @@ void player_update()
 	for (int i = 0; i < range_attack_index; i++)
 	{
 		if (hit_check(player_pos.x, player_pos.y, PLAYER_HITBOX * 0.5f,
-			range_enemy_bullet[i].pos.x, range_enemy_bullet[i].pos.y,STRONG_ENEMY_W * 0.5f) && !player_hit)
+			range_enemy_bullet[i].pos.x, range_enemy_bullet[i].pos.y, ENEMY_BULLET_W * 0.5f) && !player_hit)
 		{
 			screen_shake_init(DAMAGE_SHAKE_TIME);
 			player_hit = true;

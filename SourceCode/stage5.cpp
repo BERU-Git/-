@@ -11,6 +11,7 @@
 void stage5_init()
 {
 	boss_stage = true;
+
 	camera_init();
 	player_init();
 	field_init();
