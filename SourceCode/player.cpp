@@ -3,6 +3,7 @@
 #include "hit_check.h"
 #include "enemy.h"
 #include "strong_enemy.h"
+#include "range_enemy.h"
 #include "field.h"
 #include "gimick.h"
 
@@ -58,8 +59,6 @@ void player_init()
 
 	player_render_posx = 0;
 	player_render_posy = 0;
-
-	player_hp = PLAYER_HP;
 
 	player_hit = false;
 
@@ -170,7 +169,7 @@ void player_update()
 	//ƒvƒŒƒCƒ„[‚ÌHPˆ—
 	for(int i = 0; i < ENEMY_MAX ; i++ )
 	{
-		if (hit_check(player_pos.x, player_pos.y, PLAYER_W * 0.5f,
+		if (hit_check(player_pos.x, player_pos.y, PLAYER_HITBOX * 0.5f,
 			enemy[i].pos.x, enemy[i].pos.y, NORMAL_ENEMY_HITBOX * 0.5f) && !player_hit)
 		{
 			player_hit = true;
@@ -178,12 +177,23 @@ void player_update()
 		}
 	}
 
-	if (hit_check(player_pos.x, player_pos.y, PLAYER_W * 0.5f,
+	if (hit_check(player_pos.x, player_pos.y, PLAYER_HITBOX * 0.5f,
 		strong_enemy.pos.x, strong_enemy.pos.y, STRONG_ENEMY_W * 0.5f) && !player_hit)
 	{
 		player_hit = true;
 		player_hp -= 2;
 
+	}
+
+	for (int i = 0; i < range_attack_index; i++)
+	{
+		if (hit_check(player_pos.x, player_pos.y, PLAYER_HITBOX * 0.5f,
+			range_enemy_bullet[i].pos.x, range_enemy_bullet[i].pos.y,STRONG_ENEMY_W * 0.5f) && !player_hit)
+		{
+			player_hit = true;
+			player_hp -= 1;
+
+		}
 	}
 
 	//–³“GŠÔ

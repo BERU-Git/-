@@ -1,5 +1,6 @@
 #include "all.h"
 #include <sstream>
+#include "player.h"
 
 int title_state = 0;     // 状態
 int title_timer = 0;     // タイマー
@@ -8,6 +9,7 @@ bool start_check = false;
 void title_init()
 {
 	/*DirectX::Mouse::Get().SetWindow(window::getHwnd());*/
+	player_hp = PLAYER_HP;
 }
 void title_update()
 {
@@ -30,7 +32,7 @@ void title_update()
 		//////// 通常時 ////////
 		if (TRG(0) & PAD_TRG1)
 		{
-			nextScene = SCENE_STAGE2;
+			nextScene = SCENE_STAGE3;
 		}
 		
 	{

@@ -47,6 +47,8 @@ void range_enemy_update()
 
 	case BULLET_CHASE:
 			range_attack_timer++;
+
+
 			//‹…‚ðƒZƒbƒg
 			if(range_attack_timer % (RANGE_ATTACK_TIMER / BULLET_MAX ) == 0 )
 			{
@@ -72,6 +74,7 @@ void range_enemy_update()
 			if (range_attack_timer >= RANGE_ATTACK_TIMER)
 			{
 				range_enemy.range_state = ENEMY_TELEPORT_PREP;
+				range_attack_timer = 0;
 			}
 
 			break;
@@ -87,17 +90,43 @@ void range_enemy_update()
 			range_enemy_bullet[i].pos.y += range_enemy_bullet[i].speed.y * range_enemy_bullet[i].chase.y;
 		}
 
-		if (range_prep_timer >= RANGE_ATTACK_TIMER)
+		if (range_prep_timer >= RANGE_PREP_TIMER)
 		{
 			range_enemy.range_state = ENEMY_TELEPORT;
+			range_prep_timer = 0;
+			range_enemy.pos.x = (player_pos.x - SCREEN_W * 0.5f) + rand() % SCREEN_W;
+			range_enemy.pos.y = (player_pos.y - SCREEN_H * 0.5f) + rand() % SCREEN_H;
 		}
 
 		break;
 
-	//case ENEMY_TELEPORT:
-	//	
+	case ENEMY_TELEPORT:
+		range_teleport_timer++;
 
-	//	break;
+
+		for (int i = 0; i < BULLET_MAX; i++)
+		{
+			range_enemy_bullet[i].pos.x += range_enemy_bullet[i].speed.x * range_enemy_bullet[i].chase.x;
+			range_enemy_bullet[i].pos.y += range_enemy_bullet[i].speed.y * range_enemy_bullet[i].chase.y;
+		}
+
+
+
+
+		if (range_teleport_timer >= RANGE_TELEPORT_TIMER)
+		{
+			range_enemy.range_state = BULLET_CHASE;
+			range_teleport_timer = 0;
+			range_attack_index = 0;
+			for (int i = 0; i < BULLET_MAX; i++)
+			{
+				range_enemy_bullet[i].pos.x = range_enemy.pos.x;
+				range_enemy_bullet[i].pos.y = range_enemy.pos.y;
+
+			}
+		}
+
+		break;
 
 	}
 

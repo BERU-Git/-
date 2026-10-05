@@ -27,6 +27,8 @@
 
 #define NORMAL_ENEMY_HITBOX    100     //ゴブリンのヒットボックス
 
+#define PLAYER_HITBOX         64       //プレイヤーのヒットボックス
+
 #define CHARGE_CHECK_W  520            //突進を認識する範囲
 
 #define WALL_W         256             //壁のサイズ
@@ -44,8 +46,8 @@
 #define BULLET_MAX     20              //エネミーが出す最大の球数
 
 #define RANGE_ATTACK_TIMER    300      //遠距離攻撃の敵の攻撃時間
-#define RANGE_ATTACK_TIMER    300      //遠距離攻撃の敵の攻撃時間
-#define RANGE_ATTACK_TIMER    300      //遠距離攻撃の敵の攻撃時間
+#define RANGE_PREP_TIMER      180      //遠距離攻撃の敵の攻撃時間
+#define RANGE_TELEPORT_TIMER  120      //遠距離攻撃の敵の攻撃時間
 
 #define RANGE_ATTACK_SPEED    10.0f    //エネミー攻撃スピード
 
@@ -78,14 +80,14 @@
 #define MIN_SPEED      -10.0f          //スピードの最大速度
 #define MAX_SPEED       10.0f
 
-#define PLAYER_HP        10            //プレイヤーのHP
+#define PLAYER_HP        15            //プレイヤーのHP
 
 #define CHARGE_TIME     60.0f          //突進の時間
 #define STRONG_CHARGE_TIME     90.0f   //中ボスの突進の時間
 #define CHARGE_PREP_TIME     90.0f     //突進準備の時間
 #define COOLDOWN_TIME     180.0f       //突進後のクールタイム
 
-#define ENEMY_MAX       50             //敵の最大数
+#define ENEMY_MAX       25             //敵の最大数
 #define NORMAL_ENEMY_DISTANCE   80.0f  //敵同士の間隔
 
 #define ATTACK_LINE_W        100       //攻撃の予兆線

@@ -8,10 +8,6 @@
 #include "gimick.h"
 
 
-int stage1_state = 0;     // 状態
-int stage1_timer = 0;     // タイマー
-
-
 
 void stage1_init()
 {
