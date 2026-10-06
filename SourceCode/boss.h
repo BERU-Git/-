@@ -1,9 +1,18 @@
 #pragma once
 #include "all.h"
 
+enum boss_attack
+{
+	NORMAL_ENEMY,
+	STRONG_ENEMY,
+	MIX_ENEMY,
+	LAST_ATTACK
+};
+
 struct boss_data
 {
 	VECTOR2 pos;
+	float speed;
 	VECTOR2 screen;
 };
 

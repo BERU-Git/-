@@ -21,6 +21,7 @@ void strong_enemy_init()
 	strong_enemy.speed.y = STRONG_ENEMY_SPEED;
 	
 	strong_enemy.attack = false;
+	strong_enemy.charge = false;
 
 
 	strong_enemy.state = ENEMY_CHASE;
@@ -48,7 +49,7 @@ void strong_enemy_update()
 
 		//ìÀåÇèÄîı
 	case ENEMY_CHARGE_PREP:
-		strong_enemy.attack = true;
+		strong_enemy.charge = true;
 		strong_enemy.charge_prep_timer++;
 
 		enemy_chase(player_pos.x, player_pos.y, strong_enemy.pos.x, strong_enemy.pos.y,
@@ -65,6 +66,7 @@ void strong_enemy_update()
 		break;
 		//ìÀêi
 	case ENEMY_CHARGE:
+		strong_enemy.attack = true;
 		strong_enemy.charge_timer++;
 
 		strong_enemy.pos.x += strong_enemy.chase.x * STRONG_CHARGE_SPEED;
@@ -76,6 +78,7 @@ void strong_enemy_update()
 			strong_enemy.pos.y <= STRONG_ENEMY_H * 0.5f ||
 			strong_enemy.pos.y >= WORLD_H - STRONG_ENEMY_H * 0.5f)
 		{
+			strong_enemy.charge = false;
 			strong_enemy.attack = false;
 			strong_enemy.charge_timer = 0.0f;
 			strong_enemy.state = ENEMY_CHASE;

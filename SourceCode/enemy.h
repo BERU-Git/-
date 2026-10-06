@@ -34,11 +34,13 @@ struct enemy_data
 	float charge_prep_timer = 0;
 	float charge_timer = 0;
 	float cooldown_timer = 0;
+	bool charge = 0;
 	bool attack = 0;
 };
 
 extern enemy_data enemy[ENEMY_MAX];
 extern Sprite* spr_enemy;
+extern Sprite* spr_boss_enemy;
 
 
 void enemy_chase(float pos1_x, float pos1_y, 

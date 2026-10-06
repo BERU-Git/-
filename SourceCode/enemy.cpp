@@ -3,8 +3,10 @@
 #include "camera.h"
 #include "hit_check.h"
 #include "player.h"
+#include "boss.h"
 #include "attack_line.h"
 Sprite* spr_enemy;
+Sprite* spr_boss_enemy;
 enemy_data enemy[ENEMY_MAX];
 
 void enemy_separate(float pos1_x, float pos1_y,
@@ -46,6 +48,7 @@ void enemy_chase(float pos1_x,float pos1_y,
 void enemy_init()
 {
 	spr_enemy = sprite_load(L"Data/Images/enemy01.png");
+	spr_boss_enemy = sprite_load(L"Data/Images/boss_enemy.png");
 
     for (int i = 0; i < ENEMY_MAX; i++)
     {
@@ -55,6 +58,7 @@ void enemy_init()
     for (int i = 0; i < ENEMY_MAX; i++)
     {
         enemy[i].attack = false;
+        enemy[i].charge = false;
         bool can_spawn = false;
         enemy[i].speed.x = ENEMY_SPEED;
         enemy[i].speed.y = ENEMY_SPEED;
@@ -102,6 +106,8 @@ void enemy_update()
         //通常追跡
         case ENEMY_CHASE:
             enemy[i].attack = false;
+            enemy[i].charge = false;
+
             //プレイヤーの近くに敵が入ると追跡する
             if (hit_check(enemy[i].pos.x, enemy[i].pos.y, ENEMY_W * 0.5f,
                 player_pos.x, player_pos.y, SCREEN_W * 0.5f))
@@ -143,7 +149,7 @@ void enemy_update()
                 break;
          //突進待機
         case ENEMY_CHARGE_PREP:
-            enemy[i].attack = true;
+            enemy[i].charge = true;
             enemy[i].charge_prep_timer++;
             enemy_chase(player_pos.x, player_pos.y,
                 enemy[i].pos.x, enemy[i].pos.y,
@@ -165,6 +171,7 @@ void enemy_update()
             break;
         //突進
         case ENEMY_CHARGE:
+            enemy[i].attack = true;
             enemy[i].charge_timer += 1.0f;
 
             enemy[i].pos.x += enemy[i].charge_direction.x * CHARGE_SPEED;
@@ -197,6 +204,8 @@ void enemy_update()
         //クールダウン
         case  ENEMY_COOLDOWN:
             enemy[i].attack = false;
+            enemy[i].charge = false;
+
             enemy[i].cooldown_timer += 1.0f;
 
             if (enemy[i].cooldown_timer >= COOLDOWN_TIME)
@@ -247,16 +256,27 @@ void enemy_render()//敵の描画
 	{
 		enemy[i].screen.x = enemy[i].pos.x - camera_pos.x + SCREEN_W * 0.5f;
 		enemy[i].screen.y = enemy[i].pos.y - camera_pos.y + SCREEN_H * 0.5f;
-
-		sprite_render(spr_enemy, enemy[i].screen.x, enemy[i].screen.y,
-                      enemy[i].direction,1,
-					  ENEMY_W * enemy[i].render_posx,0,
-			          ENEMY_W,ENEMY_H,
-			          ENEMY_W * 0.5f,ENEMY_H * 0.5f);
+        if(!boss_stage)
+        {
+            sprite_render(spr_enemy, enemy[i].screen.x, enemy[i].screen.y,
+                enemy[i].direction, 1,
+                ENEMY_W * enemy[i].render_posx, 0,
+                ENEMY_W, ENEMY_H,
+                ENEMY_W * 0.5f, ENEMY_H * 0.5f);
+        }
+        else if(boss_stage)
+        {
+            sprite_render(spr_boss_enemy, enemy[i].screen.x, enemy[i].screen.y,
+                enemy[i].direction, 1,
+                ENEMY_W * enemy[i].render_posx, 0,
+                ENEMY_W, ENEMY_H,
+                ENEMY_W * 0.5f, ENEMY_H * 0.5f);
+        }
 	}
 	
 }
 void enemy_deinit()
 {
 	safe_delete(spr_enemy);
+	safe_delete(spr_boss_enemy);
 }

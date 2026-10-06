@@ -2,9 +2,10 @@
 #include "boss.h"
 #include "player.h"
 #include "camera.h"
+#include "enemy.h"
 Sprite* spr_boss;
 boss_data boss;
-
+boss_attack state;
 bool boss_stage;
 
 
@@ -12,6 +13,7 @@ bool boss_stage;
 
 void boss_init()
 {
+	enemy_init();
 	spr_boss = sprite_load(L"Data/Images/boss.png");
 	boss.pos.x = player_pos.x;
 	boss.pos.y = player_pos.y - SCREEN_H * 0.5f - BOSS_H * 0.5f;
@@ -20,7 +22,9 @@ void boss_init()
 
 void boss_update_init()
 {
-	boss.pos.y += (BOSS_H / 300) * 2;
+	boss.pos.y += BOSS_H / 260;
+	boss.speed = BOSS_SPEED;
+
 
 }
 
@@ -29,6 +33,50 @@ void boss_update()
 
 
 
+		if (boss.pos.x < player_pos.x - 5)
+		{
+			boss.pos.x += boss.speed;
+		}
+		else if (boss.pos.x > player_pos.x + 5)
+		{
+			boss.pos.x -= boss.speed;
+		}
+
+		if (boss.pos.y < player_pos.y - BOSS_CENTER_H - 5)
+		{
+			boss.pos.y += boss.speed;
+		}
+		else if (boss.pos.y > player_pos.y - BOSS_CENTER_H + 5)
+		{
+			boss.pos.y -= boss.speed;
+		}
+
+	//ボスの行動範囲制限
+	if (boss.pos.x <= player_pos.x - SCREEN_W * 0.5f)
+	{
+		boss.pos.x = player_pos.x - SCREEN_W * 0.5f;
+	}
+	else if (boss.pos.x >= player_pos.x + SCREEN_W * 0.5f)
+	{
+		boss.pos.x = player_pos.x + SCREEN_W * 0.5f;
+	}
+	if (boss.pos.y <= player_pos.y - SCREEN_H * 0.5f)
+	{
+		boss.pos.y = player_pos.y - SCREEN_H * 0.5f;
+	}
+	else if (boss.pos.y >= (player_pos.y - SCREEN_H * 0.5f) + BOSS_H * 0.5f)
+	{
+		boss.pos.y = (player_pos.y - SCREEN_H * 0.5f) + BOSS_H * 0.5f;
+	}
+
+	//攻撃ウェーブ処理
+
+	switch (state)
+	{
+	case NORMAL_ENEMY:
+		enemy_update();
+	}
+
 }
 
 
@@ -36,6 +84,15 @@ void boss_render()
 {
 	boss.screen.x = boss.pos.x - camera_pos.x + SCREEN_W * 0.5f;
 	boss.screen.y = boss.pos.y - camera_pos.y + SCREEN_H * 0.5f;
+
+	switch (state)
+	{
+	case NORMAL_ENEMY:
+		enemy_render();
+	}
+
+
+
 
 
 	sprite_render(spr_boss, boss.screen.x, boss.screen.y,
@@ -48,7 +105,7 @@ void boss_render()
 
 void boss_deinit()
 {
-
+	enemy_deinit();
 	safe_delete(spr_boss);
 
 }
