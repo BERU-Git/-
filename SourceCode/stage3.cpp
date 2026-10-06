@@ -32,6 +32,7 @@ void stage3_update()
 	field_update();
 	gimick_update();
 	range_enemy_update();
+	debug::setString("hp%d", player_hp);
 
 	if (go_next)
 	{
