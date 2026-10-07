@@ -218,14 +218,14 @@ void troll_update()//ボスのアクション
 	}
 }
 
-			debug::setString("anime_end%d", check);
+			/*debug::setString("anime_end%d", check);
 			debug::setString(
 				"act = %d  attack_state = %d  attack_timer = %d  anime = %d",
 				troll.act,
 				troll.attack_state,
 				troll.attack_timer,
 				troll_attack_anime
-			);
+			);*/
 
 }
 void troll_render()
