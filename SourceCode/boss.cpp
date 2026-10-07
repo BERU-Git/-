@@ -5,6 +5,8 @@
 #include "enemy.h"
 #include "strong_enemy.h"
 #include "range_enemy.h"
+#include "hit_check.h"
+
 Sprite* spr_boss;
 boss_data boss;
 
@@ -106,6 +108,10 @@ void boss_update()
 	 	                    player_pos.y - SCREEN_H * 0.5f,
 	 	                    (player_pos.y - SCREEN_H * 0.5f) + BOSS_H * 0.5f);
 	
+	//ボスの当たり判定
+	//hit_check();
+
+
 	//攻撃ウェーブ処理
 
 	switch (state)

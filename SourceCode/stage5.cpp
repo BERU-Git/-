@@ -2,7 +2,6 @@
 #include "camera.h"
 #include "player.h"
 #include "field.h"
-#include "hit_check.h"
 #include "gimick.h"
 #include "boss.h"
 #include "attack_line.h"

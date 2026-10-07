@@ -277,6 +277,11 @@ void enemy_render()//“G‚Ì•`‰æ
 }
 void enemy_deinit()
 {
+    for (int i = 0; i < ENEMY_MAX; i++)
+    {
+        enemy[i] = {};
+    }
+
 	safe_delete(spr_enemy);
 	safe_delete(spr_boss_enemy);
 }
