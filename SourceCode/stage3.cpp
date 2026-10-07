@@ -7,30 +7,35 @@
 #include "gimick.h"
 #include "strong_enemy.h"
 #include "enemy.h"
+#include "troll.h"
 #include "range_enemy.h"
 
+extern int game_timer;
 
 void stage3_init()
 {
+	field_init();
 	player_init();
 	camera_init();
-	strong_enemy_init();
-	enemy_init();
-	attack_line_init();
-	field_init();
 	gimick_init();
+	attack_line_init();
+	enemy_init();
+	strong_enemy_init();
+	troll_init();
 	range_enemy_init();
 
 }
 void stage3_update()
 {
+	game_timer++;
 	GameLib::setBlendMode(Blender::BS_ALPHA);
+	field_update();
 	camera_update();
-	strong_enemy_update();
 	enemy_update();
 	player_update();
-	field_update();
 	gimick_update();
+	strong_enemy_update();
+	troll_update();
 	range_enemy_update();
 	debug::setString("hp%d", player_hp);
 
@@ -55,8 +60,9 @@ void stage3_render()
 	player_render();
 	enemy_render();
 	strong_enemy_render();
-	gimick_render();
+	troll_render();
 	range_enemy_render();
+	gimick_render();
 
 }
 void stage3_deinit()
@@ -66,6 +72,7 @@ void stage3_deinit()
 	gimick_deinit();
 	enemy_deinit();
 	strong_enemy_deinit();
+	troll_deinit();
 	attack_line_delete();
 	range_enemy_deinit();
 }

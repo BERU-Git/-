@@ -213,7 +213,12 @@ void player_update()
 		}
 	}
 
-
+	//プレイヤーの回復制限
+	if (player_hp >= PLAYER_HP)
+	{
+		player_hp = PLAYER_HP;
+	}
+	
 	//向きを更新
 	if (player_speed.x < 0)
 	{

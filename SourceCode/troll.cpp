@@ -34,8 +34,26 @@ void troll_init()
 	troll_tex_size.x = STRONG_ENEMY_W;
 	troll_tex_size.y = STRONG_ENEMY_H;
 	troll_attack_anime_timer = 0;
-	troll.pos.x = 0.0f; //実際にtrollがいるposition
-	troll.pos.y = 0.0f;
+
+	bool can_spawn = false;
+
+	while(!can_spawn)
+	{
+		troll.pos.x = STRONG_ENEMY_W + rand() % WORLD_W - STRONG_ENEMY_W * 2.0f; //実際にtrollがいるposition
+		troll.pos.y = STRONG_ENEMY_H + rand() % WORLD_H - STRONG_ENEMY_H * 2.0f;
+
+		can_spawn = true;
+
+		if (hit_check(
+			player_pos.x, player_pos.y, SCREEN_H * 0.5f,
+			troll.pos.x, troll.pos.y, STRONG_ENEMY_W * 0.5f))
+		{
+			can_spawn = false ;
+			break;
+		}
+	}
+
+
 	troll.radius = 561.0f;
 	troll_direction = 0;
 	troll_speed = 3.0f;
@@ -108,6 +126,7 @@ void troll_update()//ボスのアクション
 			troll.attack_timer = 0;
 			troll_attack_anime_timer = 0;
 			troll_attack_anime = 0;
+			danger_circle = true;
 		}
 		else
 		{

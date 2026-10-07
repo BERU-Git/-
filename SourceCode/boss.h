@@ -4,8 +4,11 @@
 enum boss_attack
 {
 	NORMAL_ENEMY,
+	STRONG_ENEMY_INIT,
 	STRONG_ENEMY,
+	MIX_ENEMY_INIT,
 	MIX_ENEMY,
+	LAST_ATTACK_INIT,
 	LAST_ATTACK
 };
 
@@ -14,6 +17,7 @@ struct boss_data
 	VECTOR2 pos;
 	VECTOR2 screen;
 	float screen_center;
+	bool knock_down;
 };
 
 extern bool boss_stage;

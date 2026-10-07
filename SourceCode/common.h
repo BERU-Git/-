@@ -35,6 +35,10 @@
 
 #define PLAYER_HITBOX         64       //プレイヤーのヒットボックス
 
+#define BOSS_HAND_HITBOX      64       //プレイヤーのヒットボックス
+
+#define BOSS_HITBOX           256       //プレイヤーのヒットボックス
+
 #define CHARGE_CHECK_W  520            //突進を認識する範囲
 
 #define WALL_W         256             //壁のサイズ
@@ -51,7 +55,7 @@
 
 #define BULLET_MAX     20              //エネミーが出す最大の球数
 
-#define RANGE_ATTACK_TIMER    300      //遠距離攻撃の敵の攻撃時間
+#define RANGE_ATTACK_TIMER    600      //遠距離攻撃の敵の攻撃時間
 #define RANGE_PREP_TIMER      180      //遠距離攻撃の敵の攻撃時間
 #define RANGE_TELEPORT_TIMER  120      //遠距離攻撃の敵の攻撃時間
 
@@ -89,6 +93,8 @@
 #define MAX_SPEED       10.0f
 
 #define PLAYER_HP        15            //プレイヤーのHP
+
+#define PLAYER_HEEL       1            //プレイヤー回復量
 
 #define DAMAGE_SHAKE_TIME     30       //ダメージを受けたときの画面シェイクの時間
 

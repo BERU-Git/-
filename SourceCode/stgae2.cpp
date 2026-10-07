@@ -8,6 +8,8 @@
 #include "strong_enemy.h"
 #include "range_enemy.h"
 
+extern int game_timer;
+
 void stage2_init()
 {
 	for (int i = 0; i < ENEMY_MAX; i++)
@@ -26,6 +28,7 @@ void stage2_init()
 }
 void stage2_update()
 {
+	game_timer++;
 	GameLib::setBlendMode(Blender::BS_ALPHA);
 	camera_update();
 	strong_enemy_update();

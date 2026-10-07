@@ -5,6 +5,7 @@ int result_state = 0;     // 状態
 int result_timer = 0;     // タイマー
 Sprite* sprResult = nullptr;
 bool retry_check = false;
+extern int game_timer;
 
 void result_init()
 {

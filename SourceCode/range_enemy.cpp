@@ -1,9 +1,12 @@
 #include "all.h"
 #include "enemy.h"
 #include "player.h"
+#include "boss.h"
+#include "hit_check.h"
 #include "camera.h"
 
 Sprite* spr_range_enemy;
+Sprite* spr_boss_range_enemy;
 Sprite* spr_range_enemy_bullet;
 
 enemy_data range_enemy;
@@ -18,11 +21,27 @@ int range_attack_index;//‘Å‚Â‹…‚ð‹L‰¯‚·‚é
 void range_enemy_init()
 {
 	spr_range_enemy = sprite_load(L"Data/images/range_enemy.png");
+	spr_boss_range_enemy = sprite_load(L"Data/images/boss_range_enemy.png");
 	spr_range_enemy_bullet = sprite_load(L"Data/images/range_enemy_bullet.png");
 
+	bool can_spawn = false;
 
-	range_enemy.pos.x = STRONG_ENEMY_W + rand() % WORLD_W - STRONG_ENEMY_W * 2.0f;
-	range_enemy.pos.y = STRONG_ENEMY_H + rand() % WORLD_H - STRONG_ENEMY_H * 2.0f;
+	while(!can_spawn)
+	{
+		range_enemy.pos.x = STRONG_ENEMY_W + rand() % WORLD_W - STRONG_ENEMY_W * 2.0f;
+		range_enemy.pos.y = STRONG_ENEMY_H + rand() % WORLD_H - STRONG_ENEMY_H * 2.0f;
+
+		can_spawn = true;
+
+		if (hit_check(
+			player_pos.x, player_pos.y, SCREEN_H * 0.5f,
+			range_enemy.pos.x, range_enemy.pos.y, STRONG_ENEMY_W * 0.5f))
+		{
+			can_spawn = false;
+			break;
+		}
+	}
+
 
 	range_attack_timer = 0;
 	range_prep_timer = 0;
@@ -146,13 +165,24 @@ void range_enemy_render()
 	}
 
 	//“G‚Ì•\Ž¦
-	range_enemy.screen.x = range_enemy.pos.x - camera_pos.x + SCREEN_W * 0.5f;
-	range_enemy.screen.y = range_enemy.pos.y - camera_pos.y + SCREEN_H * 0.5f;
-	sprite_render(spr_range_enemy, range_enemy.screen.x, range_enemy.screen.y,
-		1,1,
-		0,0,
-		STRONG_ENEMY_W, STRONG_ENEMY_H,
-		STRONG_ENEMY_W * 0.5f, STRONG_ENEMY_H * 0.5f);
+		range_enemy.screen.x = range_enemy.pos.x - camera_pos.x + SCREEN_W * 0.5f;
+		range_enemy.screen.y = range_enemy.pos.y - camera_pos.y + SCREEN_H * 0.5f;
+	if(!boss_stage)
+	{
+		sprite_render(spr_range_enemy, range_enemy.screen.x, range_enemy.screen.y,
+			1, 1,
+			0, 0,
+			STRONG_ENEMY_W, STRONG_ENEMY_H,
+			STRONG_ENEMY_W * 0.5f, STRONG_ENEMY_H * 0.5f);
+	}
+	if(boss_stage)
+	{
+		sprite_render(spr_boss_range_enemy, range_enemy.screen.x, range_enemy.screen.y,
+			1, 1,
+			0, 0,
+			STRONG_ENEMY_W, STRONG_ENEMY_H,
+			STRONG_ENEMY_W * 0.5f, STRONG_ENEMY_H * 0.5f);
+	}
 
 
 
@@ -162,6 +192,10 @@ void range_enemy_render()
 void range_enemy_deinit()
 {
 
+	for (int i = 0; i < BULLET_MAX; i++)
+	{
+		range_enemy_bullet[i] = {};
+	}
 	safe_delete(spr_range_enemy);
 	safe_delete(spr_range_enemy_bullet);
 

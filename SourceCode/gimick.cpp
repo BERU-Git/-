@@ -3,6 +3,7 @@
 #include "camera.h"
 #include "hit_check.h"
 #include "enemy.h"
+#include "player.h"
 #include "strong_enemy.h"
 
 
@@ -50,16 +51,18 @@ void gimick_update()
 		{
 			if (hit_check(gimick[g].pos.x, gimick[g].pos.y, gimick[g].circle * 0.5f,
 						  enemy[e].pos.x, enemy[e].pos.y, NORMAL_ENEMY_HITBOX * 0.5f) &&
-						  enemy[e].attack)//もし突進中の敵とギミックのバリアが当たったら
+						  enemy[e].attack && !gimick[g].barrier_break_check)//もし突進中の敵とギミックのバリアが当たったら
 			{
+				player_hp += PLAYER_HEEL;
 				gimick[g].barrier_break_check = true;
 			}
 		}
 
 		if (hit_check(gimick[g].pos.x, gimick[g].pos.y, gimick[g].circle * 0.5f,
 			strong_enemy.pos.x, strong_enemy.pos.y, STRONG_ENEMY_W * 0.5f) &&
-			strong_enemy.attack)//もし突進中の敵とギミックのバリアが当たったら
+			strong_enemy.attack && !gimick[g].barrier_break_check)//もし突進中の敵とギミックのバリアが当たったら
 		{
+			player_hp += PLAYER_HEEL;
 			gimick[g].barrier_break_check = true;
 		}
 

@@ -7,7 +7,7 @@
 #include "attack_line.h"
 #include "gimick.h"
 
-
+extern int game_timer;
 
 void stage1_init()
 {
@@ -24,6 +24,7 @@ void stage1_init()
 
 void stage1_update()
 {
+	game_timer++;
 		GameLib::setBlendMode(Blender::BS_ALPHA);
 		player_update();
 		enemy_update();

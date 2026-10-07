@@ -2,36 +2,47 @@
 #include "camera.h"
 #include "player.h"
 #include "field.h"
+#include "attack_line.h"
 #include "hit_check.h"
 #include "gimick.h"
+#include "strong_enemy.h"
+#include "enemy.h"
 #include "troll.h"
-#include "attack_line.h"
+#include "range_enemy.h"
 
+extern int game_timer;
 
 void stage4_init()
 {
-	camera_init();
-	player_init();
 	field_init();
+	player_init();
+	camera_init();
 	gimick_init();
-	troll_init();
 	attack_line_init();
+	enemy_init();
+	strong_enemy_init();
+	troll_init();
+	range_enemy_init();
+
 }
 void stage4_update()
 {
+	game_timer++;
 	GameLib::setBlendMode(Blender::BS_ALPHA);
-	camera_update();
-	player_update();
 	field_update();
+	camera_update();
+	enemy_update();
+	player_update();
 	gimick_update();
+	strong_enemy_update();
 	troll_update();
-	attack_line_update();
+	range_enemy_update();
+	debug::setString("hp%d", player_hp);
 
 	if (player_hp <= 0)
 	{
 		nextScene = SCENE_RESULT;
 	}
-		;
 
 	if (go_next)
 	{
@@ -45,18 +56,23 @@ void stage4_render()
 
 	GameLib::clear(0.0f, 0.0f, 0.0f);
 	field_render();
-	player_render();
-	gimick_render();
-	troll_render();
 	attack_line_render();
-	debug::setString("hp%d", player_hp);
+	player_render();
+	enemy_render();
+	strong_enemy_render();
+	troll_render();
+	range_enemy_render();
+	gimick_render();
 
 }
 void stage4_deinit()
 {
-	player_deinit();
 	field_deinit();
+	player_deinit();
 	gimick_deinit();
+	enemy_deinit();
+	strong_enemy_deinit();
 	troll_deinit();
 	attack_line_delete();
+	range_enemy_deinit();
 }

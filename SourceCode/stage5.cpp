@@ -7,7 +7,7 @@
 #include "attack_line.h"
 int stage5_timer;
 int stage5_state;
-
+extern int game_timer;
 
 void stage5_init()
 {
@@ -25,6 +25,7 @@ void stage5_init()
 }
 void stage5_update()
 {
+	game_timer++;
 	GameLib::setBlendMode(Blender::BS_ALPHA);
 	stage5_timer++;
 	

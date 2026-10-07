@@ -5,6 +5,7 @@
 #include "enemy.h"
 #include "strong_enemy.h"
 #include "range_enemy.h"
+#include "troll.h"
 #include "hit_check.h"
 
 Sprite* spr_boss;
@@ -18,6 +19,7 @@ boss_data boss_left;
 
 boss_attack state;
 bool boss_stage;
+int boss_state_timer;
 
 float clamp(float value,float min,float max)
 {
@@ -37,11 +39,16 @@ float clamp(float value,float min,float max)
 void boss_init()
 {
 	enemy_init();
-	range_enemy_init();
-	strong_enemy_init();
 	spr_boss = sprite_load(L"Data/Images/boss.png");
 	spr_boss_right = sprite_load(L"Data/Images/boss_right.png");
 	spr_boss_left = sprite_load(L"Data/Images/boss_left.png");
+
+	boss.knock_down = false;
+	boss_right.knock_down = false;
+	boss_left.knock_down = false;
+
+	boss_state_timer = 0;
+
 
 	boss.pos.x = player_pos.x;
 	boss.pos.y = player_pos.y - SCREEN_H * 0.5f - BOSS_H * 0.5f;
@@ -109,8 +116,29 @@ void boss_update()
 	 	                    (player_pos.y - SCREEN_H * 0.5f) + BOSS_H * 0.5f);
 	
 	//ボスの当たり判定
-	//hit_check();
+	if (hit_check(boss.pos.x, boss.pos.y, BOSS_HITBOX * 0.5f ,
+		strong_enemy.pos.x, strong_enemy.pos.y, STRONG_ENEMY_W * 0.5f) && strong_enemy.attack)
+	{
+		boss.knock_down = true;
+	}
+	for(int i = 0; i < ENEMY_MAX ; i++ )
+	{
+		if (hit_check(boss_right.pos.x, boss_right.pos.y, BOSS_HAND_HITBOX * 0.5f,
+			enemy[i].pos.x, enemy[i].pos.y, NORMAL_ENEMY_HITBOX * 0.5f) && enemy[i].attack)
+		{
+			boss_right.knock_down = true;
+		}
 
+		if (hit_check(boss_left.pos.x, boss_left.pos.y, BOSS_HAND_HITBOX * 0.5f,
+			enemy[i].pos.x, enemy[i].pos.y, NORMAL_ENEMY_HITBOX * 0.5f) && enemy[i].attack)
+		{
+			boss_left.knock_down = true;
+		}
+
+	}
+	debug::setString("BOSS%d", boss.knock_down);
+	debug::setString("RIGHT%d", boss_right.knock_down);
+	debug::setString("LEFT%d", boss_left.knock_down);
 
 	//攻撃ウェーブ処理
 
@@ -118,21 +146,78 @@ void boss_update()
 	{
 	case NORMAL_ENEMY:
 		enemy_update();
+		if (boss_right.knock_down && boss_left.knock_down)
+		{
+			state = STRONG_ENEMY_INIT;
+			enemy_deinit();
+			screen_shake_init(240);
+		}
+		break;
+	case STRONG_ENEMY_INIT:
+		boss_state_timer++;
+		screen_shake(15);
+		if (boss_state_timer >= 180)
+		{
+			troll_init();
+			range_enemy_init();
+			strong_enemy_init();
+			state = STRONG_ENEMY;
+			boss_state_timer = 0;
+		}
 		break;
 	case STRONG_ENEMY:
+		troll_update();
 		strong_enemy_update();
 		range_enemy_update();
-
+		if (boss.knock_down)
+		{
+			screen_shake_init(240);
+			state = MIX_ENEMY_INIT;
+			boss_right.knock_down = false;
+			boss_left.knock_down = false;
+			boss.knock_down = false;
+		}
 		break;
+	case MIX_ENEMY_INIT:
+		boss_state_timer++;
+		screen_shake(15);
+		if (boss_state_timer >= 180)
+		{
+			troll_init();
+			range_enemy_init();
+			strong_enemy_init();
+			enemy_init();
+			state = MIX_ENEMY;
+			boss_state_timer = 0;
+		}
 
 	case MIX_ENEMY:
 		enemy_update();
+		troll_update();
 		strong_enemy_update();
 		range_enemy_update();
 
+		if (boss_right.knock_down && boss_left.knock_down && boss.knock_down)
+		{
+			screen_shake_init(240);
+			state = LAST_ATTACK_INIT;
+			troll_deinit();
+			enemy_deinit();
+			strong_enemy_deinit();
+			range_enemy_deinit();
+		}
 		break;
 
-	//case LAST_ATTACK:
+	case LAST_ATTACK_INIT:
+		boss_state_timer++;
+		screen_shake(15);
+		if (boss_state_timer >= 180)
+		{
+			state = LAST_ATTACK;
+			boss_state_timer = 0;
+		}
+	case LAST_ATTACK:
+		nextScene = SCENE_RESULT;
 	
 	}
 
@@ -157,6 +242,7 @@ void boss_render()
 		break;
 
 	case STRONG_ENEMY:
+		troll_render();
 		strong_enemy_render();
 		range_enemy_render();
 		break;
@@ -164,6 +250,7 @@ void boss_render()
 
 	case MIX_ENEMY:
 		enemy_render();
+		troll_render();
 		strong_enemy_render();
 		range_enemy_render();
 
