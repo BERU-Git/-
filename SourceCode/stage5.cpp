@@ -47,6 +47,11 @@ void stage5_update()
 		boss_update();
 	}
 
+		if (player_hp <= 0)
+		{
+			nextScene = SCENE_RESULT;
+		}
+
 
 }
 void stage5_render()

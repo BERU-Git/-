@@ -34,6 +34,10 @@ void stage1_update()
 
 		debug::setString("hp%d", player_hp);
 
+		if (player_hp <= 0)
+		{
+			nextScene = SCENE_RESULT;
+		}
 		if (go_next)
 		{
 			nextScene = SCENE_STAGE2;
