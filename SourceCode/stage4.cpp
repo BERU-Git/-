@@ -5,6 +5,7 @@
 #include "hit_check.h"
 #include "gimick.h"
 #include "troll.h"
+#include "attack_line.h"
 
 
 void stage4_init()
@@ -14,6 +15,7 @@ void stage4_init()
 	field_init();
 	gimick_init();
 	troll_init();
+	attack_line_init();
 }
 void stage4_update()
 {
@@ -23,7 +25,8 @@ void stage4_update()
 	field_update();
 	gimick_update();
 	troll_update();
-
+	attack_line_update()
+		;
 
 	if (go_next)
 	{
@@ -40,11 +43,15 @@ void stage4_render()
 	player_render();
 	gimick_render();
 	troll_render();
+	attack_line_render();
+	debug::setString("hp%d", player_hp);
+
 }
 void stage4_deinit()
 {
 	player_deinit();
 	field_deinit();
 	gimick_deinit();
-
+	troll_deinit();
+	attack_line_delete();
 }

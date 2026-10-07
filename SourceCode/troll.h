@@ -27,6 +27,12 @@ struct troll_data
 
 };
 
+extern bool danger_circle;
+extern VECTOR2 troll_screen;
+extern troll_data troll;
+extern bool danger_circle;
+
 void troll_init();
 void troll_update();
 void troll_render();
+void troll_deinit();

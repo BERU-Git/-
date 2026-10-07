@@ -15,6 +15,7 @@ VECTOR2 troll_tex_pos;
 VECTOR2 troll_tex_size;
 VECTOR2 troll_screen;
 bool check;
+bool danger_circle;
 
 troll_data troll;
 
@@ -22,6 +23,7 @@ troll_data troll;
 void troll_init()
 {
 	spr_troll = sprite_load(L"Data/images/troll.png");
+	
 	troll.act = TROLL_IDLE;
 	troll.act_timer = 0;
 	troll.attack_state = TROLL_ATTACK_START;
@@ -33,13 +35,14 @@ void troll_init()
 	troll_tex_size.x = STRONG_ENEMY_W;
 	troll_tex_size.y = STRONG_ENEMY_H;
 	troll_attack_anime_timer = 0;
-	troll.pos.x = 0; //実際にtrollがいるposition
-	troll.pos.y = 0;
-	troll.radius = 300.0f;
+	troll.pos.x = 0.0f; //実際にtrollがいるposition
+	troll.pos.y = 0.0f;
+	troll.radius = 561.0f;
 	troll_direction = 0;
 	troll_speed = 3.0f;
 	troll_attack_hit = false;
 	check = false;
+	danger_circle = false;
 }
 
 
@@ -138,6 +141,7 @@ void troll_update()//ボスのアクション
 			troll.attack_timer = 0;
 			troll_attack_anime_timer = 0;
 			troll_attack_anime = 0;
+			danger_circle = true;
 			//到達できてる
 		}
 		break;
@@ -151,6 +155,7 @@ void troll_update()//ボスのアクション
 			{
 				troll.attack_state = TROLL_ATTACK_WAIT;
 				troll.attack_timer = 0;
+				
 
 			}
 			break;
@@ -177,17 +182,15 @@ void troll_update()//ボスのアクション
 		{
 			check = true;
 			bool anime_end = troll_animation_variation(7, 8, 4, false);//end状態に移行してあげて一回まっさらにしてからIDLEに戻す
-			VECTOR2 attack_pos;
-			attack_pos.x = troll.pos.x;
-			attack_pos.y = troll.pos.y;
 
 
 			if (!troll_attack_hit)
 			{
-				if (hit_check(player_pos.x, player_pos.y, PLAYER_HITBOX,
+				if (hit_check(player_pos.x, player_pos.y, PLAYER_HITBOX * 0.5,
 					troll.pos.x, troll.pos.y, troll.radius))
 				{
 					troll_attack_hit = true;
+					player_hp -= 5;
 				}
 			}
 			if (anime_end)
@@ -209,6 +212,7 @@ void troll_update()//ボスのアクション
 				troll_attack_anime_timer = 0;
 				troll_attack_anime = 0;
 				troll_attack_hit = false;
+				danger_circle = false;
 			}
 			break;
 		}
@@ -234,12 +238,19 @@ void troll_render()
 	troll_screen.y = troll.pos.y - camera_pos.y + SCREEN_H * 0.5f;
 	sprite_render(spr_troll,
 		troll_screen.x, troll_screen.y,
-		1.0f, 1.0f,
+		2.0f, 2.0f,
 		troll_tex_pos.x, troll_tex_pos.y,
 		troll_tex_size.x, troll_tex_size.y,
 		128, 128);
 
+	
 
+
+}
+void troll_deinit()
+{
+	safe_delete(spr_troll);
+	
 }
 
 	
