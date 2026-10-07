@@ -22,12 +22,11 @@ troll_data troll;
 
 void troll_init()
 {
+	troll = {};
 	spr_troll = sprite_load(L"Data/images/troll.png");
 	
 	troll.act = TROLL_IDLE;
-	troll.act_timer = 0;
 	troll.attack_state = TROLL_ATTACK_START;
-	troll.attack_timer = 0;
 	troll_attack_anime = 0;
 	troll_attack_anime_timer = 0;
 	troll_tex_pos.x = 0.0f;
@@ -35,9 +34,12 @@ void troll_init()
 	troll_tex_size.x = STRONG_ENEMY_W;
 	troll_tex_size.y = STRONG_ENEMY_H;
 	troll_attack_anime_timer = 0;
+<<<<<<< HEAD
 	troll.pos.x = 0.0f; //ŽÀÛ‚Étroll‚ª‚¢‚éposition
 	troll.pos.y = 0.0f;
 	troll.radius = 561.0f;
+=======
+>>>>>>> 3cdb71dcab24d58c932449d6763d0c886b0036a1
 	troll_direction = 0;
 	troll_speed = 3.0f;
 	troll_attack_hit = false;
