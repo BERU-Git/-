@@ -155,7 +155,7 @@ void troll_update()//ボスのアクション
 			{
 				troll.attack_state = TROLL_ATTACK_WAIT;
 				troll.attack_timer = 0;
-				
+			
 
 			}
 			break;
