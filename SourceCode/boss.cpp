@@ -63,13 +63,13 @@ void boss_update()
 	boss.screen_center = player_pos.y - BOSS_CENTER_H; 
 	boss.pos.y += (boss.screen_center - boss.pos.y) * 0.1f;
 	//ボスの右手の移動
-	boss_right.pos.x += (boss.pos.x - boss_right.pos.x) * 0.05f;
+	//boss_right.pos.x += (boss.pos.x - boss_right.pos.x) * 0.05f;
 
 	boss_right.screen_center = player_pos.y - BOSS_CENTER_H;
 	boss_right.pos.y += (boss_right.screen_center - boss_right.pos.y) * 0.1f;
 
 	//ボスの左手の移動
-	boss_left.pos.x += (boss.pos.x - boss_left.pos.x) * 0.05f;
+	//boss_left.pos.x += (boss.pos.x - boss_left.pos.x) * 0.05f;
 
 	boss_left.screen_center = player_pos.y - BOSS_CENTER_H;
 	boss_left.pos.y += (boss_left.screen_center - boss_left.pos.y) * 0.1f;
