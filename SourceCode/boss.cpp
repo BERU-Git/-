@@ -23,7 +23,6 @@ void boss_init()
 void boss_update_init()
 {
 	boss.pos.y += BOSS_H / 260;
-	boss.speed = BOSS_SPEED;
 
 
 }
@@ -31,25 +30,11 @@ void boss_update_init()
 void boss_update()
 {
 
+	boss.pos.x += (player_pos.x - boss.pos.x) * 0.05f;
 
-
-		if (boss.pos.x < player_pos.x - 5)
-		{
-			boss.pos.x += boss.speed;
-		}
-		else if (boss.pos.x > player_pos.x + 5)
-		{
-			boss.pos.x -= boss.speed;
-		}
-
-		if (boss.pos.y < player_pos.y - BOSS_CENTER_H - 5)
-		{
-			boss.pos.y += boss.speed;
-		}
-		else if (boss.pos.y > player_pos.y - BOSS_CENTER_H + 5)
-		{
-			boss.pos.y -= boss.speed;
-		}
+	boss.screen_center = player_pos.y - BOSS_CENTER_H;
+	 
+	boss.pos.y += (boss.screen_center - boss.pos.y) * 0.1f;
 
 	//É{ÉXÇÃçsìÆîÕàÕêßå¿
 	if (boss.pos.x <= player_pos.x - SCREEN_W * 0.5f)

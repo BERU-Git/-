@@ -68,7 +68,7 @@
 
 #define GIMICK_MAX 4
 
-#define BOSS_CENTER_H   415            //ボスのセンター位置
+#define BOSS_CENTER_H   412            //ボスのセンター位置
 
 
 #define ACCELERATION    0.5f           //プレイヤーの加速度
@@ -82,8 +82,6 @@
 
 #define MIN_SPEED      -10.0f          //スピードの最大速度
 #define MAX_SPEED       10.0f
-
-#define BOSS_SPEED       7.0f          //ボスのスピード
 
 #define PLAYER_HP        15            //プレイヤーのHP
 
