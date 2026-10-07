@@ -29,7 +29,7 @@ void attack_line_render()
 	strong_attack_line.screen.x = strong_attack_line.pos.x - camera_pos.x + SCREEN_W * 0.5f;
 	strong_attack_line.screen.y = strong_attack_line.pos.y - camera_pos.y + SCREEN_H * 0.5f;
 	
-	if (strong_enemy.attack)
+	if (strong_enemy.charge)
 	{
 		sprite_render(spr_strong_attack_line, strong_attack_line.screen.x, strong_attack_line.screen.y,
 					  1, 1,
@@ -44,7 +44,7 @@ void attack_line_render()
 	{
 		attack_line[i].screen.x = attack_line[i].pos.x - camera_pos.x + SCREEN_W * 0.5f;
 		attack_line[i].screen.y = attack_line[i].pos.y - camera_pos.y + SCREEN_H * 0.5f;
-		if(enemy[i].attack)
+		if(enemy[i].charge)
 		{
 			sprite_render(spr_attack_line, attack_line[i].screen.x, attack_line[i].screen.y,
 				1, 1,

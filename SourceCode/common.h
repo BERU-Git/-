@@ -25,8 +25,8 @@
 #define MAGIC_CIRCLE_W  512            //魔法陣の画像サイズ
 #define MAGIC_CIRCLE_H  512            //
 
-#define BOSS_W          1211           //ボスのサイズ
-#define BOSS_H          503            //
+#define BOSS_W          672           //ボスのサイズ
+#define BOSS_H          512            //
 
 #define NORMAL_ENEMY_HITBOX    100     //ゴブリンのヒットボックス
 
@@ -68,7 +68,7 @@
 
 #define GIMICK_MAX 4
 
-
+#define BOSS_CENTER_H   412            //ボスのセンター位置
 
 
 #define ACCELERATION    0.5f           //プレイヤーの加速度

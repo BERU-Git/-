@@ -5,6 +5,7 @@
 #include "hit_check.h"
 #include "gimick.h"
 #include "boss.h"
+#include "attack_line.h"
 int stage5_timer;
 int stage5_state;
 
@@ -18,6 +19,8 @@ void stage5_init()
 	player_init();
 	field_init();
 	boss_init();
+	attack_line_init();
+
 
 
 }
@@ -27,13 +30,12 @@ void stage5_update()
 	stage5_timer++;
 	
 	camera_update();
-	player_update();
 	field_update();
 	screen_shake(15);
 	
 	if (stage5_timer >= 120 && stage5_timer <= 420)
 	{
-		screen_shake_init(300);
+		screen_shake_init(120);
 		boss_update_init();
 
 	}
@@ -41,6 +43,7 @@ void stage5_update()
 		
 		if (stage5_timer >= 420)
 	{
+		player_update();
 		boss_update();
 	}
 
@@ -51,12 +54,9 @@ void stage5_render()
 
 	GameLib::clear(0.0f, 0.0f, 0.0f);
 	field_render();
+	attack_line_render();
 	player_render();
-
-	if (stage5_timer >= 120)
-	{
 	boss_render();
-	}
 
 }
 void stage5_deinit()
@@ -64,5 +64,5 @@ void stage5_deinit()
 	player_deinit();
 	field_deinit();
 	boss_deinit();
-
+	attack_line_delete();
 }
