@@ -25,7 +25,12 @@ void stage4_update()
 	field_update();
 	gimick_update();
 	troll_update();
-	attack_line_update()
+	attack_line_update();
+
+	if (player_hp <= 0)
+	{
+		nextScene = SCENE_RESULT;
+	}
 		;
 
 	if (go_next)
