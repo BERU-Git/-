@@ -12,8 +12,8 @@ enum boss_attack
 struct boss_data
 {
 	VECTOR2 pos;
-	float speed;
 	VECTOR2 screen;
+	float screen_center;
 };
 
 extern bool boss_stage;

@@ -4,6 +4,7 @@
 #include "field.h"
 #include "hit_check.h"
 #include "gimick.h"
+#include "troll.h"
 
 
 void stage4_init()
@@ -12,7 +13,7 @@ void stage4_init()
 	player_init();
 	field_init();
 	gimick_init();
-
+	troll_init();
 }
 void stage4_update()
 {
@@ -21,6 +22,8 @@ void stage4_update()
 	player_update();
 	field_update();
 	gimick_update();
+	troll_update();
+
 
 	if (go_next)
 	{
@@ -36,7 +39,7 @@ void stage4_render()
 	field_render();
 	player_render();
 	gimick_render();
-
+	troll_render();
 }
 void stage4_deinit()
 {
