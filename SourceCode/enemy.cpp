@@ -10,10 +10,10 @@ Sprite* spr_boss_enemy;
 Sprite* spr_extinction = nullptr;
 enemy_data enemy[ENEMY_MAX];
 
-int effect_anime_timer_goblin;
-VECTOR2 effect_tex_pos_goblin;
+int effect_anime_timer_goblin[ENEMY_MAX];
+VECTOR2 effect_tex_pos_goblin[ENEMY_MAX];
 VECTOR2 effect_tex_size_goblin;
-int effect_count_goblin;
+int effect_count_goblin[ENEMY_MAX];
 bool effect_judge_goblin[ENEMY_MAX];
 bool effect_check_goblin[ENEMY_MAX];
 
@@ -59,18 +59,19 @@ void enemy_init()
 	spr_enemy = sprite_load(L"Data/Images/enemy01.png");
 	spr_boss_enemy = sprite_load(L"Data/Images/boss_enemy.png");
 	spr_extinction = sprite_load(L"Data/Images/消滅エフェクト.png");
-	effect_anime_timer_goblin = 0;
-	effect_tex_pos_goblin.x = 0.0f;
-	effect_tex_pos_goblin.y = 0.0f;
 	effect_tex_size_goblin.x = 160.0f;
 	effect_tex_size_goblin.y = 160.0f;
-	effect_count_goblin = 0;
+	
 
 	for (int i = 0; i < ENEMY_MAX; i++)
 	{
 		enemy[i] = {};
 		effect_judge_goblin[i] = false;
 		effect_check_goblin[i] = false;
+		effect_anime_timer_goblin[i] = 0;
+		effect_count_goblin[i] = 0;
+		effect_tex_pos_goblin[i] = { 0.0f, 0.0f };
+
 	}
 
 	for (int i = 0; i < ENEMY_MAX; i++)
@@ -122,17 +123,19 @@ void enemy_update()
 		// エフェクトのアニメーション再生管理
 		if (effect_judge_goblin[i] == true)
 		{
-			effect_anime_timer_goblin++;
-			if ((effect_anime_timer_goblin) % 5 == 0)
+			effect_anime_timer_goblin[i]++;
+			if (effect_anime_timer_goblin[i] % 5 == 0)
 			{
-				effect_count_goblin++;
-				effect_tex_pos_goblin.x = (160.0f * effect_count_goblin);
+				effect_count_goblin[i]++;
+				effect_tex_pos_goblin[i].x = (160.0f * effect_count_goblin[i]);
 			}
-			if (effect_count_goblin > 11)
+			if (effect_count_goblin[i] > 11)
 			{
-				effect_count_goblin = 0;
+				effect_count_goblin[i] = 0;
 				effect_judge_goblin[i] = false;
 				effect_check_goblin[i] = false;
+				effect_anime_timer_goblin[i] = 0;
+				effect_tex_pos_goblin[i] = { 0.0f, 0.0f };
 			}
 		}
 		switch (enemy[i].state)
@@ -216,6 +219,9 @@ void enemy_update()
 				if (i == j)
 					continue;
 
+				if (effect_judge_goblin[j])// エフェクト再生中のゴブリンは対象外
+					continue;////ゴブリンの消滅エフェクトが再生中なら対応してるゴブリンとの衝突判定をスキップする。
+
 				if (hit_check(
 					enemy[i].pos.x, enemy[i].pos.y, NORMAL_ENEMY_HITBOX * 0.5f,
 					enemy[j].pos.x, enemy[j].pos.y, NORMAL_ENEMY_HITBOX * 0.5f))
@@ -223,6 +229,10 @@ void enemy_update()
 					//ここ
 					enemy[j].last_pos.x = enemy[j].pos.x;
 					enemy[j].last_pos.y = enemy[j].pos.y;
+
+					effect_anime_timer_goblin[j] = 0;
+					effect_count_goblin[j] = 0;
+					effect_tex_pos_goblin[j] = { 0.0f, 0.0f };
 
 					effect_check_goblin[j] = true;
 					effect_judge_goblin[j] = true;
@@ -323,7 +333,7 @@ void enemy_render()//敵の描画
 				spr_extinction,
 				enemy[i].last_pos_screen.x, enemy[i].last_pos_screen.y,
 				1.0f, 1.0f,
-				effect_tex_pos_goblin.x, effect_tex_pos_goblin.y,
+				effect_tex_pos_goblin[i].x, effect_tex_pos_goblin[i].y,
 				effect_tex_size_goblin.x, effect_tex_size_goblin.y,
 				80,80
 			);
