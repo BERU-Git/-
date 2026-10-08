@@ -6,6 +6,7 @@
 #include "boss.h"
 #include "attack_line.h"
 int stage5_timer;
+int stage5_time;
 int stage5_state;
 extern int game_timer;
 
@@ -26,6 +27,18 @@ void stage5_init()
 void stage5_update()
 {
 	game_timer++;
+
+	if (player_hp <= 0)
+	{
+		stage5_time++;
+		if (stage5_time >= 300)
+		{
+			player_hp = CONTINUE_HP;
+			stage5_time = 0;
+		}
+	}
+
+
 	GameLib::setBlendMode(Blender::BS_ALPHA);
 	stage5_timer++;
 	
@@ -37,20 +50,19 @@ void stage5_update()
 	{
 		screen_shake_init(120);
 		boss_update_init();
-
 	}
 	
 		
 		if (stage5_timer >= 420)
 	{
-		player_update();
+		if(player_hp)
+		{
+			player_update();
+		}
+
 		boss_update();
 	}
 
-		if (player_hp <= 0)
-		{
-			nextScene = SCENE_RESULT;
-		}
 
 
 }

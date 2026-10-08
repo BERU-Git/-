@@ -6,9 +6,11 @@
 #include "hit_check.h"
 #include "gimick.h"
 #include "strong_enemy.h"
+#include "troll.h"
 #include "range_enemy.h"
 
 extern int game_timer;
+int stage2_time;
 
 void stage2_init()
 {
@@ -23,27 +25,40 @@ void stage2_init()
 	strong_enemy_init();
 	field_init();
 	gimick_init();
+	troll_init();
 	range_enemy_init();
 
 }
 void stage2_update()
 {
+	if (player_hp <= 0)
+	{
+		stage2_time++;
+		if (stage2_time >= 300)
+		{
+			player_hp = CONTINUE_HP;
+			stage2_time = 0;
+		}
+	}
+
 	game_timer++;
+
+	if (player_hp > 0)
+	{
+		player_update();
+	}
+
 	GameLib::setBlendMode(Blender::BS_ALPHA);
 	camera_update();
 	strong_enemy_update();
-	player_update();
 	field_update();
 	gimick_update();
+	troll_update();
 	range_enemy_update();
 
 
 	debug::setString("hp%d", player_hp);
 
-	if (player_hp <= 0)
-	{
-		nextScene = SCENE_RESULT;
-	}
 
 	if (go_next)
 	{
@@ -60,6 +75,7 @@ void stage2_render()
 	attack_line_render();
 	player_render();
 	strong_enemy_render();
+	troll_render();
 	gimick_render();
 	range_enemy_render();
 
@@ -71,6 +87,7 @@ void stage2_deinit()
 	gimick_deinit();
 	strong_enemy_deinit();
 	attack_line_delete();
+	troll_deinit();
 	range_enemy_deinit();
 
 }

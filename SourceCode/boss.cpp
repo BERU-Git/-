@@ -171,6 +171,10 @@ void boss_update()
 		range_enemy_update();
 		if (boss.knock_down)
 		{
+			troll_deinit();
+			strong_enemy_deinit();
+			range_enemy_deinit();
+
 			screen_shake_init(240);
 			state = MIX_ENEMY_INIT;
 			boss_right.knock_down = false;

@@ -131,5 +131,6 @@ void strong_enemy_render()
 }
 void strong_enemy_deinit()
 {
+	strong_enemy = {};
 	safe_delete(spr_strong_enemy);
 }

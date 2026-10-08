@@ -337,6 +337,7 @@ void troll_render()
 }
 void troll_deinit()
 {
+	troll = {};
 	safe_delete(spr_troll);
 	
 }

@@ -8,7 +8,7 @@
 #include "gimick.h"
 
 extern int game_timer;
-
+int stage1_time;
 void stage1_init()
 {
 	player_init();
@@ -24,10 +24,25 @@ void stage1_init()
 
 void stage1_update()
 {
+	if (player_hp <= 0)
+	{
+		stage1_time++;
+		if (stage1_time >= 300)
+		{
+			player_hp = CONTINUE_HP;
+			stage1_time = 0;
+		}
+	}
 	game_timer++;
-		GameLib::setBlendMode(Blender::BS_ALPHA);
+
+	if(player_hp > 0)
+	{
 		player_update();
+	}
+
+
 		enemy_update();
+		GameLib::setBlendMode(Blender::BS_ALPHA);
 		attack_line_update();
 		field_update();
 		camera_update();
@@ -35,10 +50,8 @@ void stage1_update()
 
 		debug::setString("hp%d", player_hp);
 
-		if (player_hp <= 0)
-		{
-			nextScene = SCENE_RESULT;
-		}
+		
+
 		if (go_next)
 		{
 			nextScene = SCENE_STAGE2;

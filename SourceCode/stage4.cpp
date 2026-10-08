@@ -11,6 +11,7 @@
 #include "range_enemy.h"
 
 extern int game_timer;
+int stage4_time;
 
 void stage4_init()
 {
@@ -27,22 +28,32 @@ void stage4_init()
 }
 void stage4_update()
 {
+
+	if (player_hp <= 0)
+	{
+		stage4_time++;
+		if (stage4_time >= 300)
+		{
+			player_hp = CONTINUE_HP;
+			stage4_time = 0;
+		}
+	}
+	if(player_hp)
+	{
+		player_update();
+	}
+
 	game_timer++;
 	GameLib::setBlendMode(Blender::BS_ALPHA);
 	field_update();
 	camera_update();
 	enemy_update();
-	player_update();
 	gimick_update();
 	strong_enemy_update();
 	troll_update();
 	range_enemy_update();
 	debug::setString("hp%d", player_hp);
 
-	if (player_hp <= 0)
-	{
-		nextScene = SCENE_RESULT;
-	}
 
 	if (go_next)
 	{
@@ -53,6 +64,8 @@ void stage4_update()
 }
 void stage4_render()
 {
+
+
 
 	GameLib::clear(0.0f, 0.0f, 0.0f);
 	field_render();
