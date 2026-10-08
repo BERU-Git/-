@@ -16,6 +16,7 @@ void strong_enemy_init()
 	spr_boss_strong_enemy = sprite_load(L"Data/Images/boss_strong_enemy.png");
 
 
+
 	strong_enemy = {};
 
 	bool can_spawn = false;
@@ -105,8 +106,26 @@ void strong_enemy_update()
 		break;
 	}
 
+}
+
+void boss_strong_enemy_init()
+{
+	spr_boss_strong_enemy = sprite_load(L"Data/Images/boss_strong_enemy.png");
+
+	strong_enemy = {};
+
+
 
 }
+
+void boss_strong_enemy_update()
+{
+
+}
+
+
+
+
 void strong_enemy_render()
 {
 	strong_enemy.screen.x = strong_enemy.pos.x - camera_pos.x + SCREEN_W * 0.5f;

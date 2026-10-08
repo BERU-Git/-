@@ -12,6 +12,13 @@ enum boss_attack
 	LAST_ATTACK
 };
 
+enum boss_last
+{
+	PHASE1,
+	PHASE2,
+	PHASE3
+};
+
 struct boss_data
 {
 	VECTOR2 pos;
@@ -21,8 +28,11 @@ struct boss_data
 };
 
 extern bool boss_stage;
+extern bool last_attack;
 extern Sprite* spr_boss;
 extern boss_data boss;
+extern boss_attack state;
+
 
 
 void boss_init();

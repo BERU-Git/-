@@ -129,9 +129,6 @@ void range_enemy_update()
 			range_enemy_bullet[i].pos.y += range_enemy_bullet[i].speed.y * range_enemy_bullet[i].chase.y;
 		}
 
-
-
-
 		if (range_teleport_timer >= RANGE_TELEPORT_TIMER)
 		{
 			range_enemy.range_state = BULLET_CHASE;
@@ -183,10 +180,6 @@ void range_enemy_render()
 			STRONG_ENEMY_W, STRONG_ENEMY_H,
 			STRONG_ENEMY_W * 0.5f, STRONG_ENEMY_H * 0.5f);
 	}
-
-
-
-
 
 }
 void range_enemy_deinit()

@@ -58,9 +58,6 @@ void title_update()
 			start_check = false;
 		}
 		
-
-		
-
 		break;
 
 	}
@@ -68,7 +65,6 @@ void title_update()
 	}
 
 	title_timer++;
-
 
 }
 void title_render()
