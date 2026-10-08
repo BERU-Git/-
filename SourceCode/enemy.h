@@ -58,6 +58,8 @@ void enemy_separate(float pos1_x, float pos1_y,
 void enemy_init();
 void enemy_deinit();
 void enemy_update();
+void boss_enemy_init();
+void boss_enemy_update();
 void enemy_render();
 
 

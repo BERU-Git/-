@@ -141,10 +141,10 @@ void boss_update()
 	debug::setString("LEFT%d", boss_left.knock_down);
 
 	//攻撃ウェーブ処理
-
 	switch (state)
 	{
 	case NORMAL_ENEMY:
+		state = LAST_ATTACK_INIT;
 		enemy_update();
 		if (boss_right.knock_down && boss_left.knock_down)
 		{
@@ -153,6 +153,7 @@ void boss_update()
 			screen_shake_init(240);
 		}
 		break;
+
 	case STRONG_ENEMY_INIT:
 		boss_state_timer++;
 		screen_shake(15);
@@ -165,6 +166,7 @@ void boss_update()
 			boss_state_timer = 0;
 		}
 		break;
+
 	case STRONG_ENEMY:
 		troll_update();
 		strong_enemy_update();
@@ -182,6 +184,7 @@ void boss_update()
 			boss.knock_down = false;
 		}
 		break;
+
 	case MIX_ENEMY_INIT:
 		boss_state_timer++;
 		screen_shake(15);
@@ -194,6 +197,7 @@ void boss_update()
 			state = MIX_ENEMY;
 			boss_state_timer = 0;
 		}
+		break;
 
 	case MIX_ENEMY:
 		enemy_update();
@@ -217,11 +221,15 @@ void boss_update()
 		screen_shake(15);
 		if (boss_state_timer >= 180)
 		{
+			boss_enemy_init();
 			state = LAST_ATTACK;
 			boss_state_timer = 0;
 		}
+		break;
+
 	case LAST_ATTACK:
-		nextScene = SCENE_RESULT;
+		boss_enemy_update();
+		//nextScene = SCENE_RESULT;
 	
 	}
 
@@ -260,8 +268,9 @@ void boss_render()
 
 		break;
 
-	//case LAST_ATTACK:
-
+	case LAST_ATTACK:
+		enemy_render();
+		break;
 
 	}
 

@@ -10,6 +10,9 @@ Sprite* spr_boss_enemy;
 Sprite* spr_extinction = nullptr;
 enemy_data enemy[ENEMY_MAX];
 
+int last_attack_time;
+int attack_enemy_num;
+
 int effect_anime_timer_goblin;
 VECTOR2 effect_tex_pos_goblin;
 VECTOR2 effect_tex_size_goblin;
@@ -266,7 +269,7 @@ void enemy_update()
 			enemy[i].speed.x, enemy[i].speed.y);
 	}
 
-
+	
 
 	//エネミーのモーション
 	for (int i = 0; i < ENEMY_MAX; i++)
@@ -292,14 +295,113 @@ void enemy_update()
 
 }
 
+void boss_enemy_init()
+{
+
+	spr_boss_enemy = sprite_load(L"Data/Images/boss_enemy.png");
+	spr_extinction = sprite_load(L"Data/Images/消滅エフェクト.png");
+	
+	last_attack_time = 0;
+	attack_enemy_num = 0;
+	boss_stage = true;
+
+	float pos_angle = ToRadian(360.0f / ENEMY_MAX);
+
+	for (int i = 0; i < ENEMY_MAX; i++)
+	{
+		enemy[i].pos.x = player_pos.x + cosf(pos_angle * i) * 500;
+		enemy[i].pos.y = player_pos.y + sinf(pos_angle * i) * 500;
+
+		enemy[i].attack = false;
+
+		enemy[i].direction = 1;       
+		enemy[i].render_posx = 0;     
+		enemy[i].effect_timer = 0;
+
+		enemy_chase(player_pos.x, player_pos.y,
+			enemy[i].pos.x, enemy[i].pos.y,
+			enemy[i].angle, enemy[i].chase.x, enemy[i].chase.y);
+	}
+
+
+
+}
+
+
+void boss_enemy_update()
+{
+	last_attack_time++;
+	
+	if (last_attack_time >= 15)
+	{
+		last_attack_time = 0;
+
+
+		enemy[attack_enemy_num].attack = true;
+
+		attack_enemy_num++;
+
+		if (attack_enemy_num >= ENEMY_MAX)
+		{
+			attack_enemy_num = 0;
+		}
+	}
+
+
+
+		enemy[attack_enemy_num].attack = true;
+		enemy[attack_enemy_num].charge_timer += 1.0f;
+
+
+		for (int i = 0; i < ENEMY_MAX; i++)
+		{
+			if(enemy[i].attack)
+			{
+				enemy[attack_enemy_num].pos.x += enemy[attack_enemy_num].chase.x * CHARGE_SPEED;
+				enemy[attack_enemy_num].pos.y += enemy[attack_enemy_num].chase.y * CHARGE_SPEED;
+			}
+		}
+	
+
+
+
+	//エネミーのモーション
+	for (int i = 0; i < ENEMY_MAX; i++)
+	{
+		enemy[i].effect_timer++;
+
+		if (enemy[i].effect_timer % 6 == 0)
+		{
+			enemy[i].render_posx++;
+			enemy[i].render_posx %= 8;
+		}
+
+		//エネミーの向き更新
+		if (enemy[i].pos.x <= player_pos.x)
+		{
+			enemy[i].direction = 1;
+		}
+		else
+		{
+			enemy[i].direction = -1;
+		}
+	}
+
+
+}
+
+
+
 void enemy_render()//敵の描画
 {
 	for (int i = 0; i < ENEMY_MAX; i++)
 	{
 		enemy[i].screen.x = enemy[i].pos.x - camera_pos.x + SCREEN_W * 0.5f;
 		enemy[i].screen.y = enemy[i].pos.y - camera_pos.y + SCREEN_H * 0.5f;
+
 		enemy[i].last_pos_screen.x = enemy[i].last_pos.x - camera_pos.x + SCREEN_W * 0.5f;
 		enemy[i].last_pos_screen.y = enemy[i].last_pos.y - camera_pos.y + SCREEN_H * 0.5f;
+
 		if (!boss_stage)
 		{
 			sprite_render(spr_enemy, enemy[i].screen.x, enemy[i].screen.y,

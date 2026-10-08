@@ -15,8 +15,8 @@ void stage5_init()
 	boss_stage = true;
 	stage5_timer = 0;
 	stage5_state = 0;
-	camera_init();
 	player_init();
+	camera_init();
 	field_init();
 	boss_init();
 	attack_line_init();
