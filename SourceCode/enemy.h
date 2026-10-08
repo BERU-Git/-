@@ -18,6 +18,7 @@
 struct enemy_data
 {
 	VECTOR2 pos = {};
+	VECTOR2 start_pos = {};
 	VECTOR2 speed = {};
 	VECTOR2 chase = {};
 	VECTOR2 move = {};

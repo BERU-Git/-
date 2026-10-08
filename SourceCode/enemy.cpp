@@ -12,6 +12,7 @@ enemy_data enemy[ENEMY_MAX];
 
 int last_attack_time;
 int attack_enemy_num;
+int attack_loop;
 
 int effect_anime_timer_goblin;
 VECTOR2 effect_tex_pos_goblin;
@@ -223,7 +224,6 @@ void enemy_update()
 					enemy[i].pos.x, enemy[i].pos.y, NORMAL_ENEMY_HITBOX * 0.5f,
 					enemy[j].pos.x, enemy[j].pos.y, NORMAL_ENEMY_HITBOX * 0.5f))
 				{
-					//ここ
 					enemy[j].last_pos.x = enemy[j].pos.x;
 					enemy[j].last_pos.y = enemy[j].pos.y;
 
@@ -301,6 +301,7 @@ void boss_enemy_init()
 	spr_boss_enemy = sprite_load(L"Data/Images/boss_enemy.png");
 	spr_extinction = sprite_load(L"Data/Images/消滅エフェクト.png");
 	
+	attack_loop = 0;
 	last_attack_time = 0;
 	attack_enemy_num = 0;
 	boss_stage = true;
@@ -309,11 +310,16 @@ void boss_enemy_init()
 
 	for (int i = 0; i < ENEMY_MAX; i++)
 	{
-		enemy[i].pos.x = player_pos.x + cosf(pos_angle * i) * 500;
-		enemy[i].pos.y = player_pos.y + sinf(pos_angle * i) * 500;
+		enemy[i].start_pos.x = player_pos.x + cosf(pos_angle * i) * 600;
+		enemy[i].start_pos.y = player_pos.y + sinf(pos_angle * i) * 600;
+		enemy[i].pos.x = enemy[i].start_pos.x;
+		enemy[i].pos.y = enemy[i].start_pos.y;
 
+		attack_line[i].pos.x = enemy[i].pos.x;
+		attack_line[i].pos.y = enemy[i].pos.y;
 		enemy[i].attack = false;
 
+		enemy[i].charge_timer = 0;
 		enemy[i].direction = 1;       
 		enemy[i].render_posx = 0;     
 		enemy[i].effect_timer = 0;
@@ -332,35 +338,48 @@ void boss_enemy_update()
 {
 	last_attack_time++;
 	
-	if (last_attack_time >= 15)
+	if (last_attack_time >= 8)
 	{
 		last_attack_time = 0;
-
-
 		enemy[attack_enemy_num].attack = true;
-
+		enemy[attack_enemy_num].charge = true;
 		attack_enemy_num++;
 
 		if (attack_enemy_num >= ENEMY_MAX)
 		{
 			attack_enemy_num = 0;
+			attack_loop++;
+
+			if (attack_loop >= 3)
+			{
+				nextScene = SCENE_RESULT;
+			}
 		}
+
 	}
-
-
-
-		enemy[attack_enemy_num].attack = true;
-		enemy[attack_enemy_num].charge_timer += 1.0f;
 
 
 		for (int i = 0; i < ENEMY_MAX; i++)
 		{
 			if(enemy[i].attack)
 			{
-				enemy[attack_enemy_num].pos.x += enemy[attack_enemy_num].chase.x * CHARGE_SPEED;
-				enemy[attack_enemy_num].pos.y += enemy[attack_enemy_num].chase.y * CHARGE_SPEED;
+
+				enemy[i].charge_timer += 1.0f;
+				enemy[i].pos.x += enemy[i].chase.x * 50.0f;
+				enemy[i].pos.y += enemy[i].chase.y * 50.0f;
+				if (enemy[i].charge_timer >= 24.0f)
+				{
+					enemy[i].charge_timer =0;
+					enemy[i].attack = false;
+					enemy[i].charge = false;
+					enemy[i].pos.x = enemy[i].start_pos.x;
+					enemy[i].pos.y = enemy[i].start_pos.y;
+
+				}
+
 			}
-		}
+
+    	}
 	
 
 
