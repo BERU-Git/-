@@ -24,6 +24,8 @@ struct enemy_data
 	VECTOR2 screen = {};
 	VECTOR2 separate = {};
 	VECTOR2 charge_direction = {};
+	VECTOR2 last_pos{};
+	VECTOR2 last_pos_screen = {};
 	enemy_state state = {};
 	range_enemy_state range_state = {};
 	int render_posx = 0;

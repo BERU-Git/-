@@ -5,6 +5,7 @@
 #include "camera.h"
 
 Sprite* spr_troll = nullptr;
+Sprite* spr_exprotion_effect = nullptr;
 
 int troll_attack_anime_timer;
 int troll_attack_anime;
@@ -17,6 +18,15 @@ VECTOR2 troll_screen;
 bool check;
 bool danger_circle;
 
+int effect_anime;
+int effect_anime_timer;
+VECTOR2 effect_tex_pos;
+VECTOR2 effect_tex_size;
+int effect_count;
+bool effect_judge;
+bool effect_check;
+
+
 troll_data troll;
 
 
@@ -24,6 +34,7 @@ void troll_init()
 {
 	troll = {};
 	spr_troll = sprite_load(L"Data/images/troll.png");
+	spr_exprotion_effect = sprite_load(L"Data/images/爆破エフェクト.png");
 	
 	troll.act = TROLL_IDLE;
 	troll.attack_state = TROLL_ATTACK_START;
@@ -34,6 +45,15 @@ void troll_init()
 	troll_tex_size.x = STRONG_ENEMY_W;
 	troll_tex_size.y = STRONG_ENEMY_H;
 	troll_attack_anime_timer = 0;
+	effect_anime = 0;
+	effect_anime_timer = 0;
+	effect_tex_pos.x = 0.0f;
+	effect_tex_pos.y = 0.0f;
+	effect_tex_size.x = 512.0f;
+	effect_tex_size.y = 512.0f;
+	effect_check = false;
+	effect_count = 0;
+	effect_judge = false;
 
 	bool can_spawn = false;
 
@@ -60,8 +80,27 @@ void troll_init()
 	troll_attack_hit = false;
 	check = false;
 	danger_circle = false;
+
 }
 
+//bool effect_animation(int startFrame, int endFrame, int frameSpeed)
+//{
+//	int total = endFrame - startFrame + 1;
+//	effect_anime = effect_anime_timer / frameSpeed;
+//	int check_frame = startFrame + effect_anime;
+//	if (check_frame < 8)
+//	{
+//		effect_tex_pos.x = check_frame * effect_tex_size.x;
+//		effect_tex_pos.y = 0.0f;
+//	}
+//	else
+//	{
+//		effect_tex_pos.x = (check_frame - 8);
+//		effect_tex_pos.y = effect_tex_size.y;
+//	}
+//	effect_anime_timer++;
+//	return false;
+//}
 
 bool troll_animation_variation(int startFrame, int endFrame, int frameSpeed, bool loop)//アニメーションの?コマから?コマまでを再生する関数
 //startFrameは始まりのコマ。endFrameが終わりのフレーム。frameSpeedは1コマ？フレームか。loopはループするかどうか
@@ -105,7 +144,24 @@ bool troll_animation_variation(int startFrame, int endFrame, int frameSpeed, boo
 }
 void troll_update()//ボスのアクション
 {
-
+	if (effect_judge)
+	{
+		effect_anime_timer++;
+		if ((effect_anime_timer) % 4 == 0)
+		{
+			effect_count++;
+			effect_tex_pos.x = (512.0f * effect_count);
+		}
+		if (effect_count == 8)
+		{
+			effect_tex_pos.y = effect_tex_size.y;
+		}
+		if (effect_count > 16)
+		{
+			effect_count = 0;
+			effect_judge = false;
+		}
+	}
 	if (player_pos.x < troll.pos.x)
 	{
 		troll_direction = -1;
@@ -200,15 +256,22 @@ void troll_update()//ボスのアクション
 		{
 			check = true;
 			bool anime_end = troll_animation_variation(7, 8, 4, false);//end状態に移行してあげて一回まっさらにしてからIDLEに戻す
-
+			
 
 			if (!troll_attack_hit)
 			{
+				
 				if (hit_check(player_pos.x, player_pos.y, PLAYER_HITBOX * 0.5,
 					troll.pos.x, troll.pos.y, troll.radius))
 				{
 					troll_attack_hit = true;
 					player_hp -= 5;
+
+					effect_check = true;
+					effect_judge = true;
+					
+					
+					
 				}
 			}
 			if (anime_end)
@@ -231,6 +294,7 @@ void troll_update()//ボスのアクション
 				troll_attack_anime = 0;
 				troll_attack_hit = false;
 				danger_circle = false;
+				effect_check = false;
 			}
 			break;
 		}
@@ -260,6 +324,12 @@ void troll_render()
 		troll_tex_pos.x, troll_tex_pos.y,
 		troll_tex_size.x, troll_tex_size.y,
 		128, 128);
+
+	if (effect_check)
+	{
+		sprite_render(spr_exprotion_effect, troll_screen.x, troll_screen.y, 2.3f, 2.3f, effect_tex_pos.x, effect_tex_pos.y, effect_tex_size.x, effect_tex_size.y, 256, 256);
+	}
+	
 
 	
 
