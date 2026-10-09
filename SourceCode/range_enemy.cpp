@@ -191,6 +191,7 @@ void range_enemy_render()
 }
 void range_enemy_deinit()
 {
+	range_enemy = {};
 
 	for (int i = 0; i < BULLET_MAX; i++)
 	{

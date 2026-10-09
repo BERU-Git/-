@@ -18,6 +18,7 @@
 struct enemy_data
 {
 	VECTOR2 pos = {};
+	VECTOR2 start_pos = {};
 	VECTOR2 speed = {};
 	VECTOR2 chase = {};
 	VECTOR2 move = {};
@@ -58,6 +59,8 @@ void enemy_separate(float pos1_x, float pos1_y,
 void enemy_init();
 void enemy_deinit();
 void enemy_update();
+void boss_enemy_init();
+void boss_enemy_update();
 void enemy_render();
 
 

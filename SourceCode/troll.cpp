@@ -27,6 +27,7 @@ bool effect_judge;
 bool effect_check;
 
 
+
 troll_data troll;
 
 
@@ -144,6 +145,14 @@ bool troll_animation_variation(int startFrame, int endFrame, int frameSpeed, boo
 }
 void troll_update()//ボスのアクション
 {
+	/*if (player_pos.x < troll.pos.x)
+	{
+		troll_direction = 1;
+	}
+	else
+	{
+		troll_direction = -1;
+	}*/
 	if (effect_judge)
 	{
 		effect_anime_timer++;
@@ -165,6 +174,7 @@ void troll_update()//ボスのアクション
 	if (player_pos.x < troll.pos.x)
 	{
 		troll_direction = -1;
+		
 	}
 	else
 	{
@@ -320,10 +330,10 @@ void troll_render()
 	troll_screen.y = troll.pos.y - camera_pos.y + SCREEN_H * 0.5f;
 	sprite_render(spr_troll,
 		troll_screen.x, troll_screen.y,
-		2.0f, 2.0f,
+		2.0f * troll_direction, 2.0f,
 		troll_tex_pos.x, troll_tex_pos.y,
 		troll_tex_size.x, troll_tex_size.y,
-		128, 128);
+		128 , 128);
 
 	if (effect_check)
 	{
@@ -337,6 +347,7 @@ void troll_render()
 }
 void troll_deinit()
 {
+	troll = {};
 	safe_delete(spr_troll);
 	
 }

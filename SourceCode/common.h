@@ -35,7 +35,7 @@
 
 #define PLAYER_HITBOX         64       //プレイヤーのヒットボックス
 
-#define BOSS_HAND_HITBOX      64       //プレイヤーのヒットボックス
+#define BOSS_HAND_HITBOX      96       //プレイヤーのヒットボックス
 
 #define BOSS_HITBOX           256       //プレイヤーのヒットボックス
 
@@ -93,6 +93,8 @@
 #define MAX_SPEED       10.0f
 
 #define PLAYER_HP        15            //プレイヤーのHP
+
+#define CONTINUE_HP        7           //コンテニューのHP
 
 #define PLAYER_HEEL       1            //プレイヤー回復量
 
