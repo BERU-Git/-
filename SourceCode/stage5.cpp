@@ -5,6 +5,10 @@
 #include "gimick.h"
 #include "boss.h"
 #include "attack_line.h"
+#include"timer.h"
+
+
+
 int stage5_timer;
 int stage5_time;
 int stage5_state;
@@ -19,6 +23,7 @@ void stage5_init()
 	camera_init();
 	field_init();
 	boss_init();
+	timer_init();
 	attack_line_init();
 
 
@@ -33,6 +38,10 @@ void stage5_update()
 		stage5_time++;
 		if (stage5_time >= 300)
 		{
+			if (last_attack == true)
+			{
+				state = LAST_ATTACK_INIT;
+			}
 			player_hp = CONTINUE_HP;
 			stage5_time = 0;
 		}
@@ -44,6 +53,7 @@ void stage5_update()
 	
 	camera_update();
 	field_update();
+	timer_update();
 	screen_shake(15);
 	
 	if (stage5_timer >= 120 && stage5_timer <= 420)
@@ -53,7 +63,7 @@ void stage5_update()
 	}
 	
 		
-		if (stage5_timer >= 420)
+	if (stage5_timer >= 420)
 	{
 		if(player_hp)
 		{
@@ -74,6 +84,7 @@ void stage5_render()
 	attack_line_render();
 	player_render();
 	boss_render();
+	timer_render();
 
 }
 void stage5_deinit()
@@ -82,4 +93,5 @@ void stage5_deinit()
 	field_deinit();
 	boss_deinit();
 	attack_line_delete();
+	timer_deinit();
 }

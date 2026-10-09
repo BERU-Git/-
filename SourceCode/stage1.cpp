@@ -1,6 +1,7 @@
 #include "all.h"
 #include "field.h"
 #include "player.h"
+#include "timer.h"
 #include "camera.h"
 #include "enemy.h"
 #include "hit_check.h"
@@ -9,9 +10,15 @@
 
 extern int game_timer;
 int stage1_time;
+
+
+
+
+
 void stage1_init()
 {
 	player_init();
+	timer_init();
 	enemy_init();
 	field_init();
 	camera_init();
@@ -41,6 +48,7 @@ void stage1_update()
 	}
 
 
+		timer_update();
 		enemy_update();
 		GameLib::setBlendMode(Blender::BS_ALPHA);
 		attack_line_update();
@@ -67,6 +75,7 @@ void stage1_render()
     player_render();
 	enemy_render();
 	gimick_render();
+	timer_render();
 	
 
 }
@@ -78,5 +87,6 @@ void stage1_deinit()
 	field_deinit();
 	attack_line_delete();
 	gimick_deinit();
+	timer_deinit();
 
 }

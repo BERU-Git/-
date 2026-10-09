@@ -8,9 +8,11 @@
 #include "strong_enemy.h"
 #include "troll.h"
 #include "range_enemy.h"
+#include"timer.h"
 
 extern int game_timer;
 int stage2_time;
+
 
 void stage2_init()
 {
@@ -21,6 +23,7 @@ void stage2_init()
 
 	attack_line_init();
 	player_init();
+timer_init();
 	camera_init();
 	strong_enemy_init();
 	field_init();
@@ -55,6 +58,7 @@ void stage2_update()
 	gimick_update();
 	troll_update();
 	range_enemy_update();
+timer_update();
 
 
 	debug::setString("hp%d", player_hp);
@@ -78,6 +82,7 @@ void stage2_render()
 	troll_render();
 	gimick_render();
 	range_enemy_render();
+timer_render();
 
 }
 void stage2_deinit()
@@ -89,5 +94,6 @@ void stage2_deinit()
 	attack_line_delete();
 	troll_deinit();
 	range_enemy_deinit();
+timer_deinit();
 
 }

@@ -18,7 +18,10 @@ Sprite* spr_boss_left;
 boss_data boss_left;
 
 boss_attack state;
+
+boss_last last_state;
 bool boss_stage;
+bool last_attack;
 int boss_state_timer;
 
 float clamp(float value,float min,float max)
@@ -63,9 +66,11 @@ void boss_init()
 
 void boss_update_init()
 {
+
 	boss.pos.y += BOSS_H / 260;
 	boss_right.pos.y += BOSS_H / 260;
 	boss_left.pos.y += BOSS_H / 260;
+
 }
 
 void boss_update()
@@ -144,7 +149,7 @@ void boss_update()
 	switch (state)
 	{
 	case NORMAL_ENEMY:
-		state = LAST_ATTACK_INIT;
+		//state = LAST_ATTACK_INIT;
 		enemy_update();
 		if (boss_right.knock_down && boss_left.knock_down)
 		{
@@ -221,6 +226,7 @@ void boss_update()
 		screen_shake(15);
 		if (boss_state_timer >= 180)
 		{
+			last_attack = true;
 			boss_enemy_init();
 			state = LAST_ATTACK;
 			boss_state_timer = 0;
@@ -228,7 +234,16 @@ void boss_update()
 		break;
 
 	case LAST_ATTACK:
-		boss_enemy_update();
+		switch(last_state)
+		{
+		case PHASE1:
+			boss_enemy_update();
+			break;
+		case PHASE2:
+
+			break;
+		}
+
 		//nextScene = SCENE_RESULT;
 	
 	}
