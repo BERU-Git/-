@@ -32,7 +32,7 @@ void title_update()
 		//////// �ʏ펞 ////////
 		if (TRG(0) & PAD_TRG1)
 		{
-			nextScene = SCENE_STAGE4;
+			nextScene = SCENE_STAGE2;
 		}
 		
 	{

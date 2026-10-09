@@ -75,7 +75,7 @@ void troll_init()
 	}
 
 
-	troll.radius = 561.0f;
+	troll.radius = 500.0f;
 	troll_direction = 0;
 	troll_speed = 3.0f;
 	troll_attack_hit = false;
@@ -185,7 +185,7 @@ void troll_update()//ボスのアクション
 	case TROLL_IDLE:
 	{
 		troll.act_timer++;
-		if (hit_check(troll.pos.x, troll.pos.y, 300.0f, player_pos.x, player_pos.y, player_direction))//もしplayerとtrollとの距離が400を切ったらTROLL_ATTACKに移行それ以外ならTROLL_WALK
+		if (hit_check(troll.pos.x, troll.pos.y, 500.0f, player_pos.x, player_pos.y, player_direction))//もしplayerとtrollとの距離が400を切ったらTROLL_ATTACKに移行それ以外ならTROLL_WALK
 		{
 			troll.act = TROLL_ATTACK;
 			troll.attack_state = TROLL_ATTACK_START;
@@ -337,7 +337,7 @@ void troll_render()
 
 	if (effect_check)
 	{
-		sprite_render(spr_exprotion_effect, troll_screen.x, troll_screen.y, 2.3f, 2.3f, effect_tex_pos.x, effect_tex_pos.y, effect_tex_size.x, effect_tex_size.y, 256, 256);
+		sprite_render(spr_exprotion_effect, troll_screen.x, troll_screen.y, 2.7f, 2.7f, effect_tex_pos.x, effect_tex_pos.y, effect_tex_size.x, effect_tex_size.y, 256, 256);
 	}
 	
 
