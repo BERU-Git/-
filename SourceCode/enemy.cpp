@@ -84,6 +84,11 @@ void enemy_init()
 		enemy[i].attack = false;
 		enemy[i].charge = false;
 		bool can_spawn = false;
+
+		enemy[i].jast_avoid_entered = false;
+		enemy[i].jast_avoid_hit = false;
+		enemy[i].jast_avoid_done = false;
+
 		enemy[i].speed.x = ENEMY_SPEED;
 		enemy[i].speed.y = ENEMY_SPEED;
 
@@ -152,11 +157,18 @@ void enemy_update()
 
 			//プレイヤーの近くに敵が入ると追跡する
 			if (hit_check(enemy[i].pos.x, enemy[i].pos.y, ENEMY_W * 0.5f,
-				player_pos.x, player_pos.y, SCREEN_W * 0.5f))
+				player_pos.x, player_pos.y, SCREEN_W * 0.5f) || jast_avoid_check)
 			{
-
-				enemy_chase(player_pos.x, player_pos.y, enemy[i].pos.x, enemy[i].pos.y,
-					enemy[i].angle, enemy[i].chase.x, enemy[i].chase.y);
+				if(!jast_avoid_check)
+				{
+					enemy_chase(player_pos.x, player_pos.y, enemy[i].pos.x, enemy[i].pos.y,
+						enemy[i].angle, enemy[i].chase.x, enemy[i].chase.y);
+				}
+				else
+				{
+					enemy_chase(decoy_totem_pos.x, decoy_totem_pos.y, enemy[i].pos.x, enemy[i].pos.y,
+						enemy[i].angle, enemy[i].chase.x, enemy[i].chase.y);
+				}
 
 				enemy[i].separate.x = 0.0f;
 				enemy[i].separate.y = 0.0f;
@@ -181,7 +193,7 @@ void enemy_update()
 
 				if (hit_check(
 					player_pos.x, player_pos.y, CHARGE_CHECK_W * 0.5f,
-					enemy[i].pos.x, enemy[i].pos.y, ENEMY_W * 0.5f))
+					enemy[i].pos.x, enemy[i].pos.y, ENEMY_W * 0.5f) && !jast_avoid_check)
 				{
 
 					enemy[i].charge_prep_timer = 0.0f;
@@ -244,12 +256,36 @@ void enemy_update()
 					enemy[j].pos.y = (float)(ENEMY_H + rand() % (WORLD_H - ENEMY_H * 2));
 					enemy[j].attack = false;
 				}
+
+				//ジャスト回避判定に入って出るまでを判定する
+				if (!enemy[i].jast_avoid_done)
+				{
+					if (hit_check(player_pos.x, player_pos.y, PLAYER_W * 0.5f,
+						enemy[i].pos.x, enemy[i].pos.y, 128 * 0.5f))
+					{
+						enemy[i].jast_avoid_entered = true;
+					}
+					else if (enemy[i].jast_avoid_entered)
+					{
+						enemy[i].jast_avoid_done = true;
+					}
+				}
+				//ジャスト回避中に攻撃を食らったかどうか
+				if (enemy[i].jast_avoid_entered && player_hit)
+				{
+					enemy[i].jast_avoid_hit = true;
+				}
+
 			}
 
 			if (enemy[i].charge_timer >= CHARGE_TIME ||
 				enemy[i].pos.x >= WORLD_W - ENEMY_W * 0.7f || enemy[i].pos.x <= ENEMY_W * 0.7f ||
 				enemy[i].pos.y >= WORLD_H - ENEMY_H * 0.7f || enemy[i].pos.y <= -ENEMY_H * 0.1f)
 			{
+				enemy[i].jast_avoid_entered = false;
+				enemy[i].jast_avoid_hit = false;
+				enemy[i].jast_avoid_done = false;
+
 				enemy[i].charge_timer = 0.0f;
 				enemy[i].state = ENEMY_COOLDOWN;
 			}

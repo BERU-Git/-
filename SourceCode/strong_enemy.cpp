@@ -26,6 +26,12 @@ void strong_enemy_init()
 	strong_timer = 0;
 	strong_count = 0;
 	strong_direction = 0;
+
+	strong_enemy.jast_avoid_entered = false;
+	strong_enemy.jast_avoid_done = false;
+	strong_enemy.jast_avoid_hit = false;
+
+
 	bool can_spawn = false;
 
 	while(!can_spawn)
@@ -79,15 +85,23 @@ void strong_enemy_update()
 	{
 		//通常追跡
 	case ENEMY_CHASE:
+	if(!jast_avoid_check)
+	{
 		enemy_chase(player_pos.x, player_pos.y, strong_enemy.pos.x, strong_enemy.pos.y,
 			strong_enemy.angle, strong_enemy.chase.x, strong_enemy.chase.y);
+	}
+	else
+	{
+		enemy_chase(decoy_totem_pos.x, decoy_totem_pos.y, strong_enemy.pos.x, strong_enemy.pos.y,
+			strong_enemy.angle, strong_enemy.chase.x, strong_enemy.chase.y);
 
+	}
 	strong_enemy.pos.x += strong_enemy.speed.x * strong_enemy.chase.x;
 	strong_enemy.pos.y += strong_enemy.speed.y * strong_enemy.chase.y;
 
 
 	if (hit_check(player_pos.x, player_pos.y, CHARGE_CHECK_W * 0.5f,
-			strong_enemy.pos.x, strong_enemy.pos.y, STRONG_ENEMY_W * 0.5f))
+			strong_enemy.pos.x, strong_enemy.pos.y, STRONG_ENEMY_W * 0.5f) && !jast_avoid_check)
 		{
 			strong_enemy.state = ENEMY_CHARGE_PREP;
 		}
@@ -119,6 +133,25 @@ void strong_enemy_update()
 		strong_enemy.pos.x += strong_enemy.chase.x * STRONG_CHARGE_SPEED;
 		strong_enemy.pos.y += strong_enemy.chase.y * STRONG_CHARGE_SPEED;
 
+		//ジャスト回避判定に入って出るまでの検知
+		if (!strong_enemy.jast_avoid_done)
+		{
+			if (hit_check(player_pos.x, player_pos.y, PLAYER_W * 0.5f,
+				strong_enemy.pos.x, strong_enemy.pos.y, 320 * 0.5f))
+			{
+				strong_enemy.jast_avoid_entered = true;
+			}
+			else if (strong_enemy.jast_avoid_entered)
+			{
+				strong_enemy.jast_avoid_done = true;
+			}
+		}
+		//ジャスト回避中に攻撃を食らったかどうか
+		if (strong_enemy.jast_avoid_entered && player_hit)
+		{
+			strong_enemy.jast_avoid_hit = true;
+		}
+		//state遷移
 		if (strong_enemy.charge_timer >= STRONG_CHARGE_TIME || 
 			strong_enemy.pos.x <= STRONG_ENEMY_W * 0.5f ||
 			strong_enemy.pos.x >= WORLD_W - STRONG_ENEMY_W * 0.5f ||
@@ -127,9 +160,15 @@ void strong_enemy_update()
 		{
 			strong_enemy.charge = false;
 			strong_enemy.attack = false;
+
+			strong_enemy.jast_avoid_entered = false;
+			strong_enemy.jast_avoid_done = false;
+			strong_enemy.jast_avoid_hit = false;
+
 			strong_enemy.charge_timer = 0.0f;
 			strong_enemy.state = ENEMY_CHASE;
 		}
+
 		break;
 	}
 

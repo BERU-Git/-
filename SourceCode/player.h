@@ -5,6 +5,7 @@ extern Sprite* spr_player;
 extern VECTOR2 screen;
 extern VECTOR2 player_pos;
 extern VECTOR2 player_speed;
+extern VECTOR2 decoy_totem_pos;
 extern int player_hp;
 extern int player_render_posx;
 extern int player_render_posy;
@@ -13,6 +14,7 @@ extern int player_direction;
 extern float length;
 extern bool player_hit;
 extern bool go_next;
+extern bool jast_avoid_check;
 
 void clamp_position(float& pos_x, float& pos_y, float texsize_x, float texsize_y,
 	float& speed_x, float& speed_y);

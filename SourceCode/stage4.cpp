@@ -57,7 +57,7 @@ void stage4_update()
 	troll_update();
 	range_enemy_update();
 timer_update();
-	debug::setString("hp%d", player_hp);
+
 
 
 	if (go_next)

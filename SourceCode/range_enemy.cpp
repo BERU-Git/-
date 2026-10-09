@@ -133,10 +133,19 @@ void range_enemy_update()
 				range_enemy_bullet[range_attack_index].pos.x = range_enemy.pos.x;
 				range_enemy_bullet[range_attack_index].pos.y = range_enemy.pos.y;
 
+				if(!jast_avoid_check)
+				{
+					enemy_chase(player_pos.x, player_pos.y,
+						range_enemy_bullet[range_attack_index].pos.x, range_enemy_bullet[range_attack_index].pos.y,
+						range_enemy_bullet[range_attack_index].angle, range_enemy_bullet[range_attack_index].chase.x, range_enemy_bullet[range_attack_index].chase.y);
+				}
+				else
+				{
+					enemy_chase(decoy_totem_pos.x, decoy_totem_pos.y,
+						range_enemy_bullet[range_attack_index].pos.x, range_enemy_bullet[range_attack_index].pos.y,
+						range_enemy_bullet[range_attack_index].angle, range_enemy_bullet[range_attack_index].chase.x, range_enemy_bullet[range_attack_index].chase.y);
 
-				enemy_chase(player_pos.x, player_pos.y,
-					range_enemy_bullet[range_attack_index].pos.x, range_enemy_bullet[range_attack_index].pos.y,
-					range_enemy_bullet[range_attack_index].angle, range_enemy_bullet[range_attack_index].chase.x, range_enemy_bullet[range_attack_index].chase.y);
+				}
 			
 				range_attack_index++;
 

@@ -11,15 +11,18 @@ Sprite* spr_player;
 VECTOR2 screen;
 VECTOR2 player_pos;
 VECTOR2 player_speed;
+VECTOR2 decoy_totem_pos;
 int player_hp;
 int player_invincible_time;
 int player_render_posx;
 int player_render_posy;
 int player_effect_timer;
 int player_direction;
+int decoy_totem_timer;
 float length;
 bool player_hit;
 bool go_next;
+bool jast_avoid_check;
 
 
 void clamp_position(float& pos_x,float& pos_y,float texsize_x, float texsize_y,
@@ -62,10 +65,12 @@ void player_init()
 
 	player_hit = false;
 
+	jast_avoid_check = false;
+
 	go_next = false;
 
 	player_invincible_time = 0;
-
+	decoy_totem_timer = 0;
 	player_direction = 0;
 }
 
@@ -202,6 +207,7 @@ void player_update()
 	//パワー10で画面をシェイクさせる
 		screen_shake(15);
 
+
 	//無敵時間
 	if (player_hit)
 	{
@@ -212,6 +218,51 @@ void player_update()
 			player_invincible_time = 0;
 		}
 	}
+
+	//ジャスト回避判定
+	for (int i = 0; i < ENEMY_MAX; i++)
+	{
+		if (!jast_avoid_check && !enemy[i].jast_avoid_hit && enemy[i].jast_avoid_done)
+		{
+			jast_avoid_check = true;
+			decoy_totem_pos.x = player_pos.x;
+			decoy_totem_pos.y = player_pos.y;
+		}
+	}
+	if (!jast_avoid_check && !strong_enemy.jast_avoid_hit && strong_enemy.jast_avoid_done)
+	{
+		jast_avoid_check = true;
+		decoy_totem_pos.x = player_pos.x;
+		decoy_totem_pos.y = player_pos.y;
+	}
+
+	debug::setString("jyast%d", jast_avoid_check);
+
+	//デコイトーテム処理
+		if (jast_avoid_check)
+		{
+			decoy_totem_timer++;
+
+			if (decoy_totem_timer >= 300)
+			{
+				for (int i = 0; i < ENEMY_MAX; i++)
+				{
+
+					if (hit_check(decoy_totem_pos.x, decoy_totem_pos.y, DECOY_TOTEM_EXPLOSION * 0.5f,
+						enemy[i].pos.x, enemy[i].pos.y, NORMAL_ENEMY_HITBOX * 0.5f))
+					{
+						enemy[i].pos.x = (float)(ENEMY_W + rand() % (WORLD_W - ENEMY_W * 2));
+						enemy[i].pos.y = (float)(ENEMY_H + rand() % (WORLD_H - ENEMY_H * 2));
+
+					}
+
+				}
+
+				decoy_totem_timer = 0;
+				jast_avoid_check = false;
+			}
+		}
+	
 
 	//プレイヤーの回復制限
 	if (player_hp >= PLAYER_HP)

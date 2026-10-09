@@ -145,14 +145,6 @@ bool troll_animation_variation(int startFrame, int endFrame, int frameSpeed, boo
 }
 void troll_update()//ボスのアクション
 {
-	/*if (player_pos.x < troll.pos.x)
-	{
-		troll_direction = 1;
-	}
-	else
-	{
-		troll_direction = -1;
-	}*/
 	if (effect_judge)
 	{
 		effect_anime_timer++;
@@ -218,7 +210,8 @@ void troll_update()//ボスのアクション
 		}
 		troll_animation_variation(0, 3, 20, true);//ループするからtrue
 
-		if (hit_check(troll.pos.x, troll.pos.y, 300.0f, player_pos.x, player_pos.y, player_direction))
+		if (hit_check(troll.pos.x, troll.pos.y, 300.0f,
+			player_pos.x, player_pos.y, player_direction))
 		{
 			troll.act = TROLL_ATTACK;
 			troll.attack_state = TROLL_ATTACK_START;

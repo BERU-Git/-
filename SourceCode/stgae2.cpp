@@ -61,7 +61,6 @@ void stage2_update()
 timer_update();
 
 
-	debug::setString("hp%d", player_hp);
 
 
 	if (go_next)

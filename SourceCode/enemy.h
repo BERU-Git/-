@@ -39,6 +39,10 @@ struct enemy_data
 	float cooldown_timer = 0;
 	bool charge = 0;
 	bool attack = 0;
+	bool jast_avoid_done;
+	bool jast_avoid_entered;
+	bool jast_avoid_hit;
+
 };
 
 extern enemy_data enemy[ENEMY_MAX];

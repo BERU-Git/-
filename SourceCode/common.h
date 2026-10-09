@@ -41,6 +41,8 @@
 
 #define BOSS_HITBOX           256       //プレイヤーのヒットボックス
 
+#define DECOY_TOTEM_EXPLOSION 512       //デコイの爆発の直径
+
 #define CHARGE_CHECK_W  520            //突進を認識する範囲
 
 #define WALL_W         256             //壁のサイズ
