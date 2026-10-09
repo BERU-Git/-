@@ -5,11 +5,24 @@
 int title_state = 0;     // 状態
 int title_timer = 0;     // タイマー
 bool start_check = false;
+bool tutrial_check = false;
+bool end_check = false;
+float start_alpha = 0.5f;
+float tutrial_alpha = 0.5f;
+float end_alpha = 0.5f;
+Sprite* spr_title;
+Sprite* spr_gameStart;
+Sprite* spr_gameEnd;
+Sprite* spr_tutrial;
 
 void title_init()
 {
 	/*DirectX::Mouse::Get().SetWindow(window::getHwnd());*/
 	player_hp = PLAYER_HP;
+	spr_title = sprite_load(L"Data/Images/タイトル.png");
+	spr_gameStart = sprite_load(L"Data/Images/ゲームスタート.png");
+	spr_gameEnd = sprite_load(L"Data/Images/ゲームの終了.png");
+	spr_tutrial = sprite_load(L"Data/Images/チュートリアル.png");
 }
 void title_update()
 {
@@ -32,7 +45,7 @@ void title_update()
 		//////// 通常時 ////////
 		if (TRG(0) & PAD_TRG1)
 		{
-			nextScene = SCENE_STAGE4;
+			nextScene = SCENE_STAGE2;
 		}
 		
 	{
@@ -45,7 +58,7 @@ void title_update()
 		int mouseY = point.y;
 		/*DirectX::Mouse::State mouseState = DirectX::Mouse::Get().GetState();*/
 
-		if (mouseX >= 800 && mouseX <= 1130 && mouseY >= 400 && mouseY <= 420)
+		if (mouseX >= 1300 && mouseX <= 1660 && mouseY >= 400 && mouseY <= 520)
 		{
 			start_check = true;
 			if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
@@ -56,6 +69,79 @@ void title_update()
 		else
 		{
 			start_check = false;
+		}
+		if (mouseX >= 1300 && mouseX <= 1660 && mouseY >= 600 && mouseY <= 720)
+		{
+			tutrial_check = true;
+			if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+			{
+				nextScene = SCENE_STAGE1;
+			}
+		}
+		else
+		{
+			tutrial_check = false;
+		}
+		if (mouseX >= 1300 && mouseX <= 1660 && mouseY >= 800 && mouseY <= 920)
+		{
+			end_check = true;
+			if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+			{
+				nextScene = SCENE_STAGE1;
+			}
+		}
+		else
+		{
+			end_check = false;
+		}
+		
+		if (start_check)
+		{
+			start_alpha += 0.05f;
+			if (start_alpha > 1.0f)
+			{
+				start_alpha = 1.0f;
+			}
+		}
+		else
+		{
+			start_alpha -= 0.05f;
+			if (start_alpha < 0.5f)
+			{
+				start_alpha = 0.5f;
+			}
+		}
+		if (tutrial_check)
+		{
+			tutrial_alpha += 0.05f;
+			if (tutrial_alpha > 1.0f)
+			{
+				tutrial_alpha = 1.0f;
+			}
+		}
+		else
+		{
+			tutrial_alpha -= 0.05f;
+			if (tutrial_alpha < 0.5f)
+			{
+				tutrial_alpha = 0.5f;
+			}
+		}
+		if (end_check)
+		{
+			end_alpha += 0.05f;
+			if (end_alpha > 1.0f)
+			{
+				end_alpha = 1.0f;
+			}
+		}
+		else
+		{
+			end_alpha -= 0.05f;
+			if (end_alpha < 0.5f)
+			{
+				end_alpha = 0.5f;
+			}
 		}
 		
 		break;
@@ -69,17 +155,77 @@ void title_update()
 }
 void title_render()
 {
-	GameLib::clear(0.2f, 0.2f, 0.2f);
+	/*GameLib::clear(0.2f, 0.2f, 0.2f);*/
+	sprite_render(spr_title, 0.0f, 0.0f);
 
-	font::textOut(1, "SAMPLE GAME TITLE", 700, 200);
+	font::textOut(1, "SAMPLE GAME TITLE", 200, 200);
+	GameLib::setBlendMode(Blender::BS_ALPHA);
+	sprite_render(spr_gameStart,
+		1305, 405,
+		0.52f, 0.52f,
+		0.0f, 0.0f,
+		720.0f, 320.0f,
+		0.0f, 0.0f,
+		ToRadian(0),
+		1.0f, 1.0f, 1.0f, start_alpha);
+	sprite_render(spr_tutrial,
+		1305, 605,
+		0.52f, 0.52f,
+		0.0f, 0.0f,
+		720.0f, 320.0f,
+		0.0f, 0.0f,
+		ToRadian(0),
+		1.0f, 1.0f, 1.0f, tutrial_alpha);
+	sprite_render(spr_gameEnd,
+		1305, 805,
+		0.52f, 0.52f,
+		0.0f, 0.0f,
+		720.0f, 320.0f,
+		0.0f, 0.0f,
+		ToRadian(0),
+		1.0f, 1.0f, 1.0f, end_alpha);
 	if (start_check)
 	{
-		font::textOut(1, "> GAME START <", 760, 400);
+		GameLib::setBlendMode(Blender::BS_ADD);
+		sprite_render(spr_gameStart,
+			1300, 400,
+			0.5f, 0.5f,
+			0.0f, 0.0f,
+			720.0f, 320.0f,
+			0.0f, 0.0f,
+			ToRadian(0),
+			1.0f, 1.0f, 1.0f, 0.25f);
 	}
-	else
+	GameLib::setBlendMode(Blender::BS_ALPHA);
+	if (tutrial_check)
 	{
-		font::textOut(1, "GAME START", 800, 400, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.5f);
+		GameLib::setBlendMode(Blender::BS_ADD);
+		sprite_render(spr_tutrial,
+			1300, 600,
+			0.5f, 0.5f,
+			0.0f, 0.0f,
+			720.0f, 320.0f,
+			0.0f, 0.0f,
+			ToRadian(0),
+			1.0f, 1.0f, 1.0f, 0.25f);
 	}
+	GameLib::setBlendMode(Blender::BS_ALPHA);
+	if (end_check)
+	{
+		GameLib::setBlendMode(Blender::BS_ADD);
+		sprite_render(spr_gameEnd,
+			1300, 800,
+			0.5f, 0.5f,
+			0.0f, 0.0f,
+			720.0f, 320.0f,
+			0.0f, 0.0f,
+			ToRadian(0),
+			1.0f, 1.0f, 1.0f, 0.25f);
+	}
+	GameLib::setBlendMode(Blender::BS_ALPHA);
+	
+	
+	
 	/*if((title_timer / 30) % 2 == 0)
 	{ 
 		font::textOut(1, "GAME START", 800, 400);

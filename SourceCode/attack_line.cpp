@@ -63,7 +63,7 @@ void attack_line_render()
 		VECTOR2 danger_screen;
 		danger_screen.x = troll.pos.x - camera_pos.x + SCREEN_W * 0.5f;
 		danger_screen.y = troll.pos.y - camera_pos.y + SCREEN_H * 0.5f;
-		sprite_render(spr_danger_circle, danger_screen.x, danger_screen.y, 1.5f, 1.5f, 0.0f, 0.0f, 512, 512, 256, 256);
+		sprite_render(spr_danger_circle, danger_screen.x, danger_screen.y, 2.0f, 2.0f, 0.0f, 0.0f, 512, 512, 256, 256);
 	}
 
 }

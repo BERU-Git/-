@@ -9,6 +9,10 @@
 Sprite* spr_strong_enemy;
 Sprite* spr_boss_strong_enemy;
 enemy_data strong_enemy;
+float strong_tex_pos_x;
+int strong_timer;
+int strong_count;
+int strong_direction;
 
 void strong_enemy_init()
 {
@@ -18,7 +22,10 @@ void strong_enemy_init()
 
 
 	strong_enemy = {};
-
+	strong_tex_pos_x = 0.0f;
+	strong_timer = 0;
+	strong_count = 0;
+	strong_direction = 0;
 	bool can_spawn = false;
 
 	while(!can_spawn)
@@ -48,6 +55,26 @@ void strong_enemy_init()
 }
 void strong_enemy_update()
 {
+	if (player_pos.x > strong_enemy.pos.x)
+	{
+		strong_direction = 1;
+	}
+	else
+	{
+		strong_direction = -1;
+	}
+	strong_timer++;
+	if (strong_timer % 6 == 0)
+	{
+		strong_timer = 0;
+		strong_tex_pos_x = strong_count *256;
+		strong_count += 1;
+	}
+	if (strong_count == 4)
+	{
+		strong_count = 0;
+		strong_tex_pos_x = 0;
+	}
 	switch (strong_enemy.state)
 	{
 		//í èÌí«ê’
@@ -133,16 +160,16 @@ void strong_enemy_render()
 	if(!boss_stage)
 	{
 		sprite_render(spr_strong_enemy, strong_enemy.screen.x, strong_enemy.screen.y,
-			2, 2,
-			0, 0,
+			2 * strong_direction, 2,
+			strong_tex_pos_x, 0,
 			STRONG_ENEMY_W, STRONG_ENEMY_H,
 			STRONG_ENEMY_W * 0.5f, STRONG_ENEMY_H * 0.5f);
 	}
 	if(boss_stage)
 	{
 		sprite_render(spr_boss_strong_enemy, strong_enemy.screen.x, strong_enemy.screen.y,
-			2, 2,
-			0, 0,
+			2 * strong_direction, 2,
+			strong_tex_pos_x, 0,
 			STRONG_ENEMY_W, STRONG_ENEMY_H,
 			STRONG_ENEMY_W * 0.5f, STRONG_ENEMY_H * 0.5f);
 	}
