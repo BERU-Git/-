@@ -196,14 +196,17 @@ void troll_update()//ボスのアクション
 	}
 	case TROLL_WALK:
 	{
-		float tentative_x = player_pos.x - troll.pos.x;
-		float tentative_y = player_pos.y - troll.pos.y;
+		float tentative_x = player_pos.x - troll.pos.x;//playerとトロールの距離がどれだけどの方向に離れているかを
+		float tentative_y = player_pos.y - troll.pos.y;//xとyに保存して距離をdistanceに入れた後に三平方の定理を使って距離そのものを求める
 		float distance = sqrtf(tentative_x * tentative_x + tentative_y * tentative_y);//この中だけで一時的に使う
 
 		if (distance > 0.0f)//playerを追従するコード
 		{
-			tentative_x /= distance;
-			tentative_y /= distance;
+			tentative_x /= distance;//x方向とy方向のベクトルに距離を割ってあげると正規化した数字が出る
+			tentative_y /= distance;//正規化した数字にspeedにかけてposを移動させてるそして
+			//実はこのコードすごいぜ？このコードの下のposを移動させる処理は正規化していることによって
+            // pos.xとyどちらも足した合計がspeed.xとyの加算した合計値と一緒になる！だからspeedを変化させても
+			// 実際に移動する合計値はspeedのx,yの合計値と一緒になるからspeedだけで変更が容易になる
 
 			troll.pos.x += tentative_x * troll_speed;//これでtroll_speedを変更するだけで速度を変えやすい
 			troll.pos.y += tentative_y * troll_speed;

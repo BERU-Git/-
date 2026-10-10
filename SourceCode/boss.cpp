@@ -244,7 +244,7 @@ void boss_update()
 			break;
 		}
 
-		nextScene = SCENE_RESULT;
+		
 	
 	}
 
