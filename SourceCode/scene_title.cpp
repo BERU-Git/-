@@ -14,6 +14,7 @@ Sprite* spr_title;
 Sprite* spr_gameStart;
 Sprite* spr_gameEnd;
 Sprite* spr_tutrial;
+Sprite* spr_title_letter;
 
 void title_init()
 {
@@ -23,6 +24,7 @@ void title_init()
 	spr_gameStart = sprite_load(L"Data/Images/ゲームスタート.png");
 	spr_gameEnd = sprite_load(L"Data/Images/ゲームの終了.png");
 	spr_tutrial = sprite_load(L"Data/Images/チュートリアル.png");
+	spr_title_letter = sprite_load(L"Data/Images/タイトル文字.png");
 }
 void title_update()
 {
@@ -45,7 +47,7 @@ void title_update()
 		//////// 通常時 ////////
 		if (TRG(0) & PAD_TRG1)
 		{
-			nextScene = SCENE_STAGE2;
+			nextScene = SCENE_RESULT;
 		}
 		
 	{
@@ -158,7 +160,7 @@ void title_render()
 	/*GameLib::clear(0.2f, 0.2f, 0.2f);*/
 	sprite_render(spr_title, 0.0f, 0.0f);
 
-	font::textOut(1, "SAMPLE GAME TITLE", 200, 200);
+	sprite_render(spr_title_letter, 150, 90);
 	GameLib::setBlendMode(Blender::BS_ALPHA);
 	sprite_render(spr_gameStart,
 		1305, 405,
