@@ -188,6 +188,12 @@ void enemy_update()
 				enemy[i].move.x = enemy[i].chase.x + enemy[i].separate.x * 0.5f;
 				enemy[i].move.y = enemy[i].chase.y + enemy[i].separate.y * 0.5f;
 
+				if(jast_avoid_check)
+				{
+					enemy[i].speed.x = 18;
+					enemy[i].speed.y = 18;
+				}
+
 				enemy[i].pos.x += enemy[i].move.x * enemy[i].speed.x;
 				enemy[i].pos.y += enemy[i].move.y * enemy[i].speed.y;
 

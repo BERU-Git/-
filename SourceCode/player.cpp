@@ -227,6 +227,7 @@ void player_update()
 			jast_avoid_check = true;
 			decoy_totem_pos.x = player_pos.x;
 			decoy_totem_pos.y = player_pos.y;
+
 		}
 	}
 	if (!jast_avoid_check && !strong_enemy.jast_avoid_hit && strong_enemy.jast_avoid_done)
@@ -253,6 +254,9 @@ void player_update()
 					{
 						enemy[i].pos.x = (float)(ENEMY_W + rand() % (WORLD_W - ENEMY_W * 2));
 						enemy[i].pos.y = (float)(ENEMY_H + rand() % (WORLD_H - ENEMY_H * 2));
+
+						enemy[i].speed.x = ENEMY_SPEED;
+						enemy[i].speed.y = ENEMY_SPEED;
 
 					}
 
