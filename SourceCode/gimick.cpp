@@ -106,4 +106,6 @@ void gimick_render()//ƒMƒ~ƒbƒN‚Ì•`‰æ
 void gimick_deinit()
 {
 	safe_delete(spr_gimick);
+	safe_delete(spr_bonfire);
+	safe_delete(spr_kagari);
 }

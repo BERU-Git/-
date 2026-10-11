@@ -236,5 +236,9 @@ void title_render()
 }
 void title_deinit()
 {
-
+	safe_delete(spr_title);
+	safe_delete(spr_gameStart);
+	safe_delete(spr_gameEnd);
+	safe_delete(spr_tutrial);
+	safe_delete(spr_title_letter);
 }

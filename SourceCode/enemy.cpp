@@ -424,6 +424,7 @@ void boss_enemy_update()
 				enemy[i].pos.y += enemy[i].chase.y * 50.0f;
 				if (enemy[i].charge_timer >= 24.0f)
 				{
+
 					enemy[i].charge_timer =0;
 					enemy[i].attack = false;
 					enemy[i].charge = false;
@@ -516,4 +517,5 @@ void enemy_deinit()
 
 	safe_delete(spr_enemy);
 	safe_delete(spr_boss_enemy);
+	safe_delete(spr_extinction);
 }

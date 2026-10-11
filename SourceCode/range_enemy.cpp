@@ -133,6 +133,8 @@ void range_enemy_update()
 				range_enemy_bullet[range_attack_index].pos.x = range_enemy.pos.x;
 				range_enemy_bullet[range_attack_index].pos.y = range_enemy.pos.y;
 
+
+
 				if(!jast_avoid_check)
 				{
 					enemy_chase(player_pos.x, player_pos.y,
@@ -261,6 +263,7 @@ void range_enemy_deinit()
 	}
 	safe_delete(spr_range_enemy);
 	safe_delete(spr_range_enemy_bullet);
+	safe_delete(spr_boss_range_enemy);
 
 }
 

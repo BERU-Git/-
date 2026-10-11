@@ -315,6 +315,8 @@ void boss_deinit()
 	strong_enemy_deinit();
 	range_enemy_deinit();
 	safe_delete(spr_boss);
+	safe_delete(spr_boss_right);
+	safe_delete(spr_boss_left);
 
 }
 

@@ -298,7 +298,9 @@ void troll_render()
 void troll_deinit()
 {
 	troll = {};
+	danger_circle = false;
 	safe_delete(spr_troll);
+
 exprotion_deinit();
 	
 }

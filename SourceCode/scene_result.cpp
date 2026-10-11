@@ -135,5 +135,9 @@ void result_render()
 }
 void result_deinit()
 {
-	sprResult;
+	safe_delete(sprResult);
+	safe_delete(spr_result_crear);
+	safe_delete(spr_result_timer);
+	safe_delete(spr_result_return_title);
+	safe_delete(spr_result_retry);
 }

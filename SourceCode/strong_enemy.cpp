@@ -182,10 +182,13 @@ void boss_strong_enemy_init()
 
 
 
+
 }
 
 void boss_strong_enemy_update()
 {
+
+
 
 }
 
@@ -218,4 +221,5 @@ void strong_enemy_deinit()
 {
 	strong_enemy = {};
 	safe_delete(spr_strong_enemy);
+	safe_delete(spr_boss_strong_enemy);
 }
