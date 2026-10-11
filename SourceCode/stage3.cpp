@@ -29,6 +29,9 @@ timer_init();
 	range_enemy_init();
 
 }
+
+
+
 void stage3_update()
 {
 	if (player_hp <= 0)
@@ -54,7 +57,7 @@ void stage3_update()
 	strong_enemy_update();
 	troll_update();
 	range_enemy_update();
-timer_update();
+	timer_update();
 
 
 

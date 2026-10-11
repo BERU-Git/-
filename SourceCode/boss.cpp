@@ -7,6 +7,7 @@
 #include "range_enemy.h"
 #include "troll.h"
 #include "hit_check.h"
+#include "exprotion.h"
 
 Sprite* spr_boss;
 boss_data boss;
@@ -41,6 +42,7 @@ float clamp(float value,float min,float max)
 
 void boss_init()
 {
+
 	enemy_init();
 	spr_boss = sprite_load(L"Data/Images/boss.png");
 	spr_boss_right = sprite_load(L"Data/Images/boss_right.png");
@@ -75,6 +77,7 @@ void boss_update_init()
 
 void boss_update()
 {
+
 	//ボスの移動
 	boss.pos.x += (player_pos.x - boss.pos.x) * 0.05f;
 
@@ -126,6 +129,23 @@ void boss_update()
 	{
 		boss.knock_down = true;
 	}
+	//デコイの当たり判定
+	if (hit_check(boss.pos.x, boss.pos.y, BOSS_HITBOX * 0.5f ,
+		decoy_totem_pos.x, decoy_totem_pos.y, DECOY_TOTEM_EXPLOSION * 0.5f) && jast_avoid_effect_check && !boss.knock_down)
+	{
+		boss.knock_down = true;
+	}
+	else if (hit_check(boss_right.pos.x, boss_right.pos.y, BOSS_HAND_HITBOX * 0.5f,
+		decoy_totem_pos.x, decoy_totem_pos.y, DECOY_TOTEM_EXPLOSION * 0.5f) && jast_avoid_effect_check && !boss_right.knock_down)
+	{
+		boss_right.knock_down = true;
+	}
+	else if (hit_check(boss_left.pos.x, boss_left.pos.y, BOSS_HAND_HITBOX * 0.5f,
+		decoy_totem_pos.x, decoy_totem_pos.y, DECOY_TOTEM_EXPLOSION * 0.5f) && jast_avoid_effect_check && !boss_left.knock_down)
+	{
+		boss_left.knock_down = true;
+	}
+
 	for(int i = 0; i < ENEMY_MAX ; i++ )
 	{
 		if (hit_check(boss_right.pos.x, boss_right.pos.y, BOSS_HAND_HITBOX * 0.5f,
@@ -141,6 +161,9 @@ void boss_update()
 		}
 
 	}
+
+
+
 	debug::setString("BOSS%d", boss.knock_down);
 	debug::setString("RIGHT%d", boss_right.knock_down);
 	debug::setString("LEFT%d", boss_left.knock_down);
