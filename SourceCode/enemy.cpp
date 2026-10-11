@@ -59,11 +59,13 @@ void enemy_chase(float pos1_x, float pos1_y,
 }
 
 
+
 void enemy_init()
 {
 	spr_enemy = sprite_load(L"Data/Images/enemy01.png");
 	spr_boss_enemy = sprite_load(L"Data/Images/boss_enemy.png");
 	spr_extinction = sprite_load(L"Data/Images/消滅エフェクト.png");
+
 	effect_tex_size_goblin.x = 160.0f;
 	effect_tex_size_goblin.y = 160.0f;
 	
@@ -190,8 +192,8 @@ void enemy_update()
 
 				if(jast_avoid_check)
 				{
-					enemy[i].speed.x = 18;
-					enemy[i].speed.y = 18;
+					enemy[i].speed.x = 13.5f;
+					enemy[i].speed.y = 13.5f;
 				}
 
 				enemy[i].pos.x += enemy[i].move.x * enemy[i].speed.x;

@@ -3,9 +3,9 @@
 #include "hit_check.h"
 #include "player.h"
 #include "camera.h"
+#include "exprotion.h"
 
 Sprite* spr_troll = nullptr;
-Sprite* spr_exprotion_effect = nullptr;
 
 int troll_attack_anime_timer;
 int troll_attack_anime;
@@ -18,24 +18,14 @@ VECTOR2 troll_screen;
 bool check;
 bool danger_circle;
 
-int effect_anime;
-int effect_anime_timer;
-VECTOR2 effect_tex_pos;
-VECTOR2 effect_tex_size;
-int effect_count;
-bool effect_judge;
-bool effect_check;
-
-
-
 troll_data troll;
 
 
 void troll_init()
 {
+exprotion_init();
 	troll = {};
 	spr_troll = sprite_load(L"Data/images/troll.png");
-	spr_exprotion_effect = sprite_load(L"Data/images/爆破エフェクト.png");
 	
 	troll.act = TROLL_IDLE;
 	troll.attack_state = TROLL_ATTACK_START;
@@ -46,15 +36,6 @@ void troll_init()
 	troll_tex_size.x = STRONG_ENEMY_W;
 	troll_tex_size.y = STRONG_ENEMY_H;
 	troll_attack_anime_timer = 0;
-	effect_anime = 0;
-	effect_anime_timer = 0;
-	effect_tex_pos.x = 0.0f;
-	effect_tex_pos.y = 0.0f;
-	effect_tex_size.x = 512.0f;
-	effect_tex_size.y = 512.0f;
-	effect_check = false;
-	effect_count = 0;
-	effect_judge = false;
 
 	bool can_spawn = false;
 
@@ -145,24 +126,7 @@ bool troll_animation_variation(int startFrame, int endFrame, int frameSpeed, boo
 }
 void troll_update()//ボスのアクション
 {
-	if (effect_judge)
-	{
-		effect_anime_timer++;
-		if ((effect_anime_timer) % 4 == 0)
-		{
-			effect_count++;
-			effect_tex_pos.x = (512.0f * effect_count);
-		}
-		if (effect_count == 8)
-		{
-			effect_tex_pos.y = effect_tex_size.y;
-		}
-		if (effect_count > 16)
-		{
-			effect_count = 0;
-			effect_judge = false;
-		}
-	}
+exprotion_update();
 	if (player_pos.x < troll.pos.x)
 	{
 		troll_direction = -1;
@@ -274,7 +238,6 @@ void troll_update()//ボスのアクション
 					player_hp -= 5;
 
 					effect_check = true;
-					effect_judge = true;
 					
 					
 					
@@ -300,7 +263,6 @@ void troll_update()//ボスのアクション
 				troll_attack_anime = 0;
 				troll_attack_hit = false;
 				danger_circle = false;
-				effect_check = false;
 			}
 			break;
 		}
@@ -331,20 +293,13 @@ void troll_render()
 		troll_tex_size.x, troll_tex_size.y,
 		128 , 128);
 
-	if (effect_check)
-	{
-		sprite_render(spr_exprotion_effect, troll_screen.x, troll_screen.y, 2.7f, 2.7f, effect_tex_pos.x, effect_tex_pos.y, effect_tex_size.x, effect_tex_size.y, 256, 256);
-	}
-	
-
-	
-
-
+	exprotion_render();
 }
 void troll_deinit()
 {
 	troll = {};
 	safe_delete(spr_troll);
+exprotion_deinit();
 	
 }
 

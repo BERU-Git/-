@@ -31,6 +31,7 @@ extern bool danger_circle;
 extern VECTOR2 troll_screen;
 extern troll_data troll;
 extern bool danger_circle;
+extern Sprite* spr_exprotion_effect;
 
 void troll_init();
 void troll_update();

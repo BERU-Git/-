@@ -27,7 +27,7 @@ void stage4_init()
 	strong_enemy_init();
 	troll_init();
 	range_enemy_init();
-timer_init();
+	timer_init();
 
 }
 void stage4_update()

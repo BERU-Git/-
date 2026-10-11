@@ -6,13 +6,18 @@
 #include "range_enemy.h"
 #include "field.h"
 #include "gimick.h"
+#include "exprotion.h"
 
 Sprite* spr_player;
+Sprite* spr_decoy;
 VECTOR2 screen;
+VECTOR2 decoy_screen;
 VECTOR2 player_pos;
 VECTOR2 player_speed;
 VECTOR2 decoy_totem_pos;
+
 int player_hp;
+float player_alpha;
 int player_invincible_time;
 int player_render_posx;
 int player_render_posy;
@@ -50,9 +55,14 @@ void clamp_position(float& pos_x,float& pos_y,float texsize_x, float texsize_y,
 		speed_y = 0;
 	}
 }
+
+
+
 void player_init()
 {
 	spr_player = sprite_load(L"Data/images/player.png");
+	spr_decoy = sprite_load(L"Data/images/decoy_totem.png");
+
 	
 	player_pos.x = WORLD_W * 0.5f;
 	player_pos.y = WORLD_H * 0.5f;
@@ -65,17 +75,25 @@ void player_init()
 
 	player_hit = false;
 
+	player_alpha = 1.0f;
+
 	jast_avoid_check = false;
 
 	go_next = false;
 
+
+
 	player_invincible_time = 0;
 	decoy_totem_timer = 0;
 	player_direction = 0;
+	
+	exprotion_init();
 }
 
 void player_update()
 {
+	
+	exprotion_update();
 	
 	//プレイヤー操作
 	//左
@@ -91,7 +109,7 @@ void player_update()
 	else
 	{
 		player_speed.x *= DECELERATION;
-		if (fabs(player_speed.x) <= 0.01)
+		if (fabs(player_speed.x) <= 0.01)  //fabsは絶対値を求める関数
 		{
 			player_speed.x = 0;
 		}
@@ -224,6 +242,7 @@ void player_update()
 	{
 		if (!jast_avoid_check && !enemy[i].jast_avoid_hit && enemy[i].jast_avoid_done)
 		{
+			player_alpha = 0.3f;
 			jast_avoid_check = true;
 			decoy_totem_pos.x = player_pos.x;
 			decoy_totem_pos.y = player_pos.y;
@@ -232,12 +251,12 @@ void player_update()
 	}
 	if (!jast_avoid_check && !strong_enemy.jast_avoid_hit && strong_enemy.jast_avoid_done)
 	{
+		player_alpha = 0.3f;
 		jast_avoid_check = true;
 		decoy_totem_pos.x = player_pos.x;
 		decoy_totem_pos.y = player_pos.y;
 	}
 
-	debug::setString("jyast%d", jast_avoid_check);
 
 	//デコイトーテム処理
 		if (jast_avoid_check)
@@ -246,6 +265,7 @@ void player_update()
 
 			if (decoy_totem_timer >= 300)
 			{
+				jast_avoid_effect_check = true;
 				for (int i = 0; i < ENEMY_MAX; i++)
 				{
 
@@ -261,12 +281,13 @@ void player_update()
 					}
 
 				}
-
+				player_alpha = 1.0f;
 				decoy_totem_timer = 0;
 				jast_avoid_check = false;
 			}
 		}
 	
+
 
 	//プレイヤーの回復制限
 	if (player_hp >= PLAYER_HP)
@@ -334,18 +355,38 @@ void player_update()
 
 void player_render()
 {
+	exprotion_render();
+	
 	//プレイヤーのワールド座標をスクリーン座標に変換
 	screen.x = player_pos.x - camera_pos.x + SCREEN_W * 0.5f;
 	screen.y = player_pos.y - camera_pos.y + SCREEN_H * 0.5f;
+
+	decoy_screen.x = decoy_totem_pos.x - camera_pos.x + SCREEN_W * 0.5f;
+	decoy_screen.y = decoy_totem_pos.y - camera_pos.y + SCREEN_H * 0.5f;
+
+	if(jast_avoid_check)
+	{
+		sprite_render(spr_decoy, decoy_screen.x, decoy_screen.y,
+			0.5f, 0.5f,
+			0,0,
+			PLAYER_W * 2, PLAYER_H * 2,
+			PLAYER_W * 0.5f, PLAYER_H * 0.5f);
+
+	}
 
 	sprite_render(spr_player, screen.x, screen.y,
 		                      1,1,
 						      PLAYER_W * player_render_posx, PLAYER_H * player_render_posy,
 		                      PLAYER_W,PLAYER_H,
-		                      PLAYER_W * 0.5f,PLAYER_H * 0.5f);
+		                      PLAYER_W * 0.5f,PLAYER_H * 0.5f,
+		                      0,
+		                      1.0f,1.0f,1.0f,player_alpha);
 }
 
 void player_deinit()
 {
 	safe_delete(spr_player);
+	safe_delete(spr_decoy);
+	exprotion_deinit();
+
 }
