@@ -57,6 +57,7 @@ void stage1_update()
 		field_update();
 		camera_update();
 		gimick_update();//gimick_updateì‚Á‚½‚©‚çŒÄ‚ñ‚¾
+		heart_update();
 
 		
 
@@ -76,6 +77,7 @@ void stage1_render()
 	enemy_render();
 	gimick_render();
 	timer_render();
+	heart_render();
 	
 	
 
@@ -89,5 +91,5 @@ void stage1_deinit()
 	attack_line_delete();
 	gimick_deinit();
 	timer_deinit();
-
+	heart_deinit();
 }

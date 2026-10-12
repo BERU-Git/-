@@ -10,6 +10,8 @@ struct gimick_data
 	VECTOR2 screen;
 	float circle;
 	bool barrier_break_check;
+	bool clack_check;
+	float clack_tex_pos_x;
 	int anime_frame;//アニメーション用のフレームの保存変数
 	int anime_timer;//アニメーション用のタイマー
 };
