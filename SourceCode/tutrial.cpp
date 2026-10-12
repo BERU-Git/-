@@ -44,7 +44,7 @@ void tutrial_update()
 
 void tutrial_render()
 {
-	GameLib::clear(0.8f, 0.2f, 0.5f);
+	GameLib::clear(0.0f, 0.0f, 0.0f);
 	field_render();
 	attack_line_render();
 	player_render();
@@ -59,5 +59,4 @@ void tutrial_deinit()
 	field_deinit();
 	attack_line_delete();
 	gimick_deinit();
-	tutrial_deinit();
 }

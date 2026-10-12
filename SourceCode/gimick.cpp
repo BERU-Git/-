@@ -54,7 +54,7 @@ void gimick_update()
 		if (gimick[g].barrier_break_check == true && gimick[g].clack_check == false)
 		{
 			clack_timer++;
-			if (clack_timer % 6 == 0)
+			if (clack_timer % 6 == 0)//6‚©20
 			{
 				clack_timer = 0;
 				clack_count += 1;
