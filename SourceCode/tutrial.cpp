@@ -9,8 +9,6 @@
 #include "gimick.h"
 #include <sstream>
 
-int tutrial_state = 0;
-int tutrial_timer = 0;
 
 
 void tutrial_init()
@@ -23,21 +21,9 @@ void tutrial_init()
 	gimick_init();
 	attack_line_init();
 
-	srand((unsigned int)time(NULL));
 }
 void tutrial_update()
 {
-	switch (tutrial_state)
-	{
-	case 0:
-		tutrial_state++;
-
-	case 1:
-		GameLib::setBlendMode(Blender::BS_ALPHA);
-
-		tutrial_state++;
-
-	case 2:
 		player_update();
 		enemy_update();
 		GameLib::setBlendMode(Blender::BS_ALPHA);
@@ -53,10 +39,9 @@ void tutrial_update()
 			nextScene = SCENE_TITLE;
 		}
 
-		break;
-	}
-	tutrial_timer++;
+		
 }
+
 void tutrial_render()
 {
 	GameLib::clear(0.8f, 0.2f, 0.5f);
