@@ -7,6 +7,7 @@
 #include "hit_check.h"
 #include "attack_line.h"
 #include "gimick.h"
+#include "heart.h"
 
 extern int game_timer;
 int stage1_time;
@@ -24,6 +25,7 @@ void stage1_init()
 	camera_init();
 	gimick_init();
 	attack_line_init();
+	heart_init();
 
 	srand((unsigned int)time(NULL));
 
@@ -74,6 +76,7 @@ void stage1_render()
 	enemy_render();
 	gimick_render();
 	timer_render();
+	
 	
 
 }

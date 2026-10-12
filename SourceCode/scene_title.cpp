@@ -47,7 +47,7 @@ void title_update()
 		//////// �ʏ펞 ////////
 		if (TRG(0) & PAD_TRG1)
 		{
-			nextScene = SCENE_TUTRIAL;
+			nextScene = SCENE_RESULT;
 		}
 		
 	{
@@ -89,7 +89,7 @@ void title_update()
 			end_check = true;
 			if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 			{
-				nextScene = SCENE_STAGE1;
+				exit(0);
 			}
 		}
 		else

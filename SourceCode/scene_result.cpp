@@ -49,7 +49,7 @@ void result_update()
 			retry_check = true;
 			if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 			{
-				nextScene = SCENE_TITLE;
+				nextScene = SCENE_STAGE1;
 			}
 		}
 		else

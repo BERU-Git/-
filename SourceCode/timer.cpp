@@ -10,6 +10,7 @@ int minutes_pos_1 = 0;
 
 int minutes_pos_10 = 0;
 extern int game_timer;
+//extern int stop_time;
 
 void timer_init()
 {
