@@ -135,6 +135,7 @@ attrib +h SourceCode\gp1.log
     <ClInclude Include="SourceCode\strong_enemy.h" />
     <ClInclude Include="SourceCode\timer.h" />
     <ClInclude Include="SourceCode\troll.h" />
+    <ClInclude Include="SourceCode\tutrial.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameLib\debug.cpp" />

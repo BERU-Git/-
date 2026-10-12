@@ -6,6 +6,7 @@
 #include "stage5.h"
 #include "scene_result.h"
 #include "scene_title.h"
+#include "tutrial.h"
 using namespace GameLib;
 
 int curScene = SCENE_NONE;       //Œ»İ
@@ -44,7 +45,9 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)// g—p‚µ‚È‚¢•Ï”‚Í‹Lq‚
 			case SCENE_RESULT:
 				result_deinit();
 				break;
-
+			case SCENE_TUTRIAL:
+				tutrial_deinit();
+				break;
 			}
 			curScene = nextScene;
 			switch (curScene)
@@ -70,6 +73,9 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)// g—p‚µ‚È‚¢•Ï”‚Í‹Lq‚
 			case SCENE_RESULT:
 				    result_init();
 				    break;
+			case SCENE_TUTRIAL:
+				tutrial_init();
+				break;
 
 			}
 
@@ -115,6 +121,11 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)// g—p‚µ‚È‚¢•Ï”‚Í‹Lq‚
 			result_update();
 			result_render();
 		}
+		else if (curScene == SCENE_TUTRIAL)
+		{
+			tutrial_update();
+			tutrial_render();
+		}
 
 
 
@@ -150,6 +161,10 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)// g—p‚µ‚È‚¢•Ï”‚Í‹Lq‚
 	if (curScene == SCENE_RESULT)
 	{
 		result_deinit();
+	}
+	if (curScene == SCENE_TUTRIAL)
+	{
+		tutrial_deinit();
 	}
 
 

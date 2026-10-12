@@ -47,7 +47,7 @@ void title_update()
 		//////// �ʏ펞 ////////
 		if (TRG(0) & PAD_TRG1)
 		{
-			nextScene = SCENE_STAGE5;
+			nextScene = SCENE_TUTRIAL;
 		}
 		
 	{
@@ -77,7 +77,7 @@ void title_update()
 			tutrial_check = true;
 			if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 			{
-				nextScene = SCENE_STAGE1;
+				nextScene = SCENE_TUTRIAL;
 			}
 		}
 		else

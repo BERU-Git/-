@@ -127,6 +127,7 @@
 #define SCENE_STAGE4 5
 #define SCENE_STAGE5 6
 #define SCENE_RESULT 7
+#define SCENE_TUTRIAL 8
 
 
 #define ToRadian( x )   DirectX::XMConvertToRadians( x )
