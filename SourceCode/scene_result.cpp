@@ -1,8 +1,8 @@
 #include "all.h"
+#include "timer.h"
+#include "player.h"
 #include <sstream>
 
-int result_state = 0;     // 状態
-int result_timer = 0;     // タイマー
 Sprite* sprResult = nullptr;
 Sprite* spr_result_crear = nullptr;
 Sprite* spr_result_timer = nullptr;
@@ -17,6 +17,7 @@ extern int game_timer;
 
 void result_init()
 {
+	timer_init();
 	sprResult = sprite_load(L"Data/Images/タイトル.png");
 	spr_result_crear = sprite_load(L"Data/Images/ダンジョン制覇.png");
 	spr_result_timer = sprite_load(L"Data/Images/クリアタイム.png");
@@ -25,18 +26,9 @@ void result_init()
 }
 void result_update()
 {
-	switch (result_state)
-	{
-	case 0:
-
-		result_state++;
-		/*fallthrough*/
-	case 1:
+	timer_update();
 		GameLib::setBlendMode(Blender::BS_ALPHA);
 
-		result_state++;
-		/*fallthrough*/
-	case 2:
 		std::ostringstream oss;									// 文字列ストリーム
 		POINT point;												// 位置用の変数を宣言する
 		GetCursorPos(&point);										// スクリーン座標を取得する
@@ -49,6 +41,14 @@ void result_update()
 			retry_check = true;
 			if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
 			{
+				game_timer = 0;
+				player_hp = PLAYER_HP;
+				seconds_pos_1 = 0;
+				seconds_pos_10 = 0;
+				minutes_pos_1 = 0;
+				minutes_pos_10 = 0;
+
+
 				nextScene = SCENE_STAGE1;
 			}
 		}
@@ -68,12 +68,7 @@ void result_update()
 		{
 			return_check = false;
 		}
-		/*if (TRG(0) & PAD_SELECT)
-		{
-			nextScene = SCENE_TITLE;
-		}
-		break;*/
-	}
+	
 
 	if (retry_check)
 	{
@@ -107,7 +102,6 @@ void result_update()
 			return_alpha = 0.5f;
 		}
 	}
-	result_timer++;
 
 
 }
@@ -131,10 +125,12 @@ void result_render()
 		sprite_render(spr_result_return_title, 1050, 660, 1.0f, 1.0f, 0.0f, 0.0f, 812, 185, 0.0f, 0.0f, ToRadian(0), 1.0f, 1.0f, 1.0f, 0.25f);
 	}
 	GameLib::setBlendMode(Blender::BS_ALPHA);
+timer_render();
 
 }
 void result_deinit()
 {
+	timer_deinit();
 	safe_delete(sprResult);
 	safe_delete(spr_result_crear);
 	safe_delete(spr_result_timer);

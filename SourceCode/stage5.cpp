@@ -89,6 +89,7 @@ void stage5_render()
 }
 void stage5_deinit()
 {
+	boss_stage = false;
 	player_deinit();
 	field_deinit();
 	boss_deinit();

@@ -23,7 +23,7 @@ void stage2_init()
 
 	attack_line_init();
 	player_init();
-timer_init();
+	timer_init();
 	camera_init();
 	strong_enemy_init();
 	field_init();
