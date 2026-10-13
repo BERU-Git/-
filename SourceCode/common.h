@@ -84,7 +84,7 @@
 #define BOSS_HAND_POS    480            //ボスの手の初期値
 
 
-#define ACCELERATION    0.5f           //プレイヤーの加速度
+#define ACCELERATION    0.78f           //プレイヤーの加速度
 #define DECELERATION    0.78f          //プレイヤーの減速度
 
 #define ENEMY_SPEED     4.5f           //敵のスピード
