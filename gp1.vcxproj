@@ -124,6 +124,7 @@ attrib +h SourceCode\gp1.log
     <ClInclude Include="SourceCode\gimick.h" />
     <ClInclude Include="SourceCode\heart.h" />
     <ClInclude Include="SourceCode\hit_check.h" />
+    <ClInclude Include="SourceCode\hiyoko.h" />
     <ClInclude Include="SourceCode\player.h" />
     <ClInclude Include="SourceCode\range_enemy.h" />
     <ClInclude Include="SourceCode\stage1.h" />
@@ -163,6 +164,7 @@ attrib +h SourceCode\gp1.log
     <ClCompile Include="SourceCode\gimick.cpp" />
     <ClCompile Include="SourceCode\heart.cpp" />
     <ClCompile Include="SourceCode\hit_check.cpp" />
+    <ClCompile Include="SourceCode\hiyoko.cpp" />
     <ClCompile Include="SourceCode\range_enemy.cpp" />
     <ClCompile Include="SourceCode\main.cpp" />
     <ClCompile Include="SourceCode\player.cpp" />

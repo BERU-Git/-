@@ -30,6 +30,9 @@ bool go_next;
 bool jast_avoid_check;
 
 
+
+
+
 void clamp_position(float& pos_x,float& pos_y,float texsize_x, float texsize_y,
 	                float& speed_x,float& speed_y)
 {
@@ -88,10 +91,13 @@ void player_init()
 	player_direction = 0;
 	
 	exprotion_init();
+
+	
 }
 
 void player_update()
 {
+	
 	
 	exprotion_update();
 	
@@ -360,9 +366,11 @@ void player_render()
 	//プレイヤーのワールド座標をスクリーン座標に変換
 	screen.x = player_pos.x - camera_pos.x + SCREEN_W * 0.5f;
 	screen.y = player_pos.y - camera_pos.y + SCREEN_H * 0.5f;
+	
 
 	decoy_screen.x = decoy_totem_pos.x - camera_pos.x + SCREEN_W * 0.5f;
 	decoy_screen.y = decoy_totem_pos.y - camera_pos.y + SCREEN_H * 0.5f;
+	
 
 	if(jast_avoid_check)
 	{

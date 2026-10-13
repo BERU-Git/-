@@ -96,7 +96,7 @@
 #define MIN_SPEED      -10.0f          //スピードの最大速度
 #define MAX_SPEED       10.0f
 
-#define PLAYER_HP        10            //プレイヤーのHP
+#define PLAYER_HP        1            //プレイヤーのHP
 
 #define CONTINUE_HP        5           //コンテニューのHP
 

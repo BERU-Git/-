@@ -8,6 +8,8 @@
 #include "attack_line.h"
 #include "gimick.h"
 #include <sstream>
+#include "heart.h"
+#include "hiyoko.h"
 
 
 
@@ -20,7 +22,8 @@ void tutrial_init()
 	camera_init();
 	gimick_init();
 	attack_line_init();
-
+	hiyoko_init();
+	heart_init();
 }
 void tutrial_update()
 {
@@ -31,6 +34,8 @@ void tutrial_update()
 		field_update();
 		camera_update();
 		gimick_update();//gimick_updateì‚Á‚½‚©‚çŒÄ‚ñ‚¾
+		hiyoko_update();
+		heart_update();
 
 
 
@@ -50,7 +55,8 @@ void tutrial_render()
 	player_render();
 	enemy_render();
 	gimick_render();
-
+	hiyoko_render();
+	heart_render();
 }
 void tutrial_deinit()
 {
@@ -59,4 +65,6 @@ void tutrial_deinit()
 	field_deinit();
 	attack_line_delete();
 	gimick_deinit();
+	hiyoko_deinit();
+	heart_deinit();
 }

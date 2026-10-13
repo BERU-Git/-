@@ -8,12 +8,10 @@
 #include "attack_line.h"
 #include "gimick.h"
 #include "heart.h"
+#include "hiyoko.h"
 
 extern int game_timer;
 int stage1_time;
-
-
-
 
 
 void stage1_init()
@@ -26,8 +24,10 @@ void stage1_init()
 	gimick_init();
 	attack_line_init();
 	heart_init();
+	hiyoko_init();
 
 	srand((unsigned int)time(NULL));
+	
 
 }
 
@@ -35,6 +35,7 @@ void stage1_update()
 {
 	if (player_hp <= 0)
 	{
+		hiyoko_check = true;
 		stage1_time++;
 		if (stage1_time >= 300)
 		{
@@ -58,6 +59,7 @@ void stage1_update()
 		camera_update();
 		gimick_update();//gimick_updateì‚Á‚½‚©‚çŒÄ‚ñ‚¾
 		heart_update();
+		hiyoko_update();
 
 		
 
@@ -70,7 +72,9 @@ void stage1_update()
 
 void stage1_render()
 {
+	
 	GameLib::clear(0.0f, 0.0f, 0.0f);
+	
     field_render();
 	attack_line_render();
     player_render();
@@ -78,6 +82,7 @@ void stage1_render()
 	gimick_render();
 	timer_render();
 	heart_render();
+	hiyoko_render();
 	
 	
 
@@ -92,4 +97,5 @@ void stage1_deinit()
 	gimick_deinit();
 	timer_deinit();
 	heart_deinit();
+	hiyoko_deinit();
 }
