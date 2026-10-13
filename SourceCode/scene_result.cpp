@@ -1,6 +1,7 @@
 #include "all.h"
 #include "timer.h"
 #include "player.h"
+#include "sound.h"
 #include <sstream>
 
 Sprite* sprResult = nullptr;
@@ -40,6 +41,8 @@ void result_init()
 	spr_result_timer = sprite_load(L"Data/Images/クリアタイム.png");
 	spr_result_return_title = sprite_load(L"Data/Images/タイトルに戻る.png");
 	spr_result_retry = sprite_load(L"Data/Images/リトライ.png");
+
+	sound_init();
 }
 void result_update()
 {
@@ -56,7 +59,7 @@ void result_update()
 		if (mouseX >= 1200 && mouseX <= 1700 && mouseY >= 360 && mouseY <= 540)
 		{
 			retry_check = true;
-			if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+			if (GetAsyncKeyState(VK_LBUTTON) & 1)
 			{
 				game_timer = 0;
 				player_hp = PLAYER_HP;
@@ -78,6 +81,8 @@ void result_update()
 			return_check = true;
 			if (GetAsyncKeyState(VK_LBUTTON) & 1)
 			{
+				game_timer = 0;
+				player_hp = PLAYER_HP;
 				nextScene = SCENE_TITLE;
 			}
 		}
@@ -153,4 +158,6 @@ void result_deinit()
 	safe_delete(spr_result_timer);
 	safe_delete(spr_result_return_title);
 	safe_delete(spr_result_retry);
+	sound_deinit();
+
 }

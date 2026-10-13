@@ -128,6 +128,7 @@ attrib +h SourceCode\gp1.log
     <ClInclude Include="SourceCode\hiyoko.h" />
     <ClInclude Include="SourceCode\player.h" />
     <ClInclude Include="SourceCode\range_enemy.h" />
+    <ClInclude Include="SourceCode\sound.h" />
     <ClInclude Include="SourceCode\stage1.h" />
     <ClInclude Include="SourceCode\scene_result.h" />
     <ClInclude Include="SourceCode\scene_title.h" />
@@ -170,6 +171,7 @@ attrib +h SourceCode\gp1.log
     <ClCompile Include="SourceCode\range_enemy.cpp" />
     <ClCompile Include="SourceCode\main.cpp" />
     <ClCompile Include="SourceCode\player.cpp" />
+    <ClCompile Include="SourceCode\sound.cpp" />
     <ClCompile Include="SourceCode\stage1.cpp" />
     <ClCompile Include="SourceCode\scene_result.cpp" />
     <ClCompile Include="SourceCode\scene_title.cpp" />

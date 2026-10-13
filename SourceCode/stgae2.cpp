@@ -10,6 +10,7 @@
 #include "range_enemy.h"
 #include"timer.h"
 #include "heart.h"
+#include "sound.h"
 #include "hiyoko.h"
 #include "heal.h"
 
@@ -23,7 +24,7 @@ void stage2_init()
 	{
 		enemy[i].attack = false;
 	}
-
+	sound_init();
 	attack_line_init();
 	player_init();
 	timer_init();
@@ -106,6 +107,7 @@ void stage2_deinit()
 	range_enemy_deinit();
 	timer_deinit();
 	heart_deinit();
+	sound_deinit();
 	heal_deinit();
 
 }

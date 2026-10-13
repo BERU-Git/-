@@ -96,7 +96,7 @@
 #define MIN_SPEED      -10.0f          //スピードの最大速度
 #define MAX_SPEED       10.0f
 
-#define PLAYER_HP        1            //プレイヤーのHP
+#define PLAYER_HP        10            //プレイヤーのHP
 
 #define CONTINUE_HP        5           //コンテニューのHP
 
@@ -106,7 +106,7 @@
 
 #define CHARGE_TIME     60.0f          //突進の時間
 #define STRONG_CHARGE_TIME     90.0f   //中ボスの突進の時間
-#define CHARGE_PREP_TIME     90.0f     //突進準備の時間
+#define CHARGE_PREP_TIME     60.0f     //突進準備の時間
 #define COOLDOWN_TIME     180.0f       //突進後のクールタイム
 
 #define ENEMY_MAX       25             //敵の最大数

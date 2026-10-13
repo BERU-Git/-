@@ -11,6 +11,7 @@
 #include "range_enemy.h"
 #include"timer.h"
 #include "heart.h"
+#include "sound.h"
 #include "hiyoko.h"
 #include "heal.h"
 
@@ -19,6 +20,7 @@ extern int game_timer;
 int stage3_time;
 void stage3_init()
 {
+	sound_init();
 	field_init();
 	player_init();
 	camera_init();
@@ -103,5 +105,6 @@ void stage3_deinit()
 	range_enemy_deinit();
 timer_deinit();
 heart_deinit();
+sound_deinit();
 heal_deinit();
 }

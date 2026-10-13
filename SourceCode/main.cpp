@@ -7,7 +7,7 @@
 #include "scene_result.h"
 #include "scene_title.h"
 #include "tutrial.h"
-using namespace GameLib;
+
 
 int curScene = SCENE_NONE;       //Œ»İ
 int nextScene = SCENE_TITLE;     //Ÿ‚ÌƒV[ƒ“

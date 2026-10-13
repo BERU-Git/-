@@ -11,6 +11,7 @@
 #include "range_enemy.h"
 #include"timer.h"
 #include "heart.h"
+#include "sound.h"
 #include "hiyoko.h"
 #include "heal.h"
 
@@ -54,6 +55,8 @@ void stage4_update()
 
 	game_timer++;
 	GameLib::setBlendMode(Blender::BS_ALPHA);
+
+	sound_init();
 	field_update();
 	camera_update();
 	enemy_update();
@@ -105,5 +108,6 @@ void stage4_deinit()
 	range_enemy_deinit();
 	timer_deinit();
 	heart_deinit();
+	sound_deinit();
 	heal_deinit();
 }

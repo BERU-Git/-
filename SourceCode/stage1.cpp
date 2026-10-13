@@ -9,6 +9,7 @@
 #include "gimick.h"
 #include "heart.h"
 #include "hiyoko.h"
+#include "sound.h"
 #include "heal.h"
 
 extern int game_timer;
@@ -17,6 +18,7 @@ int stage1_time;
 
 void stage1_init()
 {
+	sound_init();
 	player_init();
 	timer_init();
 	enemy_init();
@@ -26,6 +28,9 @@ void stage1_init()
 	attack_line_init();
 	heart_init();
 	hiyoko_init();
+	player_hp = PLAYER_HP;
+	game_timer = 0;
+
 	heal_init();
 
 	srand((unsigned int)time(NULL));
@@ -104,5 +109,6 @@ void stage1_deinit()
 	timer_deinit();
 	heart_deinit();
 	hiyoko_deinit();
+	sound_deinit();
 	heal_deinit();
 }

@@ -6,6 +6,7 @@
 #include "boss.h"
 #include "attack_line.h"
 #include"timer.h"
+#include"sound.h"
 #include "hiyoko.h"
 #include "heal.h"
 
@@ -20,6 +21,7 @@ void stage5_init()
 	boss_stage = true;
 	stage5_timer = 0;
 	stage5_state = 0;
+	sound_init();
 	player_init();
 	camera_init();
 	field_init();
@@ -100,5 +102,6 @@ void stage5_deinit()
 	boss_deinit();
 	attack_line_delete();
 	timer_deinit();
+	sound_deinit();
 	heal_deinit();
 }
