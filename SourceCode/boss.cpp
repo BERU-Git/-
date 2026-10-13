@@ -170,7 +170,7 @@ void boss_update()
 	switch (state)
 	{
 	case NORMAL_ENEMY:
-		state = LAST_ATTACK_INIT;
+		//state = LAST_ATTACK_INIT;
 		enemy_update();
 		if (boss_right.knock_down && boss_left.knock_down)
 		{
@@ -269,6 +269,8 @@ void boss_update()
 			boss_strong_enemy_update();
 			break;
 	case BOSS_END:
+
+
 		break;
 
 	}
