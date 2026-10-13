@@ -6,6 +6,7 @@
 #include "strong_enemy.h"
 #include "range_enemy.h"
 #include "troll.h"
+#include "sound.h"
 #include "hit_check.h"
 #include "exprotion.h"
 
@@ -83,7 +84,6 @@ void boss_init()
 
 void boss_update_init()
 {
-
 	boss.pos.y += BOSS_H / 260;
 	boss_right.pos.y += BOSS_H / 260;
 	boss_left.pos.y += BOSS_H / 260;
@@ -92,6 +92,7 @@ void boss_update_init()
 
 void boss_update()
 {
+	
 	if (boss_right.knock_down == true)//右手アニメーション管理
 	{
 		right_timer++;
@@ -185,15 +186,10 @@ void boss_update()
 	 	                    player_pos.y - SCREEN_H * 0.5f,
 	 	                    (player_pos.y - SCREEN_H * 0.5f) + BOSS_H * 0.5f);
 	
-	//ボスの当たり判定
-	if (hit_check(boss.pos.x, boss.pos.y, BOSS_HITBOX * 0.5f ,
-		strong_enemy.pos.x, strong_enemy.pos.y, STRONG_ENEMY_W * 0.5f) && strong_enemy.attack)
-	{
-		boss.knock_down = true;
-	}
 	//デコイの当たり判定
 	if (hit_check(boss.pos.x, boss.pos.y, BOSS_HITBOX * 0.5f ,
-		decoy_totem_pos.x, decoy_totem_pos.y, DECOY_TOTEM_EXPLOSION * 0.5f) && jast_avoid_effect_check && !boss.knock_down)
+		decoy_totem_pos.x, decoy_totem_pos.y, DECOY_TOTEM_EXPLOSION * 0.5f) && jast_avoid_effect_check
+		&& !boss.knock_down && state != NORMAL_ENEMY)
 	{
 		boss.knock_down = true;
 	}
@@ -208,6 +204,12 @@ void boss_update()
 		boss_left.knock_down = true;
 	}
 
+	//ボスの当たり判定
+	if (hit_check(boss.pos.x, boss.pos.y, BOSS_HITBOX * 0.5f ,
+		strong_enemy.pos.x, strong_enemy.pos.y, STRONG_ENEMY_W * 0.5f) && strong_enemy.attack)
+	{
+		boss.knock_down = true;
+	}
 	for(int i = 0; i < ENEMY_MAX ; i++ )
 	{
 		if (hit_check(boss_right.pos.x, boss_right.pos.y, BOSS_HAND_HITBOX * 0.5f,
@@ -227,18 +229,16 @@ void boss_update()
 
 
 
-	debug::setString("BOSS%d", boss.knock_down);
-	debug::setString("RIGHT%d", boss_right.knock_down);
-	debug::setString("LEFT%d", boss_left.knock_down);
 
 	//攻撃ウェーブ処理
 	switch (state)
 	{
 	case NORMAL_ENEMY:
-		state = LAST_ATTACK_INIT;
+		//state = LAST_ATTACK_INIT;
 		enemy_update();
 		if (boss_right.knock_down && boss_left.knock_down)
 		{
+			music::play(BOSS_ROAR);
 			state = STRONG_ENEMY_INIT;
 			enemy_deinit();
 			screen_shake_init(240);
@@ -264,6 +264,7 @@ void boss_update()
 		range_enemy_update();
 		if (boss.knock_down)
 		{
+			music::play(BOSS_ROAR);
 			troll_deinit();
 			strong_enemy_deinit();
 			range_enemy_deinit();
@@ -298,6 +299,7 @@ void boss_update()
 
 		if (boss_right.knock_down && boss_left.knock_down && boss.knock_down)
 		{
+			music::play(BOSS_ROAR);
 			screen_shake_init(240);
 			state = LAST_ATTACK_INIT;
 			troll_deinit();
@@ -336,9 +338,9 @@ void boss_update()
 	case BOSS_END:
 
 		screen_shake(25);
-		boss.transparent -= 0.0083f;
-		boss_right.transparent -= 0.0083f;
-		boss_left.transparent -= 0.0083f;
+		boss.transparent -= 0.00333f;
+		boss_right.transparent -= 0.00333f;
+		boss_left.transparent -= 0.00333f;
 		if (boss.transparent <= 0)
 		{
 			nextScene = SCENE_RESULT;
@@ -399,7 +401,15 @@ void boss_render()
 		1.0f, 1.0f, 1.0f, boss.transparent);
 	if (boss.knock_down == true)
 	{
-		sprite_render(spr_smoke, boss.screen.x, boss.screen.y, 1.0f, 1.0f, center_tex_pos_x, 0.0f, 340.0f, 340.0f, 170.0f, 170.0f);
+		sprite_render(spr_smoke,
+			boss.screen.x, boss.screen.y,
+			1.0f, 1.0f,
+			center_tex_pos_x, 0.0f,
+			340.0f, 340.0f,
+			170.0f, 170.0f,
+			0,
+			1.0f,1.0f,1.0f,boss.transparent
+		);
 	}
 
 
@@ -412,7 +422,16 @@ void boss_render()
 		1.0f, 1.0f, 1.0f, boss_left.transparent);
 	if (boss_left.knock_down == true)//左手がknockDownしたら煙の描画
 	{
-		sprite_render(spr_smoke, boss_left.screen.x, boss_left.screen.y, 1.0f, 1.0f, left_tex_pos_x, 0.0f, 340.0f, 340.0f, 170.0f, 170.0f);
+		sprite_render(spr_smoke,
+			boss_left.screen.x, boss_left.screen.y, 
+			1.0f, 1.0f,
+			left_tex_pos_x, 0.0f,
+			340.0f, 340.0f,
+			170.0f, 170.0f,
+			0,
+			1.0f, 1.0f, 1.0f, boss_left.transparent
+
+		);
 	}
 
 
@@ -425,7 +444,15 @@ void boss_render()
 		1.0f,1.0f,1.0f, boss_right.transparent);
 	if (boss_right.knock_down == true)//右手がknockDownしたら煙の描画
 	{
-		sprite_render(spr_smoke, boss_right.screen.x, boss_right.screen.y, 1.0f, 1.0f, right_tex_pos_x, 0.0f, 340.0f, 340.0f, 170.0f, 170.0f);
+		sprite_render(spr_smoke,
+			boss_right.screen.x, boss_right.screen.y, 
+			1.0f, 1.0f,
+			right_tex_pos_x, 0.0f,
+			340.0f, 340.0f,
+			170.0f, 170.0f,
+			0,
+			1.0f, 1.0f, 1.0f, boss_right.transparent
+			);
 	}
 	
 }

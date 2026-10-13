@@ -3,15 +3,19 @@
 #include "player.h"
 #include "sound.h"
 
-int title_state = 0;     // 状態
-int title_timer = 0;     // タイマー
+int title_enter_timer = 0;
 bool start_check = false;
 bool tutrial_check = false;
 bool end_check = false;
 bool sound_check = false;
+bool title_enter = false;
+bool stage1_enter = false;
+bool totrial_enter = false;
 float start_alpha = 0.5f;
 float tutrial_alpha = 0.5f;
 float end_alpha = 0.5f;
+float title_zoom = 1.0f;
+float title_fade = 0.0f;
 Sprite* spr_title;
 Sprite* spr_gameStart;
 Sprite* spr_gameEnd;
@@ -22,39 +26,61 @@ Sprite* spr_title_letter;
 
 void title_init()
 {
-	/*DirectX::Mouse::Get().SetWindow(window::getHwnd());*/
 	spr_title = sprite_load(L"Data/Images/タイトル.png");
 	spr_gameStart = sprite_load(L"Data/Images/ゲームスタート.png");
 	spr_gameEnd = sprite_load(L"Data/Images/ゲームの終了.png");
 	spr_tutrial = sprite_load(L"Data/Images/チュートリアル.png");
 	spr_title_letter = sprite_load(L"Data/Images/タイトル文字.png");
+	player_hp = PLAYER_HP;
+	title_enter_timer = 0;
+	title_enter = false;
+	stage1_enter = false;
+	totrial_enter = false;
+	title_zoom = 1.0f;
+	title_fade = 0.0f;
 
 	sound_init();
+	music::play(TITLE_BGM,true);
 
 }
 void title_update()
 {
-	switch (title_state)
-	{
-	case 0:
-		//////// 初期設定 ////////
-
-		title_state++;
-		/*fallthrough*/
-	case 1:
-		//////// パラメータの設定 ////////
-
-		// ブレンドモードの設定
-		GameLib::setBlendMode(Blender::BS_ALPHA);
-
-		title_state++;
-		/*fallthrough*/
-	case 2:
-		//////// 通常時 ////////
+	
 		if (TRG(0) & PAD_TRG1)
 		{
 			nextScene = SCENE_STAGE5;
 		}
+
+			if (title_enter)
+			{
+				title_enter_timer++;
+
+				// 背景を拡大
+				title_zoom += 0.025f;
+
+				// 90フレーム経過したら暗転開始
+				if (title_enter_timer >= 90)
+				{
+					title_fade += 0.03f;
+
+					if (title_fade >= 1.0f)
+					{
+						title_fade = 1.0f;
+						if (totrial_enter)
+						{
+						nextScene = SCENE_TUTRIAL;
+						}
+						else if (stage1_enter)
+						{
+						nextScene = SCENE_STAGE1;
+						}
+					}
+				}
+
+				return;
+				
+			}
+
 		
 	{
 		std::ostringstream oss;									// 文字列ストリーム
@@ -71,7 +97,10 @@ void title_update()
 			start_check = true;
 			if (GetAsyncKeyState(VK_LBUTTON) & 1)
 			{
-				nextScene = SCENE_STAGE1;
+				music::play(TITLE_DECISION);
+				stage1_enter = true;
+				title_enter = true;
+				title_enter_timer = 0;
 			}
 		}
 		else
@@ -83,7 +112,10 @@ void title_update()
 			tutrial_check = true;
 			if (GetAsyncKeyState(VK_LBUTTON) & 1)
 			{
-				nextScene = SCENE_TUTRIAL;
+				music::play(TITLE_DECISION);
+				totrial_enter = true;
+				title_enter = true;
+				title_enter_timer = 0;
 			}
 		}
 		else
@@ -157,7 +189,7 @@ void title_update()
 		if ((start_check || tutrial_check || end_check )
 			&& !sound_check)
 		{
-			music::play(0);
+			music::play(TITLE_SELECT);
 			sound_check = true;
 		}
 
@@ -165,19 +197,35 @@ void title_update()
 		{
 			sound_check = false;
 		}
-		break;
+	
 
 	}
 		
-	}
+	
 
-	title_timer++;
+
 
 }
 void title_render()
 {
-	/*GameLib::clear(0.2f, 0.2f, 0.2f);*/
-	sprite_render(spr_title, 0.0f, 0.0f);
+	// 画面の中心
+	float center_x = SCREEN_W * 0.5f;
+	float center_y = SCREEN_H * 0.5f;
+
+	// 入口の中心
+	float entrance_x = 400.0f;
+	float entrance_y = 630.0f;
+
+
+
+	// 背景を描画
+	sprite_render(spr_title,
+		entrance_x, entrance_y,
+		          title_zoom, title_zoom,
+		          0,0,
+		          SCREEN_W,SCREEN_H,
+		          entrance_x, entrance_y);
+
 
 	sprite_render(spr_title_letter, 150, 90);
 	GameLib::setBlendMode(Blender::BS_ALPHA);
@@ -247,10 +295,6 @@ void title_render()
 	
 	
 	
-	/*if((title_timer / 30) % 2 == 0)
-	{ 
-		font::textOut(1, "GAME START", 800, 400);
-	}*/
 
 }
 void title_deinit()

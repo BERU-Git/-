@@ -5,6 +5,7 @@
 #include "player.h"
 #include "attack_line.h"
 #include "boss.h"
+#include "sound.h"
 
 Sprite* spr_strong_enemy;
 Sprite* spr_boss_strong_enemy;
@@ -102,6 +103,7 @@ void strong_enemy_update()
 			strong_enemy.pos.x, strong_enemy.pos.y, STRONG_ENEMY_W * 0.5f) && !jast_avoid_check)
 		{
 			strong_enemy.state = ENEMY_CHARGE_PREP;
+		music::play(STRONG_ENEMY_PREP);
 		}
 
 		break;	
@@ -180,6 +182,8 @@ void boss_strong_enemy_init()
 
 	strong_enemy = {};
 
+	music::play(STRONG_ENEMY_PREP);
+	
 	strong_enemy.pos.x = boss_circle_center.x;
 	strong_enemy.pos.y = boss_circle_center.y - SCREEN_W;
 
@@ -218,7 +222,7 @@ void boss_strong_enemy_update()
 		boss_attack_loop++;
 		if(boss_attack_loop % 2 == 0)
 		{
-
+			music::play(STRONG_ENEMY_PREP);
 			strong_enemy.charge_timer = 0;
 
 			strong_enemy.pos.x = boss_circle_center.x;
@@ -233,7 +237,7 @@ void boss_strong_enemy_update()
 		}
 		else
 		{
-
+			music::play(STRONG_ENEMY_PREP);
 			strong_enemy.charge_timer = 0;
 
 			strong_enemy.pos.x = boss_circle_center.x + SCREEN_W;

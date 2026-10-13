@@ -6,6 +6,7 @@
 #include "boss.h"
 #include "strong_enemy.h"
 #include "attack_line.h"
+#include "sound.h"
 Sprite* spr_enemy;
 Sprite* spr_boss_enemy;
 Sprite* spr_extinction = nullptr;
@@ -230,6 +231,7 @@ void enemy_update()
 
 			if (enemy[i].charge_prep_timer >= CHARGE_PREP_TIME)
 			{
+				music::play(CHARGE);
 				enemy[i].state = ENEMY_CHARGE;
 			}
 
@@ -254,6 +256,9 @@ void enemy_update()
 					enemy[i].pos.x, enemy[i].pos.y, NORMAL_ENEMY_HITBOX * 0.5f,
 					enemy[j].pos.x, enemy[j].pos.y, NORMAL_ENEMY_HITBOX * 0.5f))
 				{
+
+					music::play(ENEMY_DEFEAT);
+
 					enemy[j].last_pos.x = enemy[j].pos.x;
 					enemy[j].last_pos.y = enemy[j].pos.y;
 
@@ -400,7 +405,7 @@ void boss_enemy_init()
 void boss_enemy_update()
 {
 	last_attack_time++;
-	
+	//”ÍˆÍŠO‚Éo‚ê‚Î‚â‚è’¼‚µ
 	float dx = player_pos.x - boss_circle_center.x;
 	float dy = player_pos.y - boss_circle_center.y;
 
@@ -418,8 +423,12 @@ void boss_enemy_update()
 		player_outside = false;
 	}
 
+
+
 	if (last_attack_time >= 8)
 	{
+		music::play(CHARGE);
+
 		last_attack_time = 0;
 		enemy[attack_enemy_num].attack = true;
 		enemy[attack_enemy_num].charge = true;
@@ -440,6 +449,7 @@ void boss_enemy_update()
 
 				strong_enemy = {};
 				screen_shake_init(300);
+				music::play(BOSS_ROAR);
 				state = BOSS_END;
 			}
 		}
@@ -451,6 +461,7 @@ void boss_enemy_update()
 		{
 			if(enemy[i].attack)
 			{
+		
 
 				enemy[i].charge_timer += 1.0f;
 				enemy[i].pos.x += enemy[i].chase.x * 50.0f;

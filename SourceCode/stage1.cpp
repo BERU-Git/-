@@ -28,10 +28,11 @@ void stage1_init()
 	attack_line_init();
 	heart_init();
 	hiyoko_init();
+	heal_init();
 	player_hp = PLAYER_HP;
 	game_timer = 0;
 
-	heal_init();
+	music::play(FIELD_BGM,true);
 
 	srand((unsigned int)time(NULL));
 	
@@ -47,6 +48,7 @@ void stage1_update()
 		stage1_time++;
 		if (stage1_time >= 300)
 		{
+			music::play(RESURRECTION);
 			knock_check = false;
 			heal_check = true;
 			player_hp = CONTINUE_HP;
@@ -89,12 +91,12 @@ void stage1_render()
     field_render();
 	attack_line_render();
     player_render();
-	enemy_render();
-	gimick_render();
-	timer_render();
-	heart_render();
 	hiyoko_render();
 	heal_render();
+	enemy_render();
+	gimick_render();
+	heart_render();
+	timer_render();
 	
 
 }
@@ -111,4 +113,5 @@ void stage1_deinit()
 	hiyoko_deinit();
 	sound_deinit();
 	heal_deinit();
+	hiyoko_deinit();
 }

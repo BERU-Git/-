@@ -27,12 +27,16 @@ void stage3_init()
 	gimick_init();
 	attack_line_init();
 	enemy_init();
-timer_init();
+	timer_init();
 	strong_enemy_init();
-	troll_init();
 	range_enemy_init();
 	heart_init();
 	heal_init();
+	hiyoko_init();
+
+	music::play(FIELD_BGM, true);
+
+
 }
 
 
@@ -52,7 +56,7 @@ void stage3_update()
 			stage3_time = 0;
 		}
 	}
-	if(player_hp)
+	if(player_hp > 0)
 	{
 		player_update();
 	}
@@ -64,11 +68,11 @@ void stage3_update()
 	enemy_update();
 	gimick_update();
 	strong_enemy_update();
-	troll_update();
 	range_enemy_update();
 	timer_update();
 	heart_update();
 	heal_update();
+	hiyoko_update();
 
 
 	if (go_next)
@@ -85,14 +89,14 @@ void stage3_render()
 	field_render();
 	attack_line_render();
 	player_render();
+	hiyoko_render();
+	heal_render();
 	enemy_render();
 	strong_enemy_render();
-	troll_render();
 	range_enemy_render();
 	gimick_render();
-timer_render();
-heart_render();
-heal_render();
+	heart_render();
+	timer_render();
 
 }
 void stage3_deinit()
@@ -102,11 +106,11 @@ void stage3_deinit()
 	gimick_deinit();
 	enemy_deinit();
 	strong_enemy_deinit();
-	troll_deinit();
 	attack_line_delete();
 	range_enemy_deinit();
 timer_deinit();
 heart_deinit();
 sound_deinit();
 heal_deinit();
+hiyoko_deinit();
 }

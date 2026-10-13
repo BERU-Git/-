@@ -6,6 +6,7 @@
 #include "player.h"
 #include "strong_enemy.h"
 #include "heal.h"
+#include "sound.h"
 
 
 Sprite* spr_gimick = nullptr;
@@ -78,6 +79,7 @@ void gimick_update()
 			{
 				heal_check = true;
 				player_hp += PLAYER_HEEL;
+				music::play(BARRIER_BREAK);
 				gimick[g].barrier_break_check = true;
 			}
 		}
@@ -88,6 +90,7 @@ void gimick_update()
 		{
 			heal_check = true;
 			player_hp += PLAYER_HEEL;
+			music::play(BARRIER_BREAK);
 			gimick[g].barrier_break_check = true;
 		}
 

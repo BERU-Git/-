@@ -1,6 +1,7 @@
 #include "all.h"
 #include "timer.h"
 #include "player.h"
+#include "scene_title.h"
 #include "sound.h"
 #include <sstream>
 
@@ -43,6 +44,11 @@ void result_init()
 	spr_result_retry = sprite_load(L"Data/Images/リトライ.png");
 
 	sound_init();
+
+	music::play(RESLUT_BGM, true);
+
+
+	sound_check = false;
 }
 void result_update()
 {
@@ -61,6 +67,7 @@ void result_update()
 			retry_check = true;
 			if (GetAsyncKeyState(VK_LBUTTON) & 1)
 			{
+				music::play(TITLE_DECISION);
 				game_timer = 0;
 				player_hp = PLAYER_HP;
 				seconds_pos_1 = 0;
@@ -81,6 +88,7 @@ void result_update()
 			return_check = true;
 			if (GetAsyncKeyState(VK_LBUTTON) & 1)
 			{
+				music::play(TITLE_DECISION);
 				game_timer = 0;
 				player_hp = PLAYER_HP;
 				nextScene = SCENE_TITLE;
@@ -123,6 +131,19 @@ void result_update()
 		{
 			return_alpha = 0.5f;
 		}
+	}
+
+	//タイトルの選択SE
+	if ((retry_check || return_check)
+		&& !sound_check)
+	{
+		music::play(TITLE_SELECT);
+		sound_check = true;
+	}
+
+	if (!retry_check && !return_check)
+	{
+		sound_check = false;
 	}
 
 

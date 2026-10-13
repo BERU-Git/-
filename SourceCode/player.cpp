@@ -8,6 +8,7 @@
 #include "gimick.h"
 #include "exprotion.h"
 #include "heal.h"
+#include "sound.h"
 
 Sprite* spr_player;
 Sprite* spr_decoy;
@@ -204,6 +205,7 @@ void player_update()
 		if (hit_check(player_pos.x, player_pos.y, PLAYER_HITBOX * 0.5f,
 			enemy[i].pos.x, enemy[i].pos.y, NORMAL_ENEMY_HITBOX * 0.5f) && !player_hit)
 		{
+			music::play(DAMAGE);
 			screen_shake_init(DAMAGE_SHAKE_TIME);
 			player_hit = true;
 			player_hp -= 1;
@@ -213,6 +215,7 @@ void player_update()
 	if (hit_check(player_pos.x, player_pos.y, PLAYER_HITBOX * 0.5f,
 		strong_enemy.pos.x, strong_enemy.pos.y, STRONG_ENEMY_W * 0.5f) && !player_hit)
 	{
+		music::play(DAMAGE);
 		screen_shake_init(DAMAGE_SHAKE_TIME);
 		player_hit = true;
 		player_hp -= 2;
@@ -224,6 +227,7 @@ void player_update()
 		if (hit_check(player_pos.x, player_pos.y, PLAYER_HITBOX * 0.5f,
 			range_enemy_bullet[i].pos.x, range_enemy_bullet[i].pos.y, ENEMY_BULLET_W * 0.5f) && !player_hit)
 		{
+			music::play(DAMAGE);
 			screen_shake_init(DAMAGE_SHAKE_TIME);
 			player_hit = true;
 			player_hp -= 1;
@@ -251,7 +255,9 @@ void player_update()
 	{
 		if (!jast_avoid_check && !enemy[i].jast_avoid_hit && enemy[i].jast_avoid_done)
 		{
+			music::play(JAST_AVOID);
 			player_alpha = 0.3f;
+			player_hit = true;
 			jast_avoid_check = true;
 			decoy_totem_pos.x = player_pos.x;
 			decoy_totem_pos.y = player_pos.y;
@@ -260,7 +266,9 @@ void player_update()
 	}
 	if (!jast_avoid_check && !strong_enemy.jast_avoid_hit && strong_enemy.jast_avoid_done)
 	{
+		music::play(JAST_AVOID);
 		player_alpha = 0.3f;
+		player_hit = true;
 		jast_avoid_check = true;
 		decoy_totem_pos.x = player_pos.x;
 		decoy_totem_pos.y = player_pos.y;
@@ -275,10 +283,13 @@ void player_update()
 			if (decoy_totem_timer >= 120)
 			{
 				jast_avoid_effect_check = true;
+				music::play(DECOY_EXPLOSION);
 				for (int i = 0; i < ENEMY_MAX; i++)
 				{
 						enemy[i].speed.x = ENEMY_SPEED;
 						enemy[i].speed.y = ENEMY_SPEED;
+
+
 
 					if (hit_check(decoy_totem_pos.x, decoy_totem_pos.y, DECOY_TOTEM_EXPLOSION * 0.5f,
 						enemy[i].pos.x, enemy[i].pos.y, NORMAL_ENEMY_HITBOX * 0.5f))

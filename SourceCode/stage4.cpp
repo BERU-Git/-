@@ -32,7 +32,13 @@ void stage4_init()
 	range_enemy_init();
 	timer_init();
 	heart_init();
+	hiyoko_init();
 	heal_init();
+	sound_init();
+
+	music::play(FIELD_BGM, true);
+
+
 }
 void stage4_update()
 {
@@ -50,7 +56,7 @@ void stage4_update()
 			stage4_time = 0;
 		}
 	}
-	if(player_hp)
+	if(player_hp > 0)
 	{
 		player_update();
 	}
@@ -58,7 +64,6 @@ void stage4_update()
 	game_timer++;
 	GameLib::setBlendMode(Blender::BS_ALPHA);
 
-	sound_init();
 	field_update();
 	camera_update();
 	enemy_update();
@@ -66,9 +71,11 @@ void stage4_update()
 	strong_enemy_update();
 	troll_update();
 	range_enemy_update();
-timer_update();
-heart_update();
-heal_update();
+	timer_update();
+	heart_update();
+	heal_update();
+	hiyoko_update();
+
 
 
 
@@ -88,14 +95,15 @@ void stage4_render()
 	field_render();
 	attack_line_render();
 	player_render();
+	hiyoko_render();
+	heal_render();
 	enemy_render();
 	strong_enemy_render();
 	troll_render();
 	range_enemy_render();
 	gimick_render();
-	timer_render();
 	heart_render();
-	heal_render();
+	timer_render();
 
 }
 void stage4_deinit()
@@ -112,4 +120,5 @@ void stage4_deinit()
 	heart_deinit();
 	sound_deinit();
 	heal_deinit();
+	hiyoko_deinit();
 }

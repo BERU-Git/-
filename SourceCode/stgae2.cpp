@@ -29,13 +29,17 @@ void stage2_init()
 	player_init();
 	timer_init();
 	camera_init();
+	enemy_init();
 	strong_enemy_init();
 	field_init();
 	gimick_init();
-	troll_init();
-	range_enemy_init();
 	heart_init();
 	heal_init();
+	hiyoko_init();
+
+	music::play(FIELD_BGM, true);
+
+
 
 }
 void stage2_update()
@@ -66,11 +70,10 @@ void stage2_update()
 	strong_enemy_update();
 	field_update();
 	gimick_update();
-	troll_update();
-	range_enemy_update();
-timer_update();
-heart_update();
-heal_update();
+	timer_update();
+	heart_update();
+	heal_update();
+	enemy_update();
 
 
 
@@ -89,13 +92,14 @@ void stage2_render()
 	field_render();
 	attack_line_render();
 	player_render();
-	strong_enemy_render();
-	troll_render();
-	gimick_render();
-	range_enemy_render();
-	timer_render();
-	heart_render();
 	heal_render();
+	hiyoko_render();
+	strong_enemy_render();
+	enemy_render();
+	gimick_render();
+	heart_render();
+	timer_render();
+
 
 }
 void stage2_deinit()
@@ -105,11 +109,11 @@ void stage2_deinit()
 	gimick_deinit();
 	strong_enemy_deinit();
 	attack_line_delete();
-	troll_deinit();
-	range_enemy_deinit();
 	timer_deinit();
 	heart_deinit();
 	sound_deinit();
 	heal_deinit();
+	enemy_deinit();
+	hiyoko_deinit();
 
 }

@@ -2,10 +2,13 @@
 #include "all.h"
 #include "hit_check.h"
 #include "player.h"
+#include "boss.h"
 #include "camera.h"
+#include "sound.h"
 #include "exprotion.h"
 
 Sprite* spr_troll = nullptr;
+Sprite* spr_boss_troll = nullptr;
 
 int troll_attack_anime_timer;
 int troll_attack_anime;
@@ -26,6 +29,7 @@ void troll_init()
 exprotion_init();
 	troll = {};
 	spr_troll = sprite_load(L"Data/images/troll.png");
+	spr_boss_troll = sprite_load(L"Data/images/boss_troll.png");
 	
 	troll.act = TROLL_IDLE;
 	troll.attack_state = TROLL_ATTACK_START;
@@ -64,25 +68,6 @@ exprotion_init();
 	danger_circle = false;
 
 }
-
-//bool effect_animation(int startFrame, int endFrame, int frameSpeed)
-//{
-//	int total = endFrame - startFrame + 1;
-//	effect_anime = effect_anime_timer / frameSpeed;
-//	int check_frame = startFrame + effect_anime;
-//	if (check_frame < 8)
-//	{
-//		effect_tex_pos.x = check_frame * effect_tex_size.x;
-//		effect_tex_pos.y = 0.0f;
-//	}
-//	else
-//	{
-//		effect_tex_pos.x = (check_frame - 8);
-//		effect_tex_pos.y = effect_tex_size.y;
-//	}
-//	effect_anime_timer++;
-//	return false;
-//}
 
 bool troll_animation_variation(int startFrame, int endFrame, int frameSpeed, bool loop)//アニメーションの?コマから?コマまでを再生する関数
 //startFrameは始まりのコマ。endFrameが終わりのフレーム。frameSpeedは1コマ？フレームか。loopはループするかどうか
@@ -215,6 +200,7 @@ exprotion_update();
 
 			if (troll.attack_timer >= 30)
 			{
+				music::play(TROLL_EXPLOSION);
 				troll.attack_state = TROLL_ATTACK_SWING;
 				troll_attack_anime = 0;
 				troll_attack_anime_timer = 0;
@@ -235,7 +221,7 @@ exprotion_update();
 					troll.pos.x, troll.pos.y, troll.radius))
 				{
 					troll_attack_hit = true;
-					player_hp -= 5;
+					player_hp -= 3;
 
 					effect_check = true;
 					
@@ -272,26 +258,30 @@ exprotion_update();
 	}
 }
 
-			/*debug::setString("anime_end%d", check);
-			debug::setString(
-				"act = %d  attack_state = %d  attack_timer = %d  anime = %d",
-				troll.act,
-				troll.attack_state,
-				troll.attack_timer,
-				troll_attack_anime
-			);*/
 
 }
 void troll_render()
 {
 	troll_screen.x = troll.pos.x - camera_pos.x + SCREEN_W * 0.5f;
 	troll_screen.y = troll.pos.y - camera_pos.y + SCREEN_H * 0.5f;
-	sprite_render(spr_troll,
-		troll_screen.x, troll_screen.y,
-		2.0f * troll_direction, 2.0f,
-		troll_tex_pos.x, troll_tex_pos.y,
-		troll_tex_size.x, troll_tex_size.y,
-		128 , 128);
+	if(!boss_stage)
+	{
+		sprite_render(spr_troll,
+			troll_screen.x, troll_screen.y,
+			2.0f * troll_direction, 2.0f,
+			troll_tex_pos.x, troll_tex_pos.y,
+			troll_tex_size.x, troll_tex_size.y,
+			128, 128);
+	}
+	else if(boss_stage)
+	{
+		sprite_render(spr_boss_troll,
+			troll_screen.x, troll_screen.y,
+			2.0f * troll_direction, 2.0f,
+			troll_tex_pos.x, troll_tex_pos.y,
+			troll_tex_size.x, troll_tex_size.y,
+			128, 128);
+	}
 
 	exprotion_render();
 }

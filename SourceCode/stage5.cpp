@@ -9,6 +9,8 @@
 #include"sound.h"
 #include "hiyoko.h"
 #include "heal.h"
+#include "heart.h"
+
 
 
 int stage5_timer;
@@ -29,6 +31,8 @@ void stage5_init()
 	timer_init();
 	attack_line_init();
 	heal_init();
+	heart_init();
+	hiyoko_init();
 
 
 }
@@ -61,19 +65,30 @@ void stage5_update()
 	camera_update();
 	field_update();
 	timer_update();
-	screen_shake(15);
 	heal_update();
+	heart_update();
+	hiyoko_update();
+	screen_shake(15);
 	
+	if (stage5_timer >= 119 && stage5_timer <= 121)
+	{
+		music::play(BOSS_ROAR);
+		music::play(BOSS_RUMBLE);
+		
+	}
+
+
 	if (stage5_timer >= 120 && stage5_timer <= 420)
 	{
 		screen_shake_init(120);
 		boss_update_init();
+	music::play(BOSS_BGM,true);
 	}
 	
 		
 	if (stage5_timer >= 420)
 	{
-		if(player_hp)
+		if(player_hp > 0)
 		{
 			player_update();
 		}
@@ -91,9 +106,12 @@ void stage5_render()
 	field_render();
 	attack_line_render();
 	player_render();
+	hiyoko_render();
+	heal_render();
 	boss_render();
 	timer_render();
-	heal_render();
+	heart_render();
+
 
 }
 void stage5_deinit()
@@ -106,4 +124,7 @@ void stage5_deinit()
 	timer_deinit();
 	sound_deinit();
 	heal_deinit();
+	heart_deinit();
+	hiyoko_deinit();
+
 }
