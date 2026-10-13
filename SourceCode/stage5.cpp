@@ -7,8 +7,8 @@
 #include "attack_line.h"
 #include"timer.h"
 #include"sound.h"
-
-
+#include "hiyoko.h"
+#include "heal.h"
 
 
 int stage5_timer;
@@ -28,7 +28,7 @@ void stage5_init()
 	boss_init();
 	timer_init();
 	attack_line_init();
-
+	heal_init();
 
 
 }
@@ -38,9 +38,11 @@ void stage5_update()
 
 	if (player_hp <= 0)
 	{
+		hiyoko_check = true;
 		stage5_time++;
 		if (stage5_time >= 300)
 		{
+			heal_check = true;
 			if (last_attack == true)
 			{
 				state = LAST_ATTACK_INIT;
@@ -58,6 +60,7 @@ void stage5_update()
 	field_update();
 	timer_update();
 	screen_shake(15);
+	heal_update();
 	
 	if (stage5_timer >= 120 && stage5_timer <= 420)
 	{
@@ -88,6 +91,7 @@ void stage5_render()
 	player_render();
 	boss_render();
 	timer_render();
+	heal_render();
 
 }
 void stage5_deinit()
@@ -99,4 +103,5 @@ void stage5_deinit()
 	attack_line_delete();
 	timer_deinit();
 	sound_deinit();
+	heal_deinit();
 }

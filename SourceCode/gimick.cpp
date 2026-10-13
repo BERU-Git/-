@@ -5,6 +5,7 @@
 #include "enemy.h"
 #include "player.h"
 #include "strong_enemy.h"
+#include "heal.h"
 
 
 Sprite* spr_gimick = nullptr;
@@ -75,6 +76,7 @@ void gimick_update()
 						  enemy[e].pos.x, enemy[e].pos.y, NORMAL_ENEMY_HITBOX * 0.5f) &&
 						  enemy[e].attack && !gimick[g].barrier_break_check)//もし突進中の敵とギミックのバリアが当たったら
 			{
+				heal_check = true;
 				player_hp += PLAYER_HEEL;
 				gimick[g].barrier_break_check = true;
 			}
@@ -84,6 +86,7 @@ void gimick_update()
 			strong_enemy.pos.x, strong_enemy.pos.y, STRONG_ENEMY_W * 0.5f) &&
 			strong_enemy.attack && !gimick[g].barrier_break_check)//もし突進中の敵とギミックのバリアが当たったら
 		{
+			heal_check = true;
 			player_hp += PLAYER_HEEL;
 			gimick[g].barrier_break_check = true;
 		}

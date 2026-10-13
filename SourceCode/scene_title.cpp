@@ -53,7 +53,7 @@ void title_update()
 		//////// �ʏ펞 ////////
 		if (TRG(0) & PAD_TRG1)
 		{
-			nextScene = SCENE_RESULT;
+			nextScene = SCENE_STAGE5;
 		}
 		
 	{

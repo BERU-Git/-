@@ -7,6 +7,7 @@
 #include "field.h"
 #include "gimick.h"
 #include "exprotion.h"
+#include "heal.h"
 
 Sprite* spr_player;
 Sprite* spr_decoy;

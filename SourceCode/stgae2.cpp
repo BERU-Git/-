@@ -11,6 +11,8 @@
 #include"timer.h"
 #include "heart.h"
 #include "sound.h"
+#include "hiyoko.h"
+#include "heal.h"
 
 extern int game_timer;
 int stage2_time;
@@ -33,15 +35,18 @@ void stage2_init()
 	troll_init();
 	range_enemy_init();
 	heart_init();
+	heal_init();
 
 }
 void stage2_update()
 {
 	if (player_hp <= 0)
 	{
+		hiyoko_check = true;
 		stage2_time++;
 		if (stage2_time >= 300)
 		{
+			heal_check = true;
 			player_hp = CONTINUE_HP;
 			stage2_time = 0;
 		}
@@ -63,6 +68,7 @@ void stage2_update()
 	range_enemy_update();
 timer_update();
 heart_update();
+heal_update();
 
 
 
@@ -87,6 +93,7 @@ void stage2_render()
 	range_enemy_render();
 timer_render();
 heart_render();
+heal_render();
 
 }
 void stage2_deinit()
@@ -98,7 +105,9 @@ void stage2_deinit()
 	attack_line_delete();
 	troll_deinit();
 	range_enemy_deinit();
-timer_deinit();
-heart_deinit();
-sound_deinit();
+	timer_deinit();
+	heart_deinit();
+	sound_deinit();
+	heal_deinit();
+
 }
