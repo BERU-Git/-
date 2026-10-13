@@ -26,13 +26,13 @@ bool boss_stage;
 bool last_attack;
 int boss_state_timer;
 
-int right_timer = 0;
+int right_timer = 0;//右手アニメーション用
 int right_count = 0;
 float right_tex_pos_x = 0.0f;
-int left_timer = 0;
+int left_timer = 0;//左手アニメーション用
 int left_count = 0;
 float left_tex_pos_x = 0.0f;
-int center_timer = 0;
+int center_timer = 0;//センターアニメーション用
 int center_count = 0;
 float center_tex_pos_x = 0.0f;
 
@@ -92,7 +92,7 @@ void boss_update_init()
 
 void boss_update()
 {
-	if (boss_right.knock_down == true)
+	if (boss_right.knock_down == true)//右手アニメーション管理
 	{
 		right_timer++;
 		if (right_timer % 6 == 0)
@@ -108,7 +108,7 @@ void boss_update()
 			right_tex_pos_x = 0.0f;
 		}
 	}
-	if (boss_left.knock_down == true)
+	if (boss_left.knock_down == true)//左手アニメーション管理
 	{
 		left_timer++;
 		if (left_timer % 6 == 0)
@@ -124,7 +124,7 @@ void boss_update()
 			left_tex_pos_x = 0.0f;
 		}
 	}
-	if (boss.knock_down == true)
+	if (boss.knock_down == true)//センターアニメーション管理
 	{
 		center_timer++;
 		if (center_timer % 6 == 0)
@@ -410,7 +410,7 @@ void boss_render()
 		BOSS_HAND_W * 0.5f, BOSS_HAND_H * 0.5f,
 		0,
 		1.0f, 1.0f, 1.0f, boss_left.transparent);
-	if (boss_left.knock_down == true)
+	if (boss_left.knock_down == true)//左手がknockDownしたら煙の描画
 	{
 		sprite_render(spr_smoke, boss_left.screen.x, boss_left.screen.y, 1.0f, 1.0f, left_tex_pos_x, 0.0f, 340.0f, 340.0f, 170.0f, 170.0f);
 	}
@@ -423,7 +423,7 @@ void boss_render()
 		BOSS_HAND_W * 0.5f, BOSS_HAND_H * 0.5f,
 		0,
 		1.0f,1.0f,1.0f, boss_right.transparent);
-	if (boss_right.knock_down == true)
+	if (boss_right.knock_down == true)//右手がknockDownしたら煙の描画
 	{
 		sprite_render(spr_smoke, boss_right.screen.x, boss_right.screen.y, 1.0f, 1.0f, right_tex_pos_x, 0.0f, 340.0f, 340.0f, 170.0f, 170.0f);
 	}
