@@ -269,11 +269,13 @@ void player_update()
 		{
 			decoy_totem_timer++;
 
-			if (decoy_totem_timer >= 300)
+			if (decoy_totem_timer >= 120)
 			{
 				jast_avoid_effect_check = true;
 				for (int i = 0; i < ENEMY_MAX; i++)
 				{
+						enemy[i].speed.x = ENEMY_SPEED;
+						enemy[i].speed.y = ENEMY_SPEED;
 
 					if (hit_check(decoy_totem_pos.x, decoy_totem_pos.y, DECOY_TOTEM_EXPLOSION * 0.5f,
 						enemy[i].pos.x, enemy[i].pos.y, NORMAL_ENEMY_HITBOX * 0.5f))
@@ -281,8 +283,6 @@ void player_update()
 						enemy[i].pos.x = (float)(ENEMY_W + rand() % (WORLD_W - ENEMY_W * 2));
 						enemy[i].pos.y = (float)(ENEMY_H + rand() % (WORLD_H - ENEMY_H * 2));
 
-						enemy[i].speed.x = ENEMY_SPEED;
-						enemy[i].speed.y = ENEMY_SPEED;
 
 					}
 

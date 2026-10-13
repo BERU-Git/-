@@ -1,12 +1,14 @@
 #include "all.h"
 #include <sstream>
 #include "player.h"
+#include "sound.h"
 
 int title_state = 0;     // 状態
 int title_timer = 0;     // タイマー
 bool start_check = false;
 bool tutrial_check = false;
 bool end_check = false;
+bool sound_check = false;
 float start_alpha = 0.5f;
 float tutrial_alpha = 0.5f;
 float end_alpha = 0.5f;
@@ -16,15 +18,19 @@ Sprite* spr_gameEnd;
 Sprite* spr_tutrial;
 Sprite* spr_title_letter;
 
+
+
 void title_init()
 {
 	/*DirectX::Mouse::Get().SetWindow(window::getHwnd());*/
-	player_hp = PLAYER_HP;
 	spr_title = sprite_load(L"Data/Images/タイトル.png");
 	spr_gameStart = sprite_load(L"Data/Images/ゲームスタート.png");
 	spr_gameEnd = sprite_load(L"Data/Images/ゲームの終了.png");
 	spr_tutrial = sprite_load(L"Data/Images/チュートリアル.png");
 	spr_title_letter = sprite_load(L"Data/Images/タイトル文字.png");
+
+	sound_init();
+
 }
 void title_update()
 {
@@ -63,7 +69,7 @@ void title_update()
 		if (mouseX >= 1300 && mouseX <= 1660 && mouseY >= 400 && mouseY <= 520)
 		{
 			start_check = true;
-			if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+			if (GetAsyncKeyState(VK_LBUTTON) & 1)
 			{
 				nextScene = SCENE_STAGE1;
 			}
@@ -96,7 +102,7 @@ void title_update()
 		{
 			end_check = false;
 		}
-		
+		//ゲームスタートの文字をでかくする
 		if (start_check)
 		{
 			start_alpha += 0.05f;
@@ -113,6 +119,7 @@ void title_update()
 				start_alpha = 0.5f;
 			}
 		}
+		//チュートリアルの文字をでかくする
 		if (tutrial_check)
 		{
 			tutrial_alpha += 0.05f;
@@ -129,6 +136,7 @@ void title_update()
 				tutrial_alpha = 0.5f;
 			}
 		}
+		//ゲーム終了の文字をでかくする
 		if (end_check)
 		{
 			end_alpha += 0.05f;
@@ -145,7 +153,18 @@ void title_update()
 				end_alpha = 0.5f;
 			}
 		}
-		
+		//タイトルの選択SE
+		if ((start_check || tutrial_check || end_check )
+			&& !sound_check)
+		{
+			music::play(0);
+			sound_check = true;
+		}
+
+		if(!start_check && !tutrial_check && !end_check)
+		{
+			sound_check = false;
+		}
 		break;
 
 	}
@@ -241,4 +260,5 @@ void title_deinit()
 	safe_delete(spr_gameEnd);
 	safe_delete(spr_tutrial);
 	safe_delete(spr_title_letter);
+	sound_deinit();
 }

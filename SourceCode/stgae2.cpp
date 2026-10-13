@@ -10,6 +10,7 @@
 #include "range_enemy.h"
 #include"timer.h"
 #include "heart.h"
+#include "sound.h"
 
 extern int game_timer;
 int stage2_time;
@@ -21,7 +22,7 @@ void stage2_init()
 	{
 		enemy[i].attack = false;
 	}
-
+	sound_init();
 	attack_line_init();
 	player_init();
 	timer_init();
@@ -99,5 +100,5 @@ void stage2_deinit()
 	range_enemy_deinit();
 timer_deinit();
 heart_deinit();
-
+sound_deinit();
 }
