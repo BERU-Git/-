@@ -39,9 +39,9 @@ struct enemy_data
 	float cooldown_timer = 0;
 	bool charge = 0;
 	bool attack = 0;
-	bool jast_avoid_done;
-	bool jast_avoid_entered;
-	bool jast_avoid_hit;
+	bool jast_avoid_done = 0 ;
+	bool jast_avoid_entered = 0;
+	bool jast_avoid_hit = 0;
 
 };
 

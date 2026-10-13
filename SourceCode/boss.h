@@ -9,14 +9,8 @@ enum boss_attack
 	MIX_ENEMY_INIT,
 	MIX_ENEMY,
 	LAST_ATTACK_INIT,
-	LAST_ATTACK
-};
-
-enum boss_last
-{
-	PHASE1,
-	PHASE2,
-	PHASE3
+	LAST_ATTACK,
+	BOSS_END
 };
 
 struct boss_data

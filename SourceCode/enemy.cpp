@@ -4,6 +4,7 @@
 #include "hit_check.h"
 #include "player.h"
 #include "boss.h"
+#include "strong_enemy.h"
 #include "attack_line.h"
 Sprite* spr_enemy;
 Sprite* spr_boss_enemy;
@@ -22,6 +23,8 @@ int effect_count_goblin[ENEMY_MAX];
 bool effect_judge_goblin[ENEMY_MAX];
 bool effect_check_goblin[ENEMY_MAX];
 
+VECTOR2 boss_circle_center;
+bool player_outside;
 
 void enemy_separate(float pos1_x, float pos1_y,
 	float pos2_x, float pos2_y,
@@ -356,17 +359,24 @@ void boss_enemy_init()
 	spr_boss_enemy = sprite_load(L"Data/Images/boss_enemy.png");
 	spr_extinction = sprite_load(L"Data/Images/消滅エフェクト.png");
 	
+
+
 	attack_loop = 0;
 	last_attack_time = 0;
 	attack_enemy_num = 0;
 	boss_stage = true;
+	player_outside = false;
+
+	boss_circle_center.x = player_pos.x;
+	boss_circle_center.y = player_pos.y;
 
 	float pos_angle = ToRadian(360.0f / ENEMY_MAX);
 
 	for (int i = 0; i < ENEMY_MAX; i++)
 	{
-		enemy[i].start_pos.x = player_pos.x + cosf(pos_angle * i) * 600;
-		enemy[i].start_pos.y = player_pos.y + sinf(pos_angle * i) * 600;
+		enemy[i].start_pos.x = boss_circle_center.x + cosf(pos_angle * i) * 600;
+		enemy[i].start_pos.y = boss_circle_center.y + sinf(pos_angle * i) * 600;
+
 		enemy[i].pos.x = enemy[i].start_pos.x;
 		enemy[i].pos.y = enemy[i].start_pos.y;
 
@@ -384,8 +394,6 @@ void boss_enemy_init()
 			enemy[i].angle, enemy[i].chase.x, enemy[i].chase.y);
 	}
 
-
-
 }
 
 
@@ -393,6 +401,23 @@ void boss_enemy_update()
 {
 	last_attack_time++;
 	
+	float dx = player_pos.x - boss_circle_center.x;
+	float dy = player_pos.y - boss_circle_center.y;
+
+	if (dx * dx + dy * dy > 600.0f * 600.0f)
+	{
+		if (!player_outside)
+		{
+			player_outside = true;
+			state = LAST_ATTACK_INIT;
+
+		}
+	}
+	else
+	{
+		player_outside = false;
+	}
+
 	if (last_attack_time >= 8)
 	{
 		last_attack_time = 0;
@@ -407,7 +432,15 @@ void boss_enemy_update()
 
 			if (attack_loop >= 3)
 			{
-				nextScene = SCENE_RESULT;
+
+				for (int i = 0; i < ENEMY_MAX; i++)
+				{
+					enemy[i] = {};
+				}
+
+				strong_enemy = {};
+
+				state = BOSS_END;
 			}
 		}
 

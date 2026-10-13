@@ -13,13 +13,12 @@ float strong_tex_pos_x;
 int strong_timer;
 int strong_count;
 int strong_direction;
+int boss_attack_loop;
 
 void strong_enemy_init()
 {
 	spr_strong_enemy = sprite_load(L"Data/Images/strong_enemy.png");
 	spr_boss_strong_enemy = sprite_load(L"Data/Images/boss_strong_enemy.png");
-
-
 
 	strong_enemy = {};
 	strong_tex_pos_x = 0.0f;
@@ -30,7 +29,6 @@ void strong_enemy_init()
 	strong_enemy.jast_avoid_entered = false;
 	strong_enemy.jast_avoid_done = false;
 	strong_enemy.jast_avoid_hit = false;
-
 
 	bool can_spawn = false;
 
@@ -151,6 +149,8 @@ void strong_enemy_update()
 		{
 			strong_enemy.jast_avoid_hit = true;
 		}
+
+
 		//state遷移
 		if (strong_enemy.charge_timer >= STRONG_CHARGE_TIME || 
 			strong_enemy.pos.x <= STRONG_ENEMY_W * 0.5f ||
@@ -180,14 +180,96 @@ void boss_strong_enemy_init()
 
 	strong_enemy = {};
 
+	strong_enemy.pos.x = player_pos.x;
+	strong_enemy.pos.y = player_pos.y - SCREEN_W;
 
+	strong_tex_pos_x = 0.0f;
+	strong_timer = 0;
+	strong_count = 0;
+	strong_direction = 1;
 
+	boss_attack_loop = 0;
 
+	strong_enemy.charge_timer = 0;
+
+	strong_enemy.charge = true;
+
+	strong_enemy.speed.x = STRONG_CHARGE_SPEED;
+	strong_enemy.speed.y = STRONG_CHARGE_SPEED;
+
+	enemy_chase(player_pos.x, player_pos.y, strong_enemy.pos.x, strong_enemy.pos.y,
+		strong_enemy.angle, strong_enemy.chase.x, strong_enemy.chase.y);
+
+	strong_attack_line.pos.x = strong_enemy.pos.x;
+	strong_attack_line.pos.y = strong_enemy.pos.y;
+
+	
 }
 
 void boss_strong_enemy_update()
 {
+	strong_enemy.charge_timer++;
 
+	strong_enemy.pos.x += strong_enemy.chase.x * STRONG_CHARGE_SPEED;
+	strong_enemy.pos.y += strong_enemy.chase.y * STRONG_CHARGE_SPEED;
+
+	if (strong_enemy.charge_timer >= STRONG_CHARGE_TIME)
+	{
+		boss_attack_loop++;
+		if(boss_attack_loop % 2 == 0)
+		{
+
+			strong_enemy.charge_timer = 0;
+
+			strong_enemy.pos.x = player_pos.x;
+			strong_enemy.pos.y = player_pos.y - SCREEN_H ;
+
+			enemy_chase(player_pos.x, player_pos.y, strong_enemy.pos.x, strong_enemy.pos.y,
+				strong_enemy.angle, strong_enemy.chase.x, strong_enemy.chase.y);
+
+			strong_attack_line.pos.x = strong_enemy.pos.x;
+			strong_attack_line.pos.y = strong_enemy.pos.y;
+
+		}
+		else
+		{
+
+			strong_enemy.charge_timer = 0;
+
+			strong_enemy.pos.x = player_pos.x + SCREEN_W;
+			strong_enemy.pos.y = player_pos.y;
+
+			enemy_chase(player_pos.x, player_pos.y, strong_enemy.pos.x, strong_enemy.pos.y,
+				strong_enemy.angle, strong_enemy.chase.x, strong_enemy.chase.y);
+
+			strong_attack_line.pos.x = strong_enemy.pos.x;
+			strong_attack_line.pos.y = strong_enemy.pos.y;
+
+		}
+	}
+
+
+	//アニメーション
+	if (player_pos.x > strong_enemy.pos.x)
+	{
+		strong_direction = 1;
+	}
+	else
+	{
+		strong_direction = -1;
+	}
+	strong_timer++;
+	if (strong_timer % 6 == 0)
+	{
+		strong_timer = 0;
+		strong_tex_pos_x = strong_count * 256;
+		strong_count += 1;
+	}
+	if (strong_count == 4)
+	{
+		strong_count = 0;
+		strong_tex_pos_x = 0;
+	}
 
 
 }

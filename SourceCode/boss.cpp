@@ -20,7 +20,6 @@ boss_data boss_left;
 
 boss_attack state;
 
-boss_last last_state;
 bool boss_stage;
 bool last_attack;
 int boss_state_timer;
@@ -53,7 +52,6 @@ void boss_init()
 	boss_left.knock_down = false;
 
 	boss_state_timer = 0;
-
 
 	boss.pos.x = player_pos.x;
 	boss.pos.y = player_pos.y - SCREEN_H * 0.5f - BOSS_H * 0.5f;
@@ -172,7 +170,7 @@ void boss_update()
 	switch (state)
 	{
 	case NORMAL_ENEMY:
-		//state = LAST_ATTACK_INIT;
+		state = LAST_ATTACK_INIT;
 		enemy_update();
 		if (boss_right.knock_down && boss_left.knock_down)
 		{
@@ -247,28 +245,32 @@ void boss_update()
 	case LAST_ATTACK_INIT:
 		boss_state_timer++;
 		screen_shake(15);
+
+		strong_enemy.charge = false;
+
+		for (int i = 0; i < ENEMY_MAX; i++)
+		{
+			enemy[i].charge = false;
+		}
+
 		if (boss_state_timer >= 180)
 		{
 			last_attack = true;
 			boss_enemy_init();
+			boss_strong_enemy_init();
 			state = LAST_ATTACK;
 			boss_state_timer = 0;
 		}
 		break;
 
 	case LAST_ATTACK:
-		switch(last_state)
-		{
-		case PHASE1:
+
 			boss_enemy_update();
+			boss_strong_enemy_update();
 			break;
-		case PHASE2:
+	case BOSS_END:
+		break;
 
-			break;
-		}
-
-		
-	
 	}
 
 }
@@ -308,6 +310,8 @@ void boss_render()
 
 	case LAST_ATTACK:
 		enemy_render();
+		strong_enemy_render();
+
 		break;
 
 	}

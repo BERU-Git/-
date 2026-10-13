@@ -18,6 +18,23 @@ extern int game_timer;
 void result_init()
 {
 	timer_init();
+
+	seconds_1.x = SCREEN_W * 0.5f + 64;
+	seconds_1.y = 64;
+
+	seconds_10.x = SCREEN_W * 0.5f;
+	seconds_10.y = 64;
+
+	colon_pos.x = SCREEN_W * 0.5f - 40;
+	colon_pos.y = 64;
+
+	minutes_1.x = SCREEN_W * 0.5f - 80;
+	minutes_1.y = 64;
+
+	minutes_10.x = SCREEN_W * 0.5f - 144;
+	minutes_10.y = 64;
+
+
 	sprResult = sprite_load(L"Data/Images/タイトル.png");
 	spr_result_crear = sprite_load(L"Data/Images/ダンジョン制覇.png");
 	spr_result_timer = sprite_load(L"Data/Images/クリアタイム.png");
