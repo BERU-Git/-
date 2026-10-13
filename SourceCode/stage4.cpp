@@ -11,6 +11,8 @@
 #include "range_enemy.h"
 #include"timer.h"
 #include "heart.h"
+#include "hiyoko.h"
+#include "heal.h"
 
 
 extern int game_timer;
@@ -29,15 +31,18 @@ void stage4_init()
 	range_enemy_init();
 	timer_init();
 	heart_init();
+	heal_init();
 }
 void stage4_update()
 {
 
 	if (player_hp <= 0)
 	{
+		hiyoko_check = true;
 		stage4_time++;
 		if (stage4_time >= 300)
 		{
+			heal_check = true;
 			player_hp = CONTINUE_HP;
 			stage4_time = 0;
 		}
@@ -58,6 +63,7 @@ void stage4_update()
 	range_enemy_update();
 timer_update();
 heart_update();
+heal_update();
 
 
 
@@ -84,6 +90,7 @@ void stage4_render()
 	gimick_render();
 	timer_render();
 	heart_render();
+	heal_render();
 
 }
 void stage4_deinit()
@@ -98,4 +105,5 @@ void stage4_deinit()
 	range_enemy_deinit();
 	timer_deinit();
 	heart_deinit();
+	heal_deinit();
 }

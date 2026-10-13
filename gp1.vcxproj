@@ -122,6 +122,7 @@ attrib +h SourceCode\gp1.log
     <ClInclude Include="SourceCode\exprotion.h" />
     <ClInclude Include="SourceCode\field.h" />
     <ClInclude Include="SourceCode\gimick.h" />
+    <ClInclude Include="SourceCode\heal.h" />
     <ClInclude Include="SourceCode\heart.h" />
     <ClInclude Include="SourceCode\hit_check.h" />
     <ClInclude Include="SourceCode\hiyoko.h" />
@@ -162,6 +163,7 @@ attrib +h SourceCode\gp1.log
     <ClCompile Include="SourceCode\exprotion.cpp" />
     <ClCompile Include="SourceCode\field.cpp" />
     <ClCompile Include="SourceCode\gimick.cpp" />
+    <ClCompile Include="SourceCode\heal.cpp" />
     <ClCompile Include="SourceCode\heart.cpp" />
     <ClCompile Include="SourceCode\hit_check.cpp" />
     <ClCompile Include="SourceCode\hiyoko.cpp" />
