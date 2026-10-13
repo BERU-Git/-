@@ -38,10 +38,12 @@ void stage5_update()
 
 	if (player_hp <= 0)
 	{
+		knock_check = true;
 		hiyoko_check = true;
 		stage5_time++;
 		if (stage5_time >= 300)
 		{
+			knock_check = false;
 			heal_check = true;
 			if (last_attack == true)
 			{

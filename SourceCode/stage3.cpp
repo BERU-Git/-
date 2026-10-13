@@ -41,10 +41,12 @@ void stage3_update()
 {
 	if (player_hp <= 0)
 	{
+		knock_check = true;
 		stage3_time++;
 		hiyoko_check = true;
 		if (stage3_time >= 300)
 		{
+			knock_check = false;
 			heal_check = true;
 			player_hp = CONTINUE_HP;
 			stage3_time = 0;
