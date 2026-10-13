@@ -18,11 +18,23 @@ boss_data boss_right;
 Sprite* spr_boss_left;
 boss_data boss_left;
 
+Sprite* spr_smoke;
+
 boss_attack state;
 
 bool boss_stage;
 bool last_attack;
 int boss_state_timer;
+
+int right_timer = 0;
+int right_count = 0;
+float right_tex_pos_x = 0.0f;
+int left_timer = 0;
+int left_count = 0;
+float left_tex_pos_x = 0.0f;
+int center_timer = 0;
+int center_count = 0;
+float center_tex_pos_x = 0.0f;
 
 float clamp(float value,float min,float max)
 {
@@ -41,11 +53,12 @@ float clamp(float value,float min,float max)
 
 void boss_init()
 {
-
+	
 	enemy_init();
 	spr_boss = sprite_load(L"Data/Images/boss.png");
 	spr_boss_right = sprite_load(L"Data/Images/boss_right.png");
 	spr_boss_left = sprite_load(L"Data/Images/boss_left.png");
+	spr_smoke = sprite_load(L"Data/Images/煙エフェクト.png");
 
 	boss.knock_down = false;
 	boss_right.knock_down = false;
@@ -79,7 +92,54 @@ void boss_update_init()
 
 void boss_update()
 {
-
+	if (boss_right.knock_down == true)
+	{
+		right_timer++;
+		if (right_timer % 6 == 0)
+		{
+			right_count += 1;
+			right_tex_pos_x = right_count * 340;
+			right_timer = 0;
+		}
+		if (right_count == 4)
+		{
+			right_timer = 0;
+			right_count = 0;
+			right_tex_pos_x = 0.0f;
+		}
+	}
+	if (boss_left.knock_down == true)
+	{
+		left_timer++;
+		if (left_timer % 6 == 0)
+		{
+			left_count += 1;
+			left_tex_pos_x = right_count * 340;
+			left_timer = 0;
+		}
+		if (left_count == 4)
+		{
+			left_timer = 0;
+			left_count = 0;
+			left_tex_pos_x = 0.0f;
+		}
+	}
+	if (boss.knock_down == true)
+	{
+		center_timer++;
+		if (center_timer % 6 == 0)
+		{
+			center_count += 1;
+			center_tex_pos_x = right_count * 340;
+			center_timer = 0;
+		}
+		if (center_count == 4)
+		{
+			center_timer = 0;
+			center_count = 0;
+			center_tex_pos_x = 0.0f;
+		}
+	}
 	//ボスの移動
 	boss.pos.x += (player_pos.x - boss.pos.x) * 0.05f;
 
@@ -154,6 +214,7 @@ void boss_update()
 			enemy[i].pos.x, enemy[i].pos.y, NORMAL_ENEMY_HITBOX * 0.5f) && enemy[i].attack)
 		{
 			boss_right.knock_down = true;
+			
 		}
 
 		if (hit_check(boss_left.pos.x, boss_left.pos.y, BOSS_HAND_HITBOX * 0.5f,
@@ -336,6 +397,10 @@ void boss_render()
 		BOSS_W * 0.5f,BOSS_H * 0.5f,
 		0,
 		1.0f, 1.0f, 1.0f, boss.transparent);
+	if (boss.knock_down == true)
+	{
+		sprite_render(spr_smoke, boss.screen.x, boss.screen.y, 1.0f, 1.0f, center_tex_pos_x, 0.0f, 340.0f, 340.0f, 170.0f, 170.0f);
+	}
 
 
 	sprite_render(spr_boss_left, boss_left.screen.x, boss_left.screen.y,
@@ -345,6 +410,10 @@ void boss_render()
 		BOSS_HAND_W * 0.5f, BOSS_HAND_H * 0.5f,
 		0,
 		1.0f, 1.0f, 1.0f, boss_left.transparent);
+	if (boss_left.knock_down == true)
+	{
+		sprite_render(spr_smoke, boss_left.screen.x, boss_left.screen.y, 1.0f, 1.0f, left_tex_pos_x, 0.0f, 340.0f, 340.0f, 170.0f, 170.0f);
+	}
 
 
 	sprite_render(spr_boss_right, boss_right.screen.x, boss_right.screen.y,
@@ -354,6 +423,11 @@ void boss_render()
 		BOSS_HAND_W * 0.5f, BOSS_HAND_H * 0.5f,
 		0,
 		1.0f,1.0f,1.0f, boss_right.transparent);
+	if (boss_right.knock_down == true)
+	{
+		sprite_render(spr_smoke, boss_right.screen.x, boss_right.screen.y, 1.0f, 1.0f, right_tex_pos_x, 0.0f, 340.0f, 340.0f, 170.0f, 170.0f);
+	}
+	
 }
 
 

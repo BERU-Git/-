@@ -20,6 +20,7 @@ struct boss_data
 	float transparent;
 	float screen_center;
 	bool knock_down;
+	bool cant_using;
 };
 
 extern bool boss_stage;
