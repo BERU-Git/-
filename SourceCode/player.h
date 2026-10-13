@@ -18,7 +18,7 @@ extern float length;
 extern bool player_hit;
 extern bool go_next;
 extern bool jast_avoid_check;
-
+extern bool knock_check;
 
 void clamp_position(float& pos_x, float& pos_y, float texsize_x, float texsize_y,
 	float& speed_x, float& speed_y);

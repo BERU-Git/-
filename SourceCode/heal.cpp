@@ -41,10 +41,10 @@ void heal_render()
 	heal_screen.y = player_pos.y - camera_pos.y + SCREEN_H * 0.5f;
 	if (heal_check == true)
 	{
-		/*GameLib::setBlendMode(Blender::BS_ADD);*/
+		GameLib::setBlendMode(Blender::BS_ADD);
 		sprite_render(spr_heal, heal_screen.x, heal_screen.y, 5.0f, 5.0f, heal_tex_pos_x, 0.0f, 32.0f, 32.0f, 16.0f, 16.0f);
 	}
-	/*GameLib::setBlendMode(Blender::BS_ALPHA);*/
+	GameLib::setBlendMode(Blender::BS_ALPHA);
 	
 }
 void heal_deinit()

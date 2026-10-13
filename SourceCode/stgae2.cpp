@@ -90,9 +90,9 @@ void stage2_render()
 	troll_render();
 	gimick_render();
 	range_enemy_render();
-timer_render();
-heart_render();
-heal_render();
+	timer_render();
+	heart_render();
+	heal_render();
 
 }
 void stage2_deinit()
@@ -104,8 +104,8 @@ void stage2_deinit()
 	attack_line_delete();
 	troll_deinit();
 	range_enemy_deinit();
-timer_deinit();
-heart_deinit();
-heal_deinit();
+	timer_deinit();
+	heart_deinit();
+	heal_deinit();
 
 }

@@ -11,6 +11,7 @@
 
 Sprite* spr_player;
 Sprite* spr_decoy;
+Sprite* spr_knock_down;
 VECTOR2 screen;
 VECTOR2 decoy_screen;
 VECTOR2 player_pos;
@@ -29,6 +30,7 @@ float length;
 bool player_hit;
 bool go_next;
 bool jast_avoid_check;
+bool knock_check;
 
 
 
@@ -66,7 +68,7 @@ void player_init()
 {
 	spr_player = sprite_load(L"Data/images/player.png");
 	spr_decoy = sprite_load(L"Data/images/decoy_totem.png");
-
+	spr_knock_down = sprite_load(L"Data/images/ç∂å¸Ç´ãCê‚.png");
 	
 	player_pos.x = WORLD_W * 0.5f;
 	player_pos.y = WORLD_H * 0.5f;
@@ -382,14 +384,27 @@ void player_render()
 			PLAYER_W * 0.5f, PLAYER_H * 0.5f);
 
 	}
-
-	sprite_render(spr_player, screen.x, screen.y,
-		                      1,1,
-						      PLAYER_W * player_render_posx, PLAYER_H * player_render_posy,
-		                      PLAYER_W,PLAYER_H,
-		                      PLAYER_W * 0.5f,PLAYER_H * 0.5f,
-		                      0,
-		                      1.0f,1.0f,1.0f,player_alpha);
+	if (knock_check == false)
+	{
+		sprite_render(spr_player, screen.x, screen.y,
+			1, 1,
+			PLAYER_W * player_render_posx, PLAYER_H * player_render_posy,
+			PLAYER_W, PLAYER_H,
+			PLAYER_W * 0.5f, PLAYER_H * 0.5f,
+			0,
+			1.0f, 1.0f, 1.0f, player_alpha);
+	}
+	else
+	{
+		sprite_render(spr_knock_down, screen.x, screen.y,
+			1, 1,
+			0, 0,
+			64, 108,
+			32, 32,
+			ToRadian(90),
+			1.0f, 1.0f, 1.0f, player_alpha);
+	}
+	
 }
 
 void player_deinit()
