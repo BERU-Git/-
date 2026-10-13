@@ -180,8 +180,8 @@ void boss_strong_enemy_init()
 
 	strong_enemy = {};
 
-	strong_enemy.pos.x = player_pos.x;
-	strong_enemy.pos.y = player_pos.y - SCREEN_W;
+	strong_enemy.pos.x = boss_circle_center.x;
+	strong_enemy.pos.y = boss_circle_center.y - SCREEN_W;
 
 	strong_tex_pos_x = 0.0f;
 	strong_timer = 0;
@@ -197,7 +197,7 @@ void boss_strong_enemy_init()
 	strong_enemy.speed.x = STRONG_CHARGE_SPEED;
 	strong_enemy.speed.y = STRONG_CHARGE_SPEED;
 
-	enemy_chase(player_pos.x, player_pos.y, strong_enemy.pos.x, strong_enemy.pos.y,
+	enemy_chase(boss_circle_center.x, boss_circle_center.y, strong_enemy.pos.x, strong_enemy.pos.y,
 		strong_enemy.angle, strong_enemy.chase.x, strong_enemy.chase.y);
 
 	strong_attack_line.pos.x = strong_enemy.pos.x;
@@ -221,10 +221,10 @@ void boss_strong_enemy_update()
 
 			strong_enemy.charge_timer = 0;
 
-			strong_enemy.pos.x = player_pos.x;
-			strong_enemy.pos.y = player_pos.y - SCREEN_H ;
+			strong_enemy.pos.x = boss_circle_center.x;
+			strong_enemy.pos.y = boss_circle_center.y - SCREEN_H ;
 
-			enemy_chase(player_pos.x, player_pos.y, strong_enemy.pos.x, strong_enemy.pos.y,
+			enemy_chase(boss_circle_center.x, boss_circle_center.y, strong_enemy.pos.x, strong_enemy.pos.y,
 				strong_enemy.angle, strong_enemy.chase.x, strong_enemy.chase.y);
 
 			strong_attack_line.pos.x = strong_enemy.pos.x;
@@ -236,10 +236,10 @@ void boss_strong_enemy_update()
 
 			strong_enemy.charge_timer = 0;
 
-			strong_enemy.pos.x = player_pos.x + SCREEN_W;
-			strong_enemy.pos.y = player_pos.y;
+			strong_enemy.pos.x = boss_circle_center.x + SCREEN_W;
+			strong_enemy.pos.y = boss_circle_center.y;
 
-			enemy_chase(player_pos.x, player_pos.y, strong_enemy.pos.x, strong_enemy.pos.y,
+			enemy_chase(boss_circle_center.x, boss_circle_center.y, strong_enemy.pos.x, strong_enemy.pos.y,
 				strong_enemy.angle, strong_enemy.chase.x, strong_enemy.chase.y);
 
 			strong_attack_line.pos.x = strong_enemy.pos.x;

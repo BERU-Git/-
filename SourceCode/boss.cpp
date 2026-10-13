@@ -61,6 +61,10 @@ void boss_init()
 
 	boss_left.pos.x = player_pos.x + BOSS_HAND_POS;
 	boss_left.pos.y = player_pos.y - SCREEN_H * 0.5f - BOSS_H * 0.5f;
+
+	boss.transparent = 1.0f;
+	boss_right.transparent = 1.0f;
+	boss_left.transparent = 1.0f;
 }
 
 
@@ -170,7 +174,7 @@ void boss_update()
 	switch (state)
 	{
 	case NORMAL_ENEMY:
-		//state = LAST_ATTACK_INIT;
+		state = LAST_ATTACK_INIT;
 		enemy_update();
 		if (boss_right.knock_down && boss_left.knock_down)
 		{
@@ -270,7 +274,14 @@ void boss_update()
 			break;
 	case BOSS_END:
 
-
+		screen_shake(25);
+		boss.transparent -= 0.0083f;
+		boss_right.transparent -= 0.0083f;
+		boss_left.transparent -= 0.0083f;
+		if (boss.transparent <= 0)
+		{
+			nextScene = SCENE_RESULT;
+		}
 		break;
 
 	}
@@ -322,19 +333,27 @@ void boss_render()
 		1,1,
 		0,0,
 		BOSS_W,BOSS_H,
-		BOSS_W * 0.5f,BOSS_H * 0.5f);
+		BOSS_W * 0.5f,BOSS_H * 0.5f,
+		0,
+		1.0f, 1.0f, 1.0f, boss.transparent);
+
 
 	sprite_render(spr_boss_left, boss_left.screen.x, boss_left.screen.y,
 		1,1,
 		0,0,
 		BOSS_HAND_W, BOSS_HAND_H,
-		BOSS_HAND_W * 0.5f, BOSS_HAND_H * 0.5f);
+		BOSS_HAND_W * 0.5f, BOSS_HAND_H * 0.5f,
+		0,
+		1.0f, 1.0f, 1.0f, boss_left.transparent);
+
 
 	sprite_render(spr_boss_right, boss_right.screen.x, boss_right.screen.y,
 		1,1,
 		0,0,
 		BOSS_HAND_W, BOSS_HAND_H,
-		BOSS_HAND_W * 0.5f, BOSS_HAND_H * 0.5f);
+		BOSS_HAND_W * 0.5f, BOSS_HAND_H * 0.5f,
+		0,
+		1.0f,1.0f,1.0f, boss_right.transparent);
 }
 
 

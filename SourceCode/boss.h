@@ -17,6 +17,7 @@ struct boss_data
 {
 	VECTOR2 pos;
 	VECTOR2 screen;
+	float transparent;
 	float screen_center;
 	bool knock_down;
 };

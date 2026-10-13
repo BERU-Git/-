@@ -49,6 +49,9 @@ extern enemy_data enemy[ENEMY_MAX];
 extern Sprite* spr_enemy;
 extern Sprite* spr_boss_enemy;
 
+extern VECTOR2 boss_circle_center;
+
+
 
 void enemy_chase(float pos1_x, float pos1_y, 
 	             float pos2_x, float pos2_y,

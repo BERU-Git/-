@@ -439,7 +439,7 @@ void boss_enemy_update()
 				}
 
 				strong_enemy = {};
-
+				screen_shake_init(300);
 				state = BOSS_END;
 			}
 		}
