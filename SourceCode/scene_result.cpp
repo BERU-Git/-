@@ -19,20 +19,20 @@ void result_init()
 {
 	timer_init();
 
-	seconds_1.x = SCREEN_W * 0.5f + 64;
-	seconds_1.y = 64;
+	seconds_1.x = 649;
+	seconds_1.y = 600;
 
-	seconds_10.x = SCREEN_W * 0.5f;
-	seconds_10.y = 64;
+	seconds_10.x = 585;
+	seconds_10.y = 600;
 
-	colon_pos.x = SCREEN_W * 0.5f - 40;
-	colon_pos.y = 64;
+	colon_pos.x = 545;
+	colon_pos.y = 600;
 
-	minutes_1.x = SCREEN_W * 0.5f - 80;
-	minutes_1.y = 64;
+	minutes_1.x = 505;
+	minutes_1.y = 600;
 
-	minutes_10.x = SCREEN_W * 0.5f - 144;
-	minutes_10.y = 64;
+	minutes_10.x = 441;
+	minutes_10.y = 600;
 
 
 	sprResult = sprite_load(L"Data/Images/ƒ^ƒCƒgƒ‹.png");
@@ -76,7 +76,7 @@ void result_update()
 		if (mouseX >= 1050 && mouseX <= 1850 && mouseY >= 660 && mouseY <= 840)
 		{
 			return_check = true;
-			if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+			if (GetAsyncKeyState(VK_LBUTTON) & 1)
 			{
 				nextScene = SCENE_TITLE;
 			}

@@ -9,6 +9,7 @@
 #include "troll.h"
 #include "range_enemy.h"
 #include"timer.h"
+#include "heart.h"
 
 extern int game_timer;
 int stage2_time;
@@ -30,6 +31,7 @@ void stage2_init()
 	gimick_init();
 	troll_init();
 	range_enemy_init();
+	heart_init();
 
 }
 void stage2_update()
@@ -59,6 +61,7 @@ void stage2_update()
 	troll_update();
 	range_enemy_update();
 timer_update();
+heart_update();
 
 
 
@@ -82,6 +85,7 @@ void stage2_render()
 	gimick_render();
 	range_enemy_render();
 timer_render();
+heart_render();
 
 }
 void stage2_deinit()
@@ -94,5 +98,6 @@ void stage2_deinit()
 	troll_deinit();
 	range_enemy_deinit();
 timer_deinit();
+heart_deinit();
 
 }

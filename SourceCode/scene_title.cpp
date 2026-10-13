@@ -47,7 +47,7 @@ void title_update()
 		//////// �ʏ펞 ////////
 		if (TRG(0) & PAD_TRG1)
 		{
-			nextScene = SCENE_STAGE5;
+			nextScene = SCENE_RESULT;
 		}
 		
 	{
@@ -75,7 +75,7 @@ void title_update()
 		if (mouseX >= 1300 && mouseX <= 1660 && mouseY >= 600 && mouseY <= 720)
 		{
 			tutrial_check = true;
-			if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+			if (GetAsyncKeyState(VK_LBUTTON) & 1)
 			{
 				nextScene = SCENE_TUTRIAL;
 			}
@@ -87,7 +87,7 @@ void title_update()
 		if (mouseX >= 1300 && mouseX <= 1660 && mouseY >= 800 && mouseY <= 920)
 		{
 			end_check = true;
-			if (GetAsyncKeyState(VK_LBUTTON) & 0x8000)
+			if (GetAsyncKeyState(VK_LBUTTON) & 1)
 			{
 				exit(0);
 			}

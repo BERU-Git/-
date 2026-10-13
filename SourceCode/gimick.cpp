@@ -43,6 +43,7 @@ void gimick_init()
 		gimick[i].barrier_break_check = false;
 		gimick[i].anime_frame = 0;
 		gimick[i].anime_timer = 0;
+		gimick[i].clack_check = false;
 	}
 	    stage_clear = false;
 }
