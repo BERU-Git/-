@@ -410,7 +410,7 @@ void boss_render()
 		range_enemy_render();
 		sprite_render(spr_boss_guide2,
 			boss_guide2.x, boss_guide2.y,
-			0.25f, 0.25f);
+			0.5f, 0.5f);
 		break;
 
 
@@ -512,6 +512,8 @@ void boss_deinit()
 	safe_delete(spr_boss);
 	safe_delete(spr_boss_right);
 	safe_delete(spr_boss_left);
+	safe_delete(spr_boss_guide1);
+	safe_delete(spr_boss_guide2);
 
 }
 
