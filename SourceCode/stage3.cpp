@@ -14,12 +14,14 @@
 #include "sound.h"
 #include "hiyoko.h"
 #include "heal.h"
+#include "arrow_guide.h"
 
 
 extern int game_timer;
 int stage3_time;
 void stage3_init()
 {
+arrow_guide_init();
 	sound_init();
 	field_init();
 	player_init();
@@ -73,6 +75,7 @@ void stage3_update()
 	heart_update();
 	heal_update();
 	hiyoko_update();
+arrow_guide_update();
 
 
 	if (go_next)
@@ -97,6 +100,7 @@ void stage3_render()
 	gimick_render();
 	heart_render();
 	timer_render();
+arrow_guide_render();
 
 }
 void stage3_deinit()
@@ -113,4 +117,5 @@ heart_deinit();
 sound_deinit();
 heal_deinit();
 hiyoko_deinit();
+arrow_guide_deinit();
 }

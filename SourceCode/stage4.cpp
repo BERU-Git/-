@@ -14,6 +14,7 @@
 #include "sound.h"
 #include "hiyoko.h"
 #include "heal.h"
+#include "arrow_guide.h"
 
 
 extern int game_timer;
@@ -35,6 +36,7 @@ void stage4_init()
 	hiyoko_init();
 	heal_init();
 	sound_init();
+arrow_guide_init();
 
 	music::play(FIELD_BGM, true);
 
@@ -75,6 +77,7 @@ void stage4_update()
 	heart_update();
 	heal_update();
 	hiyoko_update();
+arrow_guide_update();
 
 
 
@@ -104,6 +107,7 @@ void stage4_render()
 	gimick_render();
 	heart_render();
 	timer_render();
+arrow_guide_render();
 
 }
 void stage4_deinit()
@@ -121,4 +125,5 @@ void stage4_deinit()
 	sound_deinit();
 	heal_deinit();
 	hiyoko_deinit();
+arrow_guide_deinit();
 }
