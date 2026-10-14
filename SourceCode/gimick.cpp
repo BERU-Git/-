@@ -78,9 +78,13 @@ void gimick_update()
 						  enemy[e].attack && !gimick[g].barrier_break_check)//もし突進中の敵とギミックのバリアが当たったら
 			{
 				heal_check = true;
-				player_hp += PLAYER_HEEL;
 				music::play(BARRIER_BREAK);
 				gimick[g].barrier_break_check = true;
+				if(player_hp > 0)
+				{
+					music::play(HEAL);
+					player_hp += PLAYER_HEEL;
+				}
 			}
 		}
 
@@ -89,9 +93,13 @@ void gimick_update()
 			strong_enemy.attack && !gimick[g].barrier_break_check)//もし突進中の敵とギミックのバリアが当たったら
 		{
 			heal_check = true;
-			player_hp += PLAYER_HEEL;
 			music::play(BARRIER_BREAK);
 			gimick[g].barrier_break_check = true;
+			if (player_hp > 0)
+			{
+				music::play(HEAL);
+				player_hp += PLAYER_HEEL;
+			}
 		}
 
 

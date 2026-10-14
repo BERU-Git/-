@@ -193,18 +193,21 @@ void boss_update()
 		decoy_totem_pos.x, decoy_totem_pos.y, DECOY_TOTEM_EXPLOSION * 0.5f) && jast_avoid_effect_check
 		&& !boss.knock_down && (state == STRONG_ENEMY || state == MIX_ENEMY) )
 	{
+		music::play(BOSS_DAMAGE_RUMBLE);
 		boss.knock_down = true;
 	}
 	else if (hit_check(boss_right.pos.x, boss_right.pos.y, BOSS_HAND_HITBOX * 0.5f,
 		decoy_totem_pos.x, decoy_totem_pos.y, DECOY_TOTEM_EXPLOSION * 0.5f) && jast_avoid_effect_check && !boss_right.knock_down
 		&& (state == STRONG_ENEMY || state == NORMAL_ENEMY))
 	{
+		music::play(BOSS_DAMAGE_RUMBLE);
 		boss_right.knock_down = true;
 	}
 	else if (hit_check(boss_left.pos.x, boss_left.pos.y, BOSS_HAND_HITBOX * 0.5f,
 		decoy_totem_pos.x, decoy_totem_pos.y, DECOY_TOTEM_EXPLOSION * 0.5f) && jast_avoid_effect_check && !boss_left.knock_down
 		&& (state == STRONG_ENEMY || state == NORMAL_ENEMY))
 	{
+		music::play(BOSS_DAMAGE_RUMBLE);
 		boss_left.knock_down = true;
 	}
 
@@ -212,6 +215,7 @@ void boss_update()
 	if (hit_check(boss.pos.x, boss.pos.y, BOSS_HITBOX * 0.5f ,
 		strong_enemy.pos.x, strong_enemy.pos.y, STRONG_ENEMY_W * 0.5f) && strong_enemy.attack)
 	{
+		music::play(BOSS_DAMAGE_RUMBLE);
 		boss.knock_down = true;
 	}
 	for(int i = 0; i < ENEMY_MAX ; i++ )
@@ -219,6 +223,7 @@ void boss_update()
 		if (hit_check(boss_right.pos.x, boss_right.pos.y, BOSS_HAND_HITBOX * 0.5f,
 			enemy[i].pos.x, enemy[i].pos.y, NORMAL_ENEMY_HITBOX * 0.5f) && enemy[i].attack)
 		{
+			music::play(BOSS_DAMAGE_RUMBLE);
 			boss_right.knock_down = true;
 			
 		}
@@ -226,6 +231,7 @@ void boss_update()
 		if (hit_check(boss_left.pos.x, boss_left.pos.y, BOSS_HAND_HITBOX * 0.5f,
 			enemy[i].pos.x, enemy[i].pos.y, NORMAL_ENEMY_HITBOX * 0.5f) && enemy[i].attack)
 		{
+			music::play(BOSS_DAMAGE_RUMBLE);
 			boss_left.knock_down = true;
 		}
 

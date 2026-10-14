@@ -19,7 +19,9 @@ enum sound_data
 	TITLE_BGM,
 	FIELD_BGM,
 	BOSS_BGM,
-	RESLUT_BGM
+	RESLUT_BGM,
+	HEAL,
+	BOSS_DAMAGE_RUMBLE
 
 };
 

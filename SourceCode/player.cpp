@@ -93,7 +93,8 @@ void player_init()
 	jast_avoid_check = false;
 
 	go_next = false;
-
+	
+	knock_check = false;
 	
 
 

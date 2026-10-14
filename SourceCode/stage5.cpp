@@ -34,7 +34,6 @@ void stage5_init()
 	heal_init();
 	heart_init();
 	hiyoko_init();
-arrow_guide_init();
 
 
 }
@@ -70,7 +69,6 @@ void stage5_update()
 	heal_update();
 	heart_update();
 	hiyoko_update();
-arrow_guide_update();
 	screen_shake(15);
 	
 	if (stage5_timer >= 119 && stage5_timer <= 121)
@@ -114,7 +112,6 @@ void stage5_render()
 	boss_render();
 	timer_render();
 	heart_render();
-arrow_guide_render();
 
 
 }
@@ -130,6 +127,5 @@ void stage5_deinit()
 	heal_deinit();
 	heart_deinit();
 	hiyoko_deinit();
-arrow_guide_deinit();
 
 }

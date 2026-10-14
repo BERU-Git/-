@@ -23,6 +23,9 @@ void sound_init()
 	music::load(FIELD_BGM, L"./Data/Sounds/field_bgm.wav");
 	music::load(BOSS_BGM, L"./Data/Sounds/boss_bgm.wav");
 	music::load(RESLUT_BGM, L"./Data/Sounds/result_bgm.wav");
+	music::load(HEAL, L"./Data/Sounds/heal.wav");
+	music::load(BOSS_DAMAGE_RUMBLE, L"./Data/Sounds/boss_damage_rumble.wav");
+
 
 
 
