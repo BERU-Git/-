@@ -19,7 +19,6 @@ int APIENTRY wWinMain(HINSTANCE, HINSTANCE, LPWSTR, int)// g—p‚µ‚È‚¢•Ï”‚Í‹Lq‚
 
 	while (GameLib::gameLoop())
 	{
-	debug::setString("time%d", game_timer);
 		if (curScene != nextScene)
 		{
 			switch (curScene)

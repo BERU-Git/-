@@ -19,6 +19,9 @@
 #define ENEMY_BULLET_W  64             //玉のサイズ
 #define ENEMY_BULLET_H  64             //
 
+#define GUIDE_W         1024           //ガイドのサイズ
+#define GUIDE_H          512           //
+
 #define TIMER_W         64             //タイマー
 
 #define STAIRS_W        256            //階段の画像サイズ
