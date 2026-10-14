@@ -35,15 +35,17 @@ void arrow_guide_render()
 	{
 		arrow_guide[i].screen.x = arrow_guide[i].pos.x - camera_pos.x + SCREEN_W * 0.5f;
 		arrow_guide[i].screen.y = arrow_guide[i].pos.y - camera_pos.y + SCREEN_H * 0.5f;
-
-		sprite_render(spr_arrow_guide,
-			arrow_guide[i].screen.x, arrow_guide[i].screen.y,
-			0.5f, 0.5f,
-			0, 0,
-			128, 128,
-			64, 64,
-			arrow_guide[i].angle + ToRadian(90)
+		if(!gimick[i].barrier_break_check)
+		{
+			sprite_render(spr_arrow_guide,
+				arrow_guide[i].screen.x, arrow_guide[i].screen.y,
+				0.5f, 0.5f,
+				0, 0,
+				128, 128,
+				64, 64,
+				arrow_guide[i].angle + ToRadian(90)
 			);
+		}
 	}
 }
 void arrow_guide_deinit()
