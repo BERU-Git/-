@@ -8,7 +8,14 @@
 #include "troll.h"
 #include "sound.h"
 #include "hit_check.h"
+#include "stage5.h"
 #include "exprotion.h"
+
+Sprite* spr_boss_guide1;
+Sprite* spr_boss_guide2;
+
+VECTOR2 boss_guide1;
+VECTOR2 boss_guide2;
 
 Sprite* spr_boss;
 boss_data boss;
@@ -26,6 +33,9 @@ boss_attack state;
 bool boss_stage;
 bool last_attack;
 int boss_state_timer;
+
+extern int stage5_timer;
+
 
 int right_timer = 0;//右手アニメーション用
 int right_count = 0;
@@ -60,6 +70,8 @@ void boss_init()
 	spr_boss_right = sprite_load(L"Data/Images/boss_right.png");
 	spr_boss_left = sprite_load(L"Data/Images/boss_left.png");
 	spr_smoke = sprite_load(L"Data/Images/煙エフェクト.png");
+	spr_boss_guide1 = sprite_load(L"Data/Images/boss_guide_1.png");
+	spr_boss_guide2 = sprite_load(L"Data/Images/boss_guide_2.png");
 
 	boss.knock_down = false;
 	boss_right.knock_down = false;
@@ -81,6 +93,7 @@ void boss_init()
 	boss.transparent = 1.0f;
 	boss_right.transparent = 1.0f;
 	boss_left.transparent = 1.0f;
+
 }
 
 
@@ -373,16 +386,31 @@ void boss_render()
 	boss_left.screen.x = boss_left.pos.x - camera_pos.x + SCREEN_W * 0.5f;
 	boss_left.screen.y = boss_left.pos.y - camera_pos.y + SCREEN_H * 0.5f;
 
+	boss_guide1.x = SCREEN_W - 512;
+	boss_guide1.y = 0;
+
+	boss_guide2.x = SCREEN_W - 512;
+	boss_guide2.y = 0;
+
 	switch (state)
 	{
 	case NORMAL_ENEMY:
 		enemy_render();
+		if(stage5_timer >= 420)
+		{
+			sprite_render(spr_boss_guide1,
+				boss_guide1.x, boss_guide2.y,
+				0.5f, 0.5f);
+		}
 		break;
 
 	case STRONG_ENEMY:
 		troll_render();
 		strong_enemy_render();
 		range_enemy_render();
+		sprite_render(spr_boss_guide2,
+			boss_guide2.x, boss_guide2.y,
+			0.25f, 0.25f);
 		break;
 
 
@@ -465,6 +493,14 @@ void boss_render()
 			);
 	}
 	
+
+
+	
+	
+
+
+
+
 }
 
 
