@@ -422,6 +422,7 @@ void player_deinit()
 {
 	safe_delete(spr_player);
 	safe_delete(spr_decoy);
+	safe_delete(spr_knock_down);
 	exprotion_deinit();
 
 }
