@@ -121,6 +121,8 @@
 #define STRONG_ATTACK_LINE_W        256       //中ボスの攻撃の予兆線
 #define STRONG_ATTACK_LINE_H       2700       //
 
+#define ARROW_GUIDE_RADIUS         200 //矢印とプレイヤーとの距離
+
 
 #define SCENE_NONE 0
 #define SCENE_TITLE 1

@@ -12,6 +12,7 @@
 #include "hiyoko.h"
 #include "sound.h"
 #include "heal.h"
+#include "arrow_guide.h"
 
 int tutrial_time;
 Sprite* spr_tutrial_guide_1;
@@ -23,11 +24,13 @@ VECTOR2 guide2_pos;
 VECTOR2 guide1_screen;
 VECTOR2 guide2_screen;
 
+
 void tutrial_init()
 {
 	spr_tutrial_guide_1 = sprite_load(L"Data/Images/tutrial_guide_1.png");
 	spr_tutrial_guide_2 = sprite_load(L"Data/Images/tutrial_guide_2.png");
 
+arrow_guide_init();
 	player_init();
 	sound_init();
 	enemy_init();
@@ -73,6 +76,7 @@ void tutrial_update()
 		hiyoko_update();
 		heart_update();
 		heal_update();
+		arrow_guide_update();
 
 
 
@@ -126,6 +130,7 @@ void tutrial_render()
 	enemy_render();
 	gimick_render();
 	heart_render();
+arrow_guide_render();
 }
 void tutrial_deinit()
 {
@@ -140,4 +145,5 @@ void tutrial_deinit()
 	sound_deinit();
 	safe_delete(spr_tutrial_guide_1);
 	safe_delete(spr_tutrial_guide_2);
+	arrow_guide_deinit();
 }
