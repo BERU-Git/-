@@ -13,6 +13,7 @@
 Sprite* spr_player;
 Sprite* spr_decoy;
 Sprite* spr_knock_down;
+Sprite* spr_avoid_smoke;
 VECTOR2 screen;
 VECTOR2 decoy_screen;
 VECTOR2 player_pos;
@@ -32,6 +33,10 @@ bool player_hit;
 bool go_next;
 bool jast_avoid_check;
 bool knock_check;
+int avoid_timer;
+int avoid_count;
+int avoid_tex_pos_X;
+
 
 
 
@@ -70,6 +75,7 @@ void player_init()
 	spr_player = sprite_load(L"Data/images/player.png");
 	spr_decoy = sprite_load(L"Data/images/decoy_totem.png");
 	spr_knock_down = sprite_load(L"Data/images/左向き気絶.png");
+	spr_avoid_smoke = sprite_load(L"Data/images/デコイ煙.png");
 	
 	player_pos.x = WORLD_W * 0.5f;
 	player_pos.y = WORLD_H * 0.5f;
@@ -88,6 +94,8 @@ void player_init()
 
 	go_next = false;
 
+	
+
 
 
 	player_invincible_time = 0;
@@ -101,7 +109,23 @@ void player_init()
 
 void player_update()
 {
-	
+	if (jast_avoid_check == true)
+	{
+		avoid_timer++;
+		if (avoid_timer % 6 == 0)
+		{
+			avoid_count += 1;
+			avoid_tex_pos_X = 256.0f * avoid_count;
+			avoid_timer = 0;
+		}
+		if (avoid_count == 20)
+		{
+			avoid_count = 0;
+			avoid_timer = 0;
+			avoid_tex_pos_X = 0.0f;
+			
+		}
+	}
 	
 	exprotion_update();
 	
@@ -394,7 +418,12 @@ void player_render()
 			PLAYER_W * 2, PLAYER_H * 2,
 			PLAYER_W * 0.5f, PLAYER_H * 0.5f);
 
+		sprite_render(spr_avoid_smoke, screen.x, screen.y, 1.0f, 1.0f, avoid_tex_pos_X, 0.0f, 256.0f, 256.0f, 128.0f, 128.0f);
+
 	}
+	
+		
+	
 	if (knock_check == false)
 	{
 		sprite_render(spr_player, screen.x, screen.y,

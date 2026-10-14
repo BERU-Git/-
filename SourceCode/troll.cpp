@@ -162,7 +162,7 @@ exprotion_update();
 		}
 		troll_animation_variation(0, 3, 20, true);//ÉãÅ[ÉvÇ∑ÇÈÇ©ÇÁtrue
 
-		if (hit_check(troll.pos.x, troll.pos.y, 300.0f,
+		if (hit_check(troll.pos.x, troll.pos.y, 500.0f,
 			player_pos.x, player_pos.y, player_direction))
 		{
 			troll.act = TROLL_ATTACK;
@@ -210,15 +210,16 @@ exprotion_update();
 		}
 		case TROLL_ATTACK_SWING:
 		{
+			effect_check = true;
 			check = true;
 			bool anime_end = troll_animation_variation(7, 8, 4, false);//endèÛë‘Ç…à⁄çsÇµÇƒÇ†Ç∞ÇƒàÍâÒÇ‹Ç¡Ç≥ÇÁÇ…ÇµÇƒÇ©ÇÁIDLEÇ…ñﬂÇ∑
 			
 
-			if (!troll_attack_hit)
+			/*if (!troll_attack_hit)
 			{
 				
 				if (hit_check(player_pos.x, player_pos.y, PLAYER_HITBOX * 0.5,
-					troll.pos.x, troll.pos.y, troll.radius))
+					troll.pos.x, troll.pos.y, 500.0f))
 				{
 					troll_attack_hit = true;
 					player_hp -= 3;
@@ -228,7 +229,7 @@ exprotion_update();
 					
 					
 				}
-			}
+			}*/
 			if (anime_end)
 			{
 
