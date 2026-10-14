@@ -38,7 +38,7 @@ void title_init()
 	totrial_enter = false;
 	title_zoom = 1.0f;
 	title_fade = 0.0f;
-
+	
 	sound_init();
 	music::play(TITLE_BGM,true);
 

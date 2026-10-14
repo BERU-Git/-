@@ -76,6 +76,8 @@ void boss_init()
 	boss_left.pos.x = player_pos.x + BOSS_HAND_POS;
 	boss_left.pos.y = player_pos.y - SCREEN_H * 0.5f - BOSS_H * 0.5f;
 
+	state = NORMAL_ENEMY;
+
 	boss.transparent = 1.0f;
 	boss_right.transparent = 1.0f;
 	boss_left.transparent = 1.0f;
@@ -189,17 +191,19 @@ void boss_update()
 	//ƒfƒRƒC‚Ì“–‚½‚è”»’è
 	if (hit_check(boss.pos.x, boss.pos.y, BOSS_HITBOX * 0.5f ,
 		decoy_totem_pos.x, decoy_totem_pos.y, DECOY_TOTEM_EXPLOSION * 0.5f) && jast_avoid_effect_check
-		&& !boss.knock_down && state != NORMAL_ENEMY)
+		&& !boss.knock_down && (state == STRONG_ENEMY || state == MIX_ENEMY) )
 	{
 		boss.knock_down = true;
 	}
 	else if (hit_check(boss_right.pos.x, boss_right.pos.y, BOSS_HAND_HITBOX * 0.5f,
-		decoy_totem_pos.x, decoy_totem_pos.y, DECOY_TOTEM_EXPLOSION * 0.5f) && jast_avoid_effect_check && !boss_right.knock_down)
+		decoy_totem_pos.x, decoy_totem_pos.y, DECOY_TOTEM_EXPLOSION * 0.5f) && jast_avoid_effect_check && !boss_right.knock_down
+		&& (state == STRONG_ENEMY || state == NORMAL_ENEMY))
 	{
 		boss_right.knock_down = true;
 	}
 	else if (hit_check(boss_left.pos.x, boss_left.pos.y, BOSS_HAND_HITBOX * 0.5f,
-		decoy_totem_pos.x, decoy_totem_pos.y, DECOY_TOTEM_EXPLOSION * 0.5f) && jast_avoid_effect_check && !boss_left.knock_down)
+		decoy_totem_pos.x, decoy_totem_pos.y, DECOY_TOTEM_EXPLOSION * 0.5f) && jast_avoid_effect_check && !boss_left.knock_down
+		&& (state == STRONG_ENEMY || state == NORMAL_ENEMY))
 	{
 		boss_left.knock_down = true;
 	}

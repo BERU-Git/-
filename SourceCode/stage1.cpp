@@ -30,6 +30,12 @@ arrow_guide_init();
 	heart_init();
 	hiyoko_init();
 	heal_init();
+
+	seconds_pos_1 = 0;
+	seconds_pos_10 = 0;
+	minutes_pos_1 = 0;
+	minutes_pos_10 = 0;
+
 	player_hp = PLAYER_HP;
 	game_timer = 0;
 
